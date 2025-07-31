@@ -17,7 +17,7 @@ export default function Testimonials() {
           What Our Clients Say
         </h2>
         <p className="text-lg text-gray-700 italic">
-          “Thanks to SupaCare&apos;s smart system, our waste pickups are always on time, and our community has never looked cleaner.”
+          “Thanks to Supacare&apos;s smart system, our waste pickups are always on time, and our community has never looked cleaner.”
         </p>
         <p className="mt-4 font-semibold text-green-800">— Facility Manager</p>
       </motion.div>

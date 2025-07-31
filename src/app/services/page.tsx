@@ -6,20 +6,8 @@ import { motion } from 'framer-motion';
 
 const services = [
   {
-    title: 'Carbon Advisory',
-    description: 'Helping you navigate carbon markets and reduction strategies.',
-    image: '/images/services/carbon-hero.webp',
-    link: '/services/carbon-advisory',
-  },
-  {
-    title: 'Carbon Footprint',
-    description: 'Measure, reduce, and report your environmental impact.',
-    image: '/images/services/footprint-overview.webp',
-    link: '/services/carbon-footprint',
-  },
-  {
-    title: 'Environmental Consultancy',
-    description: 'Audits, cleanups, and sustainable action plans.',
+    title: 'Environmental Consultancy and Carbon Advisory',
+    description: 'Audits, cleanup support, and guidance on carbon reduction and market participation.',
     image: '/images/services/solution-cleanup-audit.webp',
     link: '/services/environmental-consultancy',
   },
@@ -30,7 +18,7 @@ const services = [
     link: '/services/recycling-composting',
   },
   {
-    title: 'Smart Waste',
+    title: 'Smart Waste and  Tracking',
     description: 'IoT-powered bin monitoring and waste data dashboards.',
     image: '/images/services/dashboardui.webp',
     link: '/services/smart-waste',
@@ -47,7 +35,7 @@ export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-[#eaf5ec] text-gray-800">
       {/* Hero Intro */}
-      <section className="text-center px-6 py-16 max-w-4xl mx-auto">
+      <section className="text-center px-6 pt-36 pb-16 max-w-4xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -62,7 +50,7 @@ export default function ServicesPage() {
           transition={{ delay: 0.2 }}
           className="text-lg text-gray-600"
         >
-          SupaCare empowers sustainability through hands-on solutions and innovative technology.
+          Supacare empowers sustainability through hands-on solutions and innovative technology.
         </motion.p>
       </section>
 

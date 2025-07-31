@@ -24,7 +24,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Logo & Tagline */}
           <div>
-            <h2 className="text-2xl font-bold mb-2">SupaCare</h2>
+            <h2 className="text-2xl font-bold mb-2">Supacare</h2>
             <p className="text-sm text-gray-300">
               Sustainable solutions for a cleaner, greener tomorrow.
             </p>
@@ -56,7 +56,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-3">Get in Touch</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li className="flex items-center gap-2"><Mail size={16} /> contact@supacare.org</li>
+              <li className="flex items-center gap-2"><Mail size={16} /> contact@Supacare.org</li>
               <li className="flex items-center gap-2"><Phone size={16} /> 0720096680</li>
               <li className="flex items-center gap-2"><MapPin size={16} /> Nairobi, Kenya</li>
             </ul>
@@ -84,7 +84,7 @@ export default function Footer() {
 
         {/* Footer Bottom */}
         <div className="mt-12 pt-6 border-t border-[#2f5c48] flex flex-col sm:flex-row items-center justify-between text-sm text-gray-400">
-          <p>© 2025 SupaCare. All rights reserved.</p>
+          <p>© 2025 Supacare. All rights reserved.</p>
           <div className="flex gap-4 mt-4 sm:mt-0">
             <a href="#" className="hover:text-[#fcbf49]"><Linkedin size={18} /></a>
             <a href="#" className="hover:text-[#fcbf49]"><Instagram size={18} /></a>

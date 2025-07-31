@@ -1,7 +1,7 @@
 import Hero from './components/Hero';
 import WhatIsCarbonAdvisory from './components/WhatIsCarbonAdvisory';
 import OurServices from './components/OurServices';
-import CaseStudies from './components/CaseStudies';
+
 import WhyChooseUs from './components/WhyChooseUs';
 import ToolsStandards from './components/ToolsStandards';
 import FAQ from './components/FAQ';
@@ -13,7 +13,7 @@ export default function CarbonAdvisoryPage() {
       <Hero />
       <WhatIsCarbonAdvisory />
       <OurServices />
-      <CaseStudies />
+   
       <WhyChooseUs />
       <ToolsStandards />
       <FAQ />

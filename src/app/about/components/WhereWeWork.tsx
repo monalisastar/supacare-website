@@ -6,8 +6,8 @@ import { useState } from "react";
 const pins = [
   { name: "Nairobi", top: "58%", left: "53%", description: "Urban waste tracking pilot" },
   { name: "Kiambu", top: "55%", left: "50%", description: "Composting projects" },
-  { name: "Kisumu", top: "43%", left: "32%", description: "Clean cooking access" },
-  { name: "Eldoret", top: "35%", left: "40%", description: "Community engagement" },
+  { name: "Kirinyaga", top: "43%", left: "32%", description: "Composting project pilot " },
+  { name: "Eldoret", top: "35%", left: "40%", description: "Composting pilot " },
 ];
 
 const LeafPin = ({ color }: { color: string }) => (
@@ -39,8 +39,8 @@ export default function WhereWeWork() {
           Local Roots, Expanding Reach
         </h2>
         <p className="text-green-900 mb-6">
-          SupaCare operates in key Kenyan counties tailoring sustainable waste
-          management solutions that respect local communities and climates.
+          Supacare operates in key Kenyan counties tailoring sustainable waste
+          management solutions that improve local communities wellbeing and the environment.
         </p>
         <ul className="list-disc list-inside text-green-700 space-y-3">
           {pins.map(({ name, description }) => (

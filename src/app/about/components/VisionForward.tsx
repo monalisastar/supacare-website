@@ -40,7 +40,7 @@ export default function VisionForward() {
             The Road Ahead
           </h2>
           <p className="text-green-900 text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
-            At SupaCare, we envision a future where sustainable waste management
+            At Supacare, we envision a future where sustainable waste management
             is accessible to every community across Kenya and beyond. We will
             expand clean cooking initiatives, develop carbon credit programs,
             and harness smart waste technology to transform how waste becomes a

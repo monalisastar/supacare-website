@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer"; // ✅ Import Footer
+import Footer from "../components/Footer";
 import "./globals.css";
+import { Toaster } from "react-hot-toast"; // ✅ Import Toaster
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SupaCare Solutions - Sustainable Waste Management in Kenya",
+  title: "Supacare Solutions - Sustainable Waste Management in Kenya",
   description:
-    "SupaCare Solutions provides innovative and eco-friendly waste management and sustainability consulting services across Kenya.",
+    "Supacare Solutions provides innovative and eco-friendly waste management and sustainability consulting services across Kenya.",
   keywords: [
     "waste management",
     "sustainability",
@@ -29,17 +30,17 @@ export const metadata: Metadata = {
   ],
   viewport: "width=device-width, initial-scale=1",
   openGraph: {
-    title: "SupaCare Solutions",
+    title: "Supacare Solutions",
     description:
       "Innovative and eco-friendly waste management and sustainability consulting services across Kenya.",
-    url: "https://www.supacare.example",
-    siteName: "SupaCare Solutions",
+    url: "https://www.Supacare.example",
+    siteName: "Supacare Solutions",
     images: [
       {
-        url: "https://www.supacare.example/og-image.png",
+        url: "https://www.Supacare.example/og-image.png",
         width: 1200,
         height: 630,
-        alt: "SupaCare Solutions Logo",
+        alt: "Supacare Solutions Logo",
       },
     ],
     locale: "en_US",
@@ -47,12 +48,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SupaCare Solutions",
+    title: "Supacare Solutions",
     description:
       "Innovative and eco-friendly waste management and sustainability consulting services across Kenya.",
-    images: ["https://www.supacare.example/twitter-image.png"],
-    site: "@supacare",
-    creator: "@supacare",
+    images: ["https://www.Supacare.example/twitter-image.png"],
+    site: "@Supacare",
+    creator: "@Supacare",
   },
   robots: {
     index: true,
@@ -71,7 +72,8 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Navbar />
         {children}
-        <Footer /> {/* ✅ Global Footer added here */}
+        <Footer />
+        <Toaster position="top-right" /> {/* ✅ This line enables toast notifications */}
       </body>
     </html>
   );

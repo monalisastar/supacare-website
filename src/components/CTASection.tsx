@@ -25,7 +25,7 @@ const ctaItems = [
   },
   {
     title: 'Join a Community Clean-Up',
-    subtitle: 'Participate in SupaCare-led community events & activations',
+    subtitle: 'Participate in Supacare-led community events & activations',
     details: 'Help restore your neighborhood and earn AERRA rewards.',
     icon: Users,
   },

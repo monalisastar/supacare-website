@@ -24,7 +24,7 @@ export default function OurStory() {
         >
           <Image
             src="/images/our-story.png"
-            alt="SupaCare composting fieldwork"
+            alt="Supacare composting fieldwork"
             fill
             className="object-cover"
             priority
@@ -44,10 +44,10 @@ export default function OurStory() {
           Born from Urgency. Built on Purpose.
         </h2>
         <p className="text-lg text-gray-800 max-w-xl mx-auto md:mx-0">
-          SupaCare began where most others looked away — in the overlooked
+          Supacare began where most others looked away — in the overlooked
           alleys, waste sites, and underserved communities. We saw not just
           problems, but possibilities: the opportunity to transform waste into
-          dignity, data into carbon opportunity, and action into long-term
+          dignity, and action into long-term
           climate solutions.
         </p>
         <p className="text-lg text-gray-800 max-w-xl mx-auto md:mx-0">

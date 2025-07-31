@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 const testimonials = [
   {
     quote:
-      'SupaCare is reliable and responsive. They’ve transformed how we handle waste in our estate.',
+      'Supacare is reliable and responsive. They’ve transformed how we handle waste in our estate.',
     author: '— Property Manager, Greenhill',
   },
   {

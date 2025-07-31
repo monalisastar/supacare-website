@@ -48,7 +48,7 @@ export default function WhyChooseUs() {
     <section className="w-full bg-[#f7fdf8] py-16 px-4 sm:px-10 lg:px-20">
       <div className="max-w-7xl mx-auto text-center mb-12">
         <h2 className="text-3xl sm:text-4xl font-bold text-[#2b402e] mb-4">
-          Why Choose supaCare
+          Why Choose Supacare
         </h2>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
           Here’s why estates, institutions, and businesses trust us for reliable, eco-compliant waste collection.

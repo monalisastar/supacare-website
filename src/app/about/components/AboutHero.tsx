@@ -10,7 +10,7 @@ export default function AboutHero() {
         aria-hidden="true"
         className="hidden md:block absolute top-0 left-0 w-24 bg-gradient-to-b from-green-700 to-green-800 rounded-tr-xl rounded-br-xl shadow-lg z-0"
         style={{
-          height: "80px", // approximate navbar height
+          height: "80px",
           clipPath:
             "polygon(0 0, 100% 0, 100% 100%, 0% 100%, 30% 70%, 50% 50%, 30% 30%)",
         }}
@@ -27,12 +27,12 @@ export default function AboutHero() {
       />
 
       {/* Text Section */}
-      <div className="relative flex-1 space-y-6 text-center md:text-left z-10">
+      <div className="relative flex-1 space-y-6 text-center md:text-left z-10 md:pl-16 lg:pl-24">
         <h1 className="text-4xl md:text-5xl font-bold text-green-800">
-          Making Waste Work for People & Planet
+          OUR STORY
         </h1>
         <p className="text-lg text-green-900 max-w-xl mx-auto md:mx-0">
-          SupaCare Solutions is transforming waste into wellness through community-powered programs,
+          Supacare Solutions is transforming waste into wellness through community-powered programs,
           clean cooking, composting, and climate-smart practices across Kenya.
         </p>
         <a
@@ -48,7 +48,7 @@ export default function AboutHero() {
         <div className="w-full h-96 overflow-hidden rounded-[40%_60%_60%_40%/60%_40%_60%_40%] shadow-lg">
           <Image
             src="/images/about-hero.png"
-            alt="SupaCare community fieldwork"
+            alt="Supacare community fieldwork"
             fill
             className="object-cover"
             priority

@@ -11,7 +11,7 @@ const CTASection = () => {
           Ready to Start Your Environmental Project?
         </h2>
         <p className="text-lg mb-6">
-          Let SupaCare help you navigate compliance, sustainability, and community impact with ease and expertise.
+          Let Supacare help you navigate compliance, sustainability, and community impact with ease and expertise.
         </p>
         <Link href="/contact">
           <button className="bg-white text-[#4a9f74] font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-[#f0f0f0] transition">

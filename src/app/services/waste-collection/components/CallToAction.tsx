@@ -23,7 +23,7 @@ export default function CallToAction() {
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          Let supaCare handle it with professionalism, compliance, and care.
+          Let Supacare handle it with professionalism, compliance, and care.
         </motion.p>
 
         <motion.div

@@ -1,0 +1,26 @@
+# Sensitive files
+.env
+*.env.*
+config/settings.py
+*.key
+*.pem
+*.crt
+
+# System/IDE files
+.DS_Store
+*.log
+*.tsbuildinfo
+*.swp
+
+# Node + Next.js
+node_modules/
+.next/
+out/
+.vercel/
+
+# Build scripts & temporary files
+scripts/
+content/
+*.local.*
+*.cache
+

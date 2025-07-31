@@ -13,13 +13,13 @@ export default function HowToApply() {
           <strong>Prepare Your Documents:</strong> Update your resume/CV and write a cover letter highlighting your passion for sustainability and relevant experience.
         </li>
         <li>
-          <strong>Submit Your Application:</strong> Click the "Apply Now" button on the job listing or send your documents to <a href="mailto:careers@supacare.co.ke" className="text-green-900 underline">careers@supacare.co.ke</a>.
+          <strong>Submit Your Application:</strong> Click the "Apply Now" button on the job listing or send your documents to <a href="mailto:careers@Supacare.co.ke" className="text-green-900 underline">careers@Supacare.co.ke</a>.
         </li>
         <li>
           <strong>Interview Process:</strong> Our team will review your application and contact you for interviews if shortlisted.
         </li>
         <li>
-          <strong>Join Our Team:</strong> If selected, you’ll receive an offer and onboarding details to start your journey with SupaCare!
+          <strong>Join Our Team:</strong> If selected, you’ll receive an offer and onboarding details to start your journey with Supacare!
         </li>
       </ol>
 

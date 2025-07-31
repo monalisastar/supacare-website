@@ -39,7 +39,7 @@ export default function Hero() {
       >
         <Image
           src="/images/smart-waste/smartbins.webp"
-          alt="Smart SupaCare Waste Bin"
+          alt="Smart Supacare Waste Bin"
           layout="fill"
           objectFit="contain"
           priority

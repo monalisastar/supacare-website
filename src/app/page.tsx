@@ -8,7 +8,6 @@ import WhySupaCare from '../components/WhySupaCare'
 import Projects from '../components/Projects'
 import SustainabilityBanner from '../components/SustainabilityBanner'
 import DemandSolutionCarousel from '../components/DemandSolutionCarousel'
-import CTASection from '../components/CTASection'
 import GetInTouch from '../components/GetInTouch'
 import ImpactSection from '../components/ImpactSection'
 
@@ -22,28 +21,6 @@ export default function HomePage() {
       <section id="hero">
         <Hero />
       </section>
-
-      <motion.section
-        id="cta"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="py-12"
-      >
-        <CTASection />
-      </motion.section>
-
-      <motion.section
-        id="sustainability"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
-        className="py-10"
-      >
-        <SustainabilityBanner />
-      </motion.section>
 
       <motion.section
         id="about"
@@ -68,17 +45,6 @@ export default function HomePage() {
       </motion.section>
 
       <motion.section
-        id="why-supacare"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="py-12 bg-gray-100"
-      >
-        <WhySupaCare />
-      </motion.section>
-
-      <motion.section
         id="projects"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -87,6 +53,28 @@ export default function HomePage() {
         className="py-12 md:py-16"
       >
         <Projects />
+      </motion.section>
+
+      <motion.section
+        id="sustainability"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        className="py-10"
+      >
+        <SustainabilityBanner />
+      </motion.section>
+
+      <motion.section
+        id="why-Supacare"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-12 bg-gray-100"
+      >
+        <WhySupaCare />
       </motion.section>
 
       <motion.section

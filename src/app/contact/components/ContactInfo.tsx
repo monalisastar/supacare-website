@@ -17,8 +17,8 @@ export default function ContactInfo() {
       <div className="mt-auto space-y-2">
         <p>
           <strong>Email:</strong>{' '}
-          <a href="mailto:info@supacare.com" className="text-green-600 hover:underline">
-            info@supacare.com
+          <a href="mailto:info@Supacare.com" className="text-green-600 hover:underline">
+            info@Supacare.com
           </a>
         </p>
         <p>

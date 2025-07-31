@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
 const services = [
   {
@@ -30,9 +31,14 @@ const services = [
     alt: "School waste sorting activity",
   },
   {
-    title: "Tree Planting & Biodiversity",
-    image: "/images/tree-planting-kiambu.png",
-    alt: "Tree planting in Kiambu",
+    title: "Carbon Footprint Assessment",
+    image: "/images/carbon-advisory/carbon-definition.webp",
+    alt: "Carbon assessment process",
+  },
+  {
+    title: "Emission Reduction Planning",
+    image: "/images/carbon-advisory/reduction-plan.webp",
+    alt: "Carbon reduction planning session",
   },
 ];
 
@@ -44,7 +50,7 @@ const ServicesOffered = () => {
           What We Offer
         </h2>
         <p className="text-[#2e3e30] mb-12 max-w-2xl mx-auto">
-          SupaCare’s environmental consultancy team delivers expert assessments, community-based solutions, and forward-looking strategies tailored for Kenya’s unique context.
+          Supacare’s environmental consultancy team delivers expert assessments, community-based solutions, and forward-looking strategies tailored for Kenya’s unique context.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -70,6 +76,16 @@ const ServicesOffered = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* CTA for Carbon Advisory */}
+        <div className="mt-12">
+          <Link
+            href="/services/carbon-advisory"
+            className="inline-block bg-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow hover:bg-green-800 transition"
+          >
+            Explore Carbon Advisory Services
+          </Link>
         </div>
       </div>
     </section>

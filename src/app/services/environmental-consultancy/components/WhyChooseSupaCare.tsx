@@ -10,7 +10,7 @@ const WhyChooseSupaCare = () => {
         {/* Left: Image */}
         <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md">
           <Image
-            src="/images/environmental consultancy/why-choose-supacare.webp"
+            src="/images/environmental consultancy/why-choose-Supacare.webp"
             alt="Community members smiling outdoors"
             layout="fill"
             objectFit="cover"
@@ -22,7 +22,7 @@ const WhyChooseSupaCare = () => {
         {/* Right: Reasons */}
         <div>
           <h2 className="text-3xl font-bold text-[#2e3e30] mb-4">
-            Why Choose SupaCare?
+            Why Choose Supacare?
           </h2>
           <ul className="space-y-4 text-[#2e3e30]">
             <li className="flex items-start">

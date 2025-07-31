@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
   '/images/waste-collection/wastecollectionforoverviewcaurrosel.webp',
-  '/images/waste-collection/supatruck.webp',
+  '/images/waste-collection/supatruck.png',
 ];
 
 export default function Overview() {
@@ -42,7 +42,7 @@ export default function Overview() {
             Professional Waste Handling You Can Trust
           </h2>
           <p className="text-gray-700 text-lg leading-relaxed mb-4">
-            supaCare offers reliable, timely, and compliant waste collection services
+            Supacare offers reliable, timely, and compliant waste collection services
             for residential estates, corporate premises, schools, and institutions.
             Our waste handlers are fully trained and equipped to meet NEMA and county
             regulations, ensuring every pickup is safe and environmentally responsible.

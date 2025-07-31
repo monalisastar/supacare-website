@@ -38,7 +38,7 @@ export default function CallToAction() {
         >
           <Image
             src="/images/smart-waste/supacareagentwithtablet.webp"
-            alt="SupaCare Agent with Tablet"
+            alt="Supacare Agent with Tablet"
             layout="fill"
             objectFit="cover"
             className="rounded-xl"

@@ -42,7 +42,7 @@ const ProcessSection = () => {
           Our 4-Step Process
         </h2>
         <p className="text-[#2e3e30] max-w-2xl mx-auto mb-12">
-          SupaCare ensures every environmental consultancy engagement follows a proven, transparent process. Here’s how we support your sustainability journey from start to finish.
+          Supacare ensures every environmental consultancy engagement follows a proven, transparent process. Here’s how we support your sustainability journey from start to finish.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">

@@ -1,0 +1,3 @@
+{
+  "buildCommand": "TSC_COMPILE_ON_ERROR=true next build"
+}

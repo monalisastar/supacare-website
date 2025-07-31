@@ -10,7 +10,7 @@ const ProjectsHero = () => {
       {/* Background Image */}
       <Image
         src="/images/projects-hero.png"
-        alt="SupaCare Projects Hero"
+        alt="Supacare Projects Hero"
         fill
         className="object-cover object-center z-0"
         priority
@@ -30,7 +30,7 @@ const ProjectsHero = () => {
           Our Impact Projects
         </h1>
         <p className="mt-4 max-w-2xl text-lg md:text-xl text-green-100 font-light">
-          Explore how SupaCare is changing lives through sustainability, clean energy, and carbon action across Kenya.
+          Explore how Supacare is changing lives through sustainability, clean energy, and carbon action across Kenya.
         </p>
       </motion.div>
     </section>

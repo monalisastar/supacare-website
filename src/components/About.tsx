@@ -24,7 +24,10 @@ export default function About() {
   }, []);
 
   return (
-    <section className="w-full bg-[#eaf7ec] py-16">
+    <section
+      id="next-section"
+      className="w-full snap-start bg-[#eaf7ec] py-16"
+    >
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-start">
         {/* 🌍 Left Image with Leafy Curve */}
         <motion.div
@@ -41,7 +44,7 @@ export default function About() {
         >
           <Image
             src="/images/about-bg.png"
-            alt="About SupaCare"
+            alt="About Supacare"
             width={600}
             height={600}
             className="object-cover w-full h-full"
@@ -59,14 +62,11 @@ export default function About() {
         >
           {/* WHO WE ARE */}
           <div>
-            <div className="text-sm text-blue-700 font-semibold tracking-widest uppercase mb-2 border-l-4 pl-3 border-blue-500">
+            <h2 className="text-3xl font-bold text-[#f6a100] mb-3">
               Who We Are
-            </div>
-            <h2 className="text-3xl font-bold text-green-700 mb-3">
-              SupaCare Solutions
             </h2>
             <p className="text-base leading-relaxed">
-              SupaCare is a sustainability-driven waste management and environmental consultancy company
+              Supacare is a sustainability-driven waste management and environmental consultancy company
               committed to creating a cleaner, greener future. We empower businesses, communities, and
               institutions to reduce their environmental footprint and take climate-positive action.
               Our services include smart waste tracking, recycling, composting, carbon advisory, and
@@ -81,7 +81,7 @@ export default function About() {
           <div className="space-y-2">
             <button
               onClick={() => setMissionOpen(!isMissionOpen)}
-              className="flex items-center gap-2 text-green-700 font-semibold text-lg transition-all"
+              className="flex items-center gap-2 text-[#f6a100] font-semibold text-lg transition-all"
             >
               <motion.div
                 animate={{ rotate: isMissionOpen ? 90 : 0 }}
@@ -109,7 +109,7 @@ export default function About() {
           <div className="space-y-2">
             <button
               onClick={() => setVisionOpen(!isVisionOpen)}
-              className="flex items-center gap-2 text-green-700 font-semibold text-lg transition-all"
+              className="flex items-center gap-2 text-[#f6a100] font-semibold text-lg transition-all"
             >
               <motion.div
                 animate={{ rotate: isVisionOpen ? 90 : 0 }}

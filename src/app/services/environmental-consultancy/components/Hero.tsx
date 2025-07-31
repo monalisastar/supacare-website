@@ -29,12 +29,19 @@ const HeroSection = () => {
           Tailored solutions for sustainable impact, regulatory compliance, and climate resilience across Kenya’s communities and industries.
         </p>
 
-        {/* Updated Button */}
-        <Link href="/contact">
-          <button className="mt-6 px-6 py-3 bg-[#4a9f74] text-white rounded-lg hover:bg-[#3c845f] transition">
-            Book a Consultation
-          </button>
-        </Link>
+        {/* Dual Buttons */}
+        <div className="mt-6 flex flex-col sm:flex-row gap-4">
+          <Link href="/contact">
+            <button className="px-6 py-3 bg-[#4a9f74] text-white rounded-lg hover:bg-[#3c845f] transition">
+              Book a Consultation
+            </button>
+          </Link>
+          <Link href="/services/carbon-advisory">
+            <button className="px-6 py-3 bg-white text-[#2e3e30] border border-[#4a9f74] rounded-lg hover:bg-[#d2eadd] transition">
+              Explore Carbon Advisory
+            </button>
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -34,7 +34,7 @@ export default function WhyChooseUs() {
     <section className="py-20 px-6 md:px-12 bg-white text-gray-800">
       <div className="max-w-5xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-green-700 mb-10">
-          Why Choose SupaCare?
+          Why Choose Supacare?
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">

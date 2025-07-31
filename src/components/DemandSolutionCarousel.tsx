@@ -14,7 +14,7 @@ const slides = [
     },
     solution: {
       label: 'The Solution',
-      text: 'SupaCare conducts waste audits and cleanup drives to restore communities.',
+      text: 'Supacare conducts waste audits and cleanup drives to restore communities.',
       image: '/images/solution-cleanup-audit.png',
     },
   },
@@ -62,7 +62,7 @@ export default function DemandSolutionCarousel() {
 
   useEffect(() => {
     if (!paused) {
-      timeoutRef.current = setInterval(nextSlide, 8000)
+      timeoutRef.current = setInterval(nextSlide, 60000) // 60s delay
     }
     return () => {
       if (timeoutRef.current) clearInterval(timeoutRef.current)
@@ -106,7 +106,9 @@ export default function DemandSolutionCarousel() {
           </div>
         </div>
 
-        <p className="text-xs text-center text-gray-500 mb-3 md:hidden">Swipe left or right</p>
+        <p className="text-sm text-center text-yellow-800 mb-4 animate-pulse font-medium md:hidden">
+          Swipe left or right to explore
+        </p>
 
         <AnimatePresence custom={direction} mode="wait">
           <motion.div

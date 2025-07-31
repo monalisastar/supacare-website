@@ -24,7 +24,7 @@ export default function CarbonFootprintPage() {
             Carbon Footprint Assessment & Reduction
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto drop-shadow-md">
-            Measure, understand, and reduce your carbon emissions with supaCare’s expert assessment and tailored sustainability strategies.
+            Measure, understand, and reduce your carbon emissions with Supacare’s expert assessment and tailored sustainability strategies.
           </p>
           <Link href="/contact" className="inline-block bg-green-600 hover:bg-green-700 transition rounded-md px-8 py-4 text-lg font-semibold shadow-lg drop-shadow-md">
             Request a Consultation
@@ -211,7 +211,7 @@ export default function CarbonFootprintPage() {
             <div className="p-6 bg-white">
               <h3 className="font-semibold text-xl mb-2">Community Solar Project</h3>
               <p className="text-gray-700">
-                supaCare partnered with a local community to implement solar panels, reducing electricity emissions by 40%.
+                Supacare partnered with a local community to implement solar panels, reducing electricity emissions by 40%.
               </p>
             </div>
           </div>
@@ -251,7 +251,7 @@ export default function CarbonFootprintPage() {
             Ready to take control of your carbon footprint?
           </h2>
           <p className="text-lg mb-8 drop-shadow-md">
-            Contact supaCare today for a personalized consultation and start your sustainability journey.
+            Contact Supacare today for a personalized consultation and start your sustainability journey.
           </p>
           <Link href="/contact" className="inline-block bg-green-600 hover:bg-green-700 transition rounded-md px-10 py-4 text-xl font-semibold shadow-lg drop-shadow-md">
             Request a Consultation

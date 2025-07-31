@@ -12,7 +12,7 @@ const projects = [
     image: '/images/waste-tracking.png',
   },
   {
-    title: 'Carbon Advisory & Clean Cooking',
+    title: 'Carbon Advisory & environmental consultancy',
     location: 'Kisumu, Kenya',
     description:
       'Community engagement on LPG, E-Jikos, and household carbon savings with token-based incentives.',

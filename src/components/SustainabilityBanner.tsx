@@ -19,16 +19,16 @@ export default function SustainabilityBanner() {
         >
           <div className="text-center md:text-left space-y-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-800 leading-tight">
-              Reach Your <span className="text-green-600">Sustainability</span> Goals with supaCare
+              Compact Composting with <span className="text-green-600"></span> Supacare
             </h2>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-              From waste audits to carbon credits, we help you reduce impact and meet ESG targets through smart strategies and expert consulting.
+              Transform your food and organic waste into valuable compost with our  compact machine — ideal for apartments, estates, and urban hubs. Easy, odor-free, and sustainable.
             </p>
             <Link
-              href="/request"
+              href="/contact"
               className="inline-block bg-green-700 hover:bg-green-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow transition duration-300"
             >
-              Get Started Today
+              Book a Demo
             </Link>
           </div>
 
@@ -36,18 +36,18 @@ export default function SustainabilityBanner() {
           <div className="grid sm:grid-cols-3 gap-4 pt-4">
             <FeatureCard
               icon={<UserCheck className="w-6 h-6 text-green-700 animate-bounce" />}
-              title="Customer-Centric"
-              description="Tailored waste management for your unique needs."
+              title="Community-Ready"
+              description="Ideal for estates, apartments & urban settings."
             />
             <FeatureCard
               icon={<Leaf className="w-6 h-6 text-green-700 animate-spin-slow" />}
-              title="Eco-Friendly"
-              description="Promoting recycling, composting, and waste reduction."
+              title="Soil-Rich Output"
+              description="Produces clean, high-quality compost from waste."
             />
             <FeatureCard
               icon={<ShieldCheck className="w-6 h-6 text-green-700 animate-pulse" />}
-              title="Compliance & Safety"
-              description="Aligned with Kenyan law and global standards."
+              title="Hygienic & Compliant"
+              description="Sealed, safe, and aligned with waste laws."
             />
           </div>
         </motion.div>
@@ -61,8 +61,8 @@ export default function SustainabilityBanner() {
           className="rounded-xl overflow-hidden shadow-md order-1 md:order-2"
         >
           <Image
-            src="/images/sustainability-bg.png"
-            alt="Sustainability"
+            src="/images/recycling and composting/Supacarecompactmachine.png"
+            alt="Supacare Compact Composting Machine"
             width={600}
             height={400}
             className="object-cover w-full h-full"

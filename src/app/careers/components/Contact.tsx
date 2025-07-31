@@ -5,12 +5,12 @@ export default function Contact() {
     <section className="max-w-4xl mx-auto px-6 py-16 bg-green-50 rounded-lg border border-green-200 shadow-md text-center">
       <h2 className="text-4xl font-bold text-green-800 mb-6">Have Questions?</h2>
       <p className="text-green-700 mb-4">
-        If you have any questions about careers at SupaCare or the application process, feel free to reach out.
+        If you have any questions about careers at Supacare or the application process, feel free to reach out.
       </p>
       <p className="text-green-700 mb-2">
         <strong>Email:</strong>{' '}
-        <a href="mailto:careers@supacare.co.ke" className="text-green-900 underline">
-          careers@supacare.co.ke
+        <a href="mailto:careers@Supacare.co.ke" className="text-green-900 underline">
+          careers@Supacare.co.ke
         </a>
       </p>
       <p className="text-green-700 mb-6">

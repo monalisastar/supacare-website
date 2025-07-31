@@ -8,7 +8,7 @@ const faqs = [
     category: "General",
     questions: [
       {
-        q: "What services does supaCare Solutions offer?",
+        q: "What services does Supacare Solutions offer?",
         a: "We specialize in waste management, carbon advisory, clean cooking technologies, and sustainability consulting.",
       },
       {
@@ -16,7 +16,7 @@ const faqs = [
         a: "You can contact us via phone, email, or fill out the inquiry form on our Contact page.",
       },
       {
-        q: "Where is supaCare Solutions located?",
+        q: "Where is Supacare Solutions located?",
         a: "Our main office is in Nairobi, Kenya, but we serve multiple counties including Kisumu and Kiambu.",
       },
     ],

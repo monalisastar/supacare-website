@@ -10,30 +10,30 @@ import {
 
 const values = [
   {
-    title: "Circular Innovation",
+    title: "Innovation",
     description:
-      "We close the loop — turning waste into value through regenerative systems.",
+      "We use smart technologies and circular practices to make waste valuable..",
     icon: RotateCw,
     color: "text-green-600",
   },
   {
     title: "Community First",
     description:
-      "People are our priority. We design with dignity, not just delivery.",
+      "We prioritize people by designing waste solutions that uplift, protect, and empower every community we serve.",
     icon: Users,
     color: "text-green-700",
   },
   {
-    title: "Climate Justice",
+    title: "Sustainability",
     description:
-      "We fight inequity while fighting carbon — fairness and impact go together.",
+      "Every step we take considers long-term environmental impact..",
     icon: Globe,
     color: "text-green-800",
   },
   {
     title: "Practical Action",
     description:
-      "We work on the ground with scalable, real-world tools — no fluff.",
+      "We work on the ground with scalable, real-world tools .",
     icon: Hammer,
     color: "text-green-900",
   },
@@ -53,8 +53,7 @@ export default function CoreValues() {
           What Drives Us
         </h2>
         <p className="text-green-900 mt-4 max-w-xl mx-auto">
-          These values guide every SupaCare decision — from the bins we place to
-          the futures we imagine.
+          These values shape every Supacare decision — from where we place a bin to how we shape tomorrow’s communities..
         </p>
       </motion.div>
 

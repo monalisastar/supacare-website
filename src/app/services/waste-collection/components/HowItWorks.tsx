@@ -10,7 +10,7 @@ const steps = [
   {
     title: 'Request Pickup',
     desc: 'Client schedules collection via phone or web form.',
-    img: '/images/waste-collection/supatruck.webp',
+    img: '/images/waste-collection/supatruck.png',
   },
   {
     title: 'Sorting & Documentation',

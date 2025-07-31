@@ -1,11 +1,20 @@
+'use client';
 import Hero from './components/Hero';
-import RealWorldImpact from './components/RealWorldImpact';
+import OurServices from './components/OurServices';
+import WhoWeServe from './components/WhoWeServe';
+import CompostingProcess from './components/CompostingProcess';
+import Testimonials from './components/Testimonials';
+import FinalCTA from './components/FinalCTA';
 
-export default function WasteCollectionPage() {
+export default function CompostingPage() {
   return (
-    <main className="bg-white">
+    <main className="flex flex-col">
       <Hero />
-      <RealWorldImpact />
+      <OurServices />
+      <WhoWeServe />
+      <CompostingProcess />
+      <Testimonials />
+      <FinalCTA />
     </main>
   );
 }

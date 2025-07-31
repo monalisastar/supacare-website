@@ -18,7 +18,7 @@ export default function CaseStudy() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-2xl md:text-3xl font-bold text-[#2f4d2c] mb-4">
-            GreenView Estate: Before & After SupaCare
+            GreenView Estate: Before & After Supacare
           </h2>
           <p className="text-gray-700 mb-6">
             Through real-time bin tracking and optimized pickup schedules,

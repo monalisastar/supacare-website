@@ -21,8 +21,15 @@ export default function Hero() {
     return () => clearInterval(interval)
   }, [])
 
+  const scrollToNextSection = () => {
+    const section = document.getElementById('next-section')
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
-    <section className="relative min-h-[90vh] w-full overflow-hidden text-white">
+    <section className="relative min-h-[90vh] snap-start w-full overflow-hidden text-white">
       {/* Background Video */}
       <video
         className="absolute inset-0 w-full h-full object-cover z-0"
@@ -38,12 +45,12 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 z-10" />
 
       {/* Content */}
-      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-12 sm:py-16">
+      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-28 sm:py-40">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight max-w-4xl"
+          className="mt-10 sm:mt-16 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight max-w-4xl"
         >
           Revitalizing Nature, Empowering Communities
         </motion.h1>
@@ -51,9 +58,9 @@ export default function Hero() {
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 1 }}
             className="mt-4 text-base sm:text-lg md:text-xl max-w-2xl text-green-100"
           >
@@ -62,13 +69,13 @@ export default function Hero() {
         </AnimatePresence>
 
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
         >
           <Link
             href="/projects"
-            className="mt-6 inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg transition"
+            className="mt-6 inline-block bg-[#f5b942] hover:bg-[#e8a933] text-white px-6 py-3 rounded-lg shadow-lg transition"
           >
             Explore Our Work
           </Link>
@@ -76,7 +83,10 @@ export default function Hero() {
       </div>
 
       {/* Scroll Down Icon */}
-      <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 z-30">
+      <div
+        onClick={scrollToNextSection}
+        className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 z-30 cursor-pointer"
+      >
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}

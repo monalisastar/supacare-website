@@ -16,7 +16,7 @@ const faqs = [
   {
     question: "Can you support schools or small community groups?",
     answer:
-      "Absolutely. SupaCare has a strong track record working with schools, SMEs, and community-based organizations.",
+      "Absolutely. Supacare has a strong track record working with schools, SMEs, and community-based organizations.",
   },
   {
     question: "Do you offer carbon advisory or GHG reporting?",

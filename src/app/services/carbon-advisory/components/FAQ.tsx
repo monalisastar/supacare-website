@@ -31,7 +31,7 @@ const faqs = [
       'Tree planting, clean cooking, renewable energy, and improved waste management may all qualify.',
   },
   {
-    question: 'Can SupaCare help with climate training or compliance?',
+    question: 'Can Supacare help with climate training or compliance?',
     answer:
       'Yes. We offer ESG workshops, policy guidance, and tailored climate education for organizations.',
   },
