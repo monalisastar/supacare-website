@@ -1,42 +1,34 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { notFound } from 'next/navigation';
-import { MDXRemote } from 'next-mdx-remote/rsc';
-import { Metadata } from 'next';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
-const BLOG_DIR = path.join(process.cwd(), 'content/blog');
+import BlogClientComponents from "@/components/BlogClientComponents";
 
-// ✅ Import all custom MDX components
-import BlogImage from '@/components/BlogImage';
-import BlogQuote from '@/components/BlogQuote';
-import CallToAction from '@/components/CallToAction';
+const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
-// ✅ Register components
-const mdxComponents = {
-  BlogImage,
-  BlogQuote,
-  CallToAction,
-};
-
+// Generate static paths for all MDX files
 export async function generateStaticParams() {
-  const files = fs.readdirSync(BLOG_DIR);
-  return files
-    .filter((file) => file.endsWith('.mdx'))
-    .map((file) => ({
-      slug: file.replace(/\.mdx$/, ''),
-    }));
+  const slugsFromMDX = fs
+    .readdirSync(BLOG_DIR)
+    .filter((file) => file.endsWith(".mdx"))
+    .map((file) => ({ slug: file.replace(/\.mdx$/, "") }));
+
+  return slugsFromMDX;
 }
 
+// Generate metadata for SEO and social sharing
 export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const filePath = path.join(BLOG_DIR, `${params.slug}.mdx`);
+  const { slug } = await params; // ✅ await params
+  const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return {};
 
-  const file = fs.readFileSync(filePath, 'utf-8');
+  const file = fs.readFileSync(filePath, "utf-8");
   const { data } = matter(file);
 
   return {
@@ -45,32 +37,33 @@ export async function generateMetadata({
     openGraph: {
       title: data.title,
       description: data.excerpt,
-      images: [data.coverImage],
+      images: data.coverImage ? [data.coverImage] : [],
     },
   };
 }
 
+// Blog post page
 export default async function BlogPostPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const filePath = path.join(BLOG_DIR, `${params.slug}.mdx`);
+  const { slug } = await params; // ✅ await params
 
-  if (!fs.existsSync(filePath)) {
-    notFound();
-  }
+  const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
+  if (!fs.existsSync(filePath)) notFound();
 
-  const file = fs.readFileSync(filePath, 'utf-8');
+  const file = fs.readFileSync(filePath, "utf-8");
   const { content, data } = matter(file);
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-10 text-green-900">
-      <h1 className="text-4xl font-bold text-green-800 mb-2">{data.title}</h1>
-      <p className="text-green-600 mb-6 text-sm">{data.publishedAt}</p>
-      <div className="prose prose-green max-w-none">
-        <MDXRemote source={content} components={mdxComponents} />
-      </div>
-    </main>
+    <BlogClientComponents
+      slug={slug}
+      title={data.title}
+      coverImage={data.coverImage}
+      author={data.author}
+      publishedAt={data.publishedAt}
+      content={content}
+    />
   );
 }

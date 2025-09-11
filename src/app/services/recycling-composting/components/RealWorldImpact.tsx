@@ -1,58 +1,33 @@
 'use client';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
-type Slide = {
-  img: string;
-  caption: string;
-};
-
-const initialSlides: Slide[] = [
+// Hardcoded slides
+const slides = [
   {
     img: '/images/recycling and composting/compost-use.webp',
-    caption: '',
+    caption: 'Transforming kitchen waste into valuable compost for greener gardens.',
   },
   {
     img: '/images/recycling and composting/waste-sorting-collection.webp',
-    caption: '',
+    caption: 'Sorted waste streams improve recycling and reduce landfill loads.',
   },
   {
     img: '/images/recycling and composting/composting-site.webp',
-    caption: '',
+    caption: 'Large-scale composting sites turn organic waste into natural fertilizer.',
   },
 ];
 
 export default function RealWorldImpact() {
-  const [slides, setSlides] = useState<Slide[]>(initialSlides);
   const [index, setIndex] = useState(0);
-
-  // Simulate CMS fetch for captions
-  useEffect(() => {
-    const fetchCaptions = async () => {
-      // Simulate CMS call
-      const updatedCaptions = [
-        'Transforming kitchen waste into valuable compost for greener gardens.',
-        'Sorted waste streams improve recycling and reduce landfill loads.',
-        'Large-scale composting sites turn organic waste into natural fertilizer.',
-      ];
-
-      setSlides((prev) =>
-        prev.map((slide, i) => ({
-          ...slide,
-          caption: updatedCaptions[i] || slide.caption,
-        }))
-      );
-    };
-
-    fetchCaptions();
-  }, []);
 
   const next = () => setIndex((index + 1) % slides.length);
   const prev = () => setIndex((index - 1 + slides.length) % slides.length);
   const goToSlide = (i: number) => setIndex(i);
 
+  // Auto-rotate every 45s
   useEffect(() => {
-    const timer = setInterval(next, 45000); // Rotate every 45s
+    const timer = setInterval(next, 45000);
     return () => clearInterval(timer);
   }, [index]);
 
@@ -68,7 +43,6 @@ export default function RealWorldImpact() {
             width={600}
             height={400}
             className="rounded-lg object-cover w-full h-auto"
-            loading={index === 0 ? 'eager' : 'lazy'}
             priority={index === 0}
           />
         </div>
@@ -81,15 +55,12 @@ export default function RealWorldImpact() {
             <button onClick={next} className="bg-green-700 text-white px-4 py-2 rounded">›</button>
           </div>
 
-          {/* Dots */}
           <div className="mt-4 flex justify-center md:justify-start space-x-2">
             {slides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => goToSlide(i)}
-                className={`w-3 h-3 rounded-full ${
-                  i === index ? 'bg-green-700' : 'bg-gray-400'
-                }`}
+                className={`w-3 h-3 rounded-full ${i === index ? 'bg-green-700' : 'bg-gray-400'}`}
               />
             ))}
           </div>

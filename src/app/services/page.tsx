@@ -3,11 +3,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
-const services = [
+const defaultServices = [
   {
     title: 'Environmental Consultancy and Carbon Advisory',
-    description: 'Audits, cleanup support, and guidance on carbon reduction and market participation.',
+    description:
+      'Audits, cleanup support, and guidance on carbon reduction and market participation.',
     image: '/images/services/solution-cleanup-audit.webp',
     link: '/services/environmental-consultancy',
   },
@@ -18,7 +20,7 @@ const services = [
     link: '/services/recycling-composting',
   },
   {
-    title: 'Smart Waste and  Tracking',
+    title: 'Smart Waste and Tracking',
     description: 'IoT-powered bin monitoring and waste data dashboards.',
     image: '/images/services/dashboardui.webp',
     link: '/services/smart-waste',
@@ -32,6 +34,8 @@ const services = [
 ];
 
 export default function ServicesPage() {
+  const [services] = useState(defaultServices);
+
   return (
     <main className="min-h-screen bg-[#eaf5ec] text-gray-800">
       {/* Hero Intro */}

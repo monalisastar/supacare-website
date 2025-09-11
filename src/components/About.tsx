@@ -5,16 +5,36 @@ import { motion } from 'framer-motion';
 import { Target, Eye } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
+type AboutData = {
+  image: string; // made required
+  whoTitle: string;
+  whoDescription: string;
+  mission: string;
+  vision: string;
+};
+
+const fallbackData: AboutData = {
+  image: '/images/about-bg.png',
+  whoTitle: 'Who We Are',
+  whoDescription:
+    'Supacare is a sustainability-driven waste management and environmental consultancy company committed to creating a cleaner, greener future. We empower businesses, communities, and institutions to reduce their environmental footprint and take climate-positive action.',
+  mission:
+    'To provide sustainable and affordable waste management solutions that promote a clean, healthy, and eco-friendly environment for all.',
+  vision:
+    'To be a leading force in Kenya’s waste management industry by pioneering innovative and responsible solutions that protect the environment and foster a circular economy.',
+};
+
 export default function About() {
   const [isMobile, setIsMobile] = useState(false);
   const [isMissionOpen, setMissionOpen] = useState(true);
   const [isVisionOpen, setVisionOpen] = useState(true);
+  const [data] = useState<AboutData>(fallbackData);
 
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      setMissionOpen(!mobile); // Auto-expand on desktop
+      setMissionOpen(!mobile);
       setVisionOpen(!mobile);
     };
 
@@ -24,12 +44,9 @@ export default function About() {
   }, []);
 
   return (
-    <section
-      id="next-section"
-      className="w-full snap-start bg-[#eaf7ec] py-16"
-    >
+    <section id="next-section" className="w-full snap-start bg-[#eaf7ec] py-16">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-start">
-        {/* 🌍 Left Image with Leafy Curve */}
+        {/* Left Image */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -38,12 +55,12 @@ export default function About() {
           className="overflow-hidden shadow-xl"
           style={{
             clipPath:
-              "polygon(50% 0%, 80% 20%, 100% 50%, 80% 80%, 50% 100%, 20% 80%, 0% 50%, 20% 20%)",
-            filter: "drop-shadow(0 4px 8px rgba(34, 139, 34, 0.3))",
+              'polygon(50% 0%, 80% 20%, 100% 50%, 80% 80%, 50% 100%, 20% 80%, 0% 50%, 20% 20%)',
+            filter: 'drop-shadow(0 4px 8px rgba(34, 139, 34, 0.3))',
           }}
         >
           <Image
-            src="/images/about-bg.png"
+            src={data.image}
             alt="About Supacare"
             width={600}
             height={600}
@@ -52,7 +69,7 @@ export default function About() {
           />
         </motion.div>
 
-        {/* ✅ Right Content */}
+        {/* Right Content */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -60,21 +77,14 @@ export default function About() {
           viewport={{ once: true }}
           className="text-gray-800 space-y-6"
         >
-          {/* WHO WE ARE */}
+          {/* Who We Are */}
           <div>
             <h2 className="text-3xl font-bold text-[#f6a100] mb-3">
-              Who We Are
+              {data.whoTitle}
             </h2>
-            <p className="text-base leading-relaxed">
-              Supacare is a sustainability-driven waste management and environmental consultancy company
-              committed to creating a cleaner, greener future. We empower businesses, communities, and
-              institutions to reduce their environmental footprint and take climate-positive action.
-              Our services include smart waste tracking, recycling, composting, carbon advisory, and
-              sustainability education to promote long-term impact.
-            </p>
+            <p className="text-base leading-relaxed">{data.whoDescription}</p>
           </div>
 
-          {/* Divider */}
           <div className="border-t border-blue-200 my-4" />
 
           {/* Mission */}
@@ -93,15 +103,13 @@ export default function About() {
             </button>
             <motion.div
               initial={false}
-              animate={{ height: isMissionOpen ? 'auto' : 0, opacity: isMissionOpen ? 1 : 0 }}
+              animate={{
+                height: isMissionOpen ? 'auto' : 0,
+                opacity: isMissionOpen ? 1 : 0,
+              }}
               className="overflow-hidden text-gray-700 text-sm leading-relaxed pr-2"
             >
-              <p>
-                To provide sustainable and affordable waste management solutions that promote a clean,
-                healthy, and eco-friendly environment for all. We empower communities, businesses, and
-                institutions to take climate-positive action through smart technology, recycling, and
-                education.
-              </p>
+              <p>{data.mission}</p>
             </motion.div>
           </div>
 
@@ -121,14 +129,13 @@ export default function About() {
             </button>
             <motion.div
               initial={false}
-              animate={{ height: isVisionOpen ? 'auto' : 0, opacity: isVisionOpen ? 1 : 0 }}
+              animate={{
+                height: isVisionOpen ? 'auto' : 0,
+                opacity: isVisionOpen ? 1 : 0,
+              }}
               className="overflow-hidden text-gray-700 text-sm leading-relaxed pr-2"
             >
-              <p>
-                To be a leading force in Kenya’s waste management industry by pioneering innovative and
-                responsible solutions that protect the environment and foster a circular economy. We
-                envision a future where sustainability is embedded in every community’s daily life.
-              </p>
+              <p>{data.vision}</p>
             </motion.div>
           </div>
         </motion.div>

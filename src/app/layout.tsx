@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./globals.css";
-import { Toaster } from "react-hot-toast"; // ✅ Import Toaster
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +28,6 @@ export const metadata: Metadata = {
     "composting",
     "recycling",
   ],
-  viewport: "width=device-width, initial-scale=1",
   openGraph: {
     title: "Supacare Solutions",
     description:
@@ -62,6 +61,12 @@ export const metadata: Metadata = {
   },
 };
 
+// ✅ Correct viewport export
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -73,7 +78,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
-        <Toaster position="top-right" /> {/* ✅ This line enables toast notifications */}
+        <Toaster position="top-right" />
       </body>
     </html>
   );

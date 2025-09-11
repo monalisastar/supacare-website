@@ -7,23 +7,23 @@ type Blog = {
   title: string;
   slug: string;
   publishedAt: string;
-  tags: string[];
+  tags?: string[]; // make optional
 };
 
 type SidebarProps = {
-  blogs: Blog[];
+  blogs?: Blog[]; // make optional
 };
 
-export default function Sidebar({ blogs }: SidebarProps) {
+export default function Sidebar({ blogs = [] }: SidebarProps) {
   const recentPosts = blogs.slice(0, 5);
 
   const tagsSet = new Set<string>();
-  blogs.forEach((blog) => blog.tags.forEach((tag) => tagsSet.add(tag)));
+  blogs.forEach((blog) => (blog.tags || []).forEach((tag) => tagsSet.add(tag)));
   const categories = Array.from(tagsSet);
 
   const archivesMap: { [key: string]: Blog[] } = {};
   blogs.forEach((blog) => {
-    const key = blog.publishedAt.slice(0, 7);
+    const key = blog.publishedAt?.slice(0, 7) || 'unknown';
     if (!archivesMap[key]) archivesMap[key] = [];
     archivesMap[key].push(blog);
   });

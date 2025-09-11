@@ -1,9 +1,17 @@
 'use client';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-const services = [
+type ServiceType = {
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+};
+
+const services: ServiceType[] = [
   {
     title: 'Waste Collection',
     description:
@@ -36,9 +44,11 @@ const services = [
 
 export default function OurServices() {
   return (
-    <section className="px-4 py-16" style={{ backgroundColor: '#e5f7eb' }}>
+    <section className="px-4 py-16 bg-green-50">
       <div className="max-w-7xl mx-auto text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-green-800">Our Composting Services</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-green-800">
+          Our Composting Services
+        </h2>
         <p className="mt-2 text-gray-600">
           Supacare offers end-to-end solutions for sustainable waste management.
         </p>
@@ -59,13 +69,17 @@ export default function OurServices() {
                   <Image
                     src={service.image}
                     alt={service.title}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: 'cover' }}
                     className="rounded"
                   />
                 </div>
-                <h3 className="mt-4 text-xl font-semibold text-green-700">{service.title}</h3>
-                <p className="mt-2 text-gray-600 text-sm flex-grow">{service.description}</p>
+                <h3 className="mt-4 text-xl font-semibold text-green-700">
+                  {service.title}
+                </h3>
+                <p className="mt-2 text-gray-600 text-sm flex-grow">
+                  {service.description}
+                </p>
               </div>
             </Link>
           </motion.div>
@@ -74,4 +88,3 @@ export default function OurServices() {
     </section>
   );
 }
-

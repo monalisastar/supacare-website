@@ -1,14 +1,34 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // TypeScript settings
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: true, // Only ignore during build
   },
+
+  // Image handling
   images: {
-    domains: ['images.unsplash.com', 'localhost'], // Keep your existing config
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
   },
+
+  // Experimental features
   experimental: {
-    serverActions: true, // Keep your existing config
+    serverActions: {}, // Must be an object, not boolean
   },
+
+  // Optional: strict mode for React
+  reactStrictMode: true,
+
+  // Optional: compression for production
+  compress: true,
 };
 
 export default nextConfig;

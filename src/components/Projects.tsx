@@ -1,9 +1,17 @@
 'use client'
 
-import Image from 'next/image'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
+import React from 'react'
 
-const projects = [
+type Project = {
+  title: string
+  location: string
+  description: string
+  image: string
+}
+
+const projects: Project[] = [
   {
     title: 'Smart Waste Tracking',
     location: 'Nairobi, Kenya',
@@ -32,13 +40,12 @@ export default function Projects() {
     <section className="bg-gradient-to-b from-[#e6f5ea] to-white py-6 sm:py-8 px-3 sm:px-6">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-xl sm:text-2xl font-semibold text-[#1b4332] mb-2">
-         What We’re Doing
+          What We’re Doing
         </h2>
         <p className="text-gray-700 text-sm sm:text-base max-w-2xl mx-auto">
           We deliver programs that combine community action and eco-friendly innovation.
         </p>
 
-        {/* Mobile scroll slider */}
         <div className="mt-6 overflow-x-auto sm:overflow-visible">
           <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 min-w-[700px] sm:min-w-0">
             {projects.map((project, index) => (

@@ -1,14 +1,17 @@
-// components/careers/JobList.tsx
+'use client'
+
+import { useState } from 'react'
 
 type Job = {
-  id: string;
-  title: string;
-  location: string;
-  type: string; // e.g. Full-time, Internship
-  description: string;
-  applyLink: string;
-};
+  id: string
+  title: string
+  location: string
+  type: string
+  description: string
+  applyLink: string
+}
 
+// Hardcoded jobs
 const jobs: Job[] = [
   {
     id: '1',
@@ -37,18 +40,17 @@ const jobs: Job[] = [
       'Lead local workshops and community engagement on clean cooking solutions and carbon reduction.',
     applyLink: '#apply',
   },
-];
+]
 
 export default function JobList() {
+  const [openJobs] = useState<Job[]>(jobs)
+
   return (
-    <section
-      id="open-positions"
-      className="max-w-6xl mx-auto px-6 py-16"
-    >
+    <section id="open-positions" className="max-w-6xl mx-auto px-6 py-16">
       <h2 className="text-4xl font-bold text-green-800 mb-10 text-center">Open Positions</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {jobs.map(({ id, title, location, type, description, applyLink }) => (
+        {openJobs.map(({ id, title, location, type, description, applyLink }) => (
           <article
             key={id}
             className="bg-green-50 rounded-lg border border-green-200 p-6 shadow-sm hover:shadow-md transition-shadow"
@@ -71,5 +73,5 @@ export default function JobList() {
         ))}
       </div>
     </section>
-  );
+  )
 }

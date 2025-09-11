@@ -1,41 +1,44 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
+import Image from "next/image";
+import React, { useState } from "react";
 
-const services = [
+const fallbackServices = [
   {
-    title: 'Carbon Footprint Assessment',
-    image: '/images/carbon-advisory/carbon-definition.webp',
-    description: 'Measure baseline emissions for schools, SMEs, and events.',
+    title: "Carbon Footprint Assessment",
+    image: "/images/carbon-advisory/carbon-definition.webp",
+    description: "Measure baseline emissions for schools, SMEs, and events.",
   },
   {
-    title: 'Emission Reduction Planning',
-    image: '/images/carbon-advisory/reduction-plan.webp',
-    description: 'Create practical roadmaps to reduce carbon output.',
+    title: "Emission Reduction Planning",
+    image: "/images/carbon-advisory/reduction-plan.webp",
+    description: "Create practical roadmaps to reduce carbon output.",
   },
   {
-    title: 'Carbon Project Development',
-    image: '/images/tree-planting-kiambu.png',
-    description: 'Design and register community carbon projects like tree planting and clean cookstoves.',
+    title: "Carbon Project Development",
+    image: "/images/tree-planting-kiambu.png",
+    description: "Design and register community carbon projects like tree planting and clean cookstoves.",
   },
   {
-    title: 'Carbon Credit Registration',
-    image: '/images/carbon-advisory/credit-documents.webp',
-    description: 'Support in registering with Verra, Gold Standard & others.',
+    title: "Carbon Credit Registration",
+    image: "/images/carbon-advisory/credit-documents.webp",
+    description: "Support in registering with Verra, Gold Standard & others.",
   },
   {
-    title: 'MRV Support (Monitoring, Reporting, Verification)',
-    image: '/images/carbon-advisory/mrv-support.webp',
-    description: 'Help you track, report, and verify climate impact.',
+    title: "MRV Support (Monitoring, Reporting, Verification)",
+    image: "/images/carbon-advisory/mrv-support.webp",
+    description: "Help you track, report, and verify climate impact.",
   },
   {
-    title: 'Climate Training & ESG',
-    image: '/images/carbon-advisory/climate-training.webp',
-    description: 'Build internal capacity on climate, ESG, and compliance.',
+    title: "Climate Training & ESG",
+    image: "/images/carbon-advisory/climate-training.webp",
+    description: "Build internal capacity on climate, ESG, and compliance.",
   },
 ];
 
-export default function OurServices() {
+export default function OurCarbonServices() {
+  const [services] = useState(fallbackServices);
+
   return (
     <section className="py-20 bg-gray-100 px-6 md:px-12">
       <div className="max-w-6xl mx-auto text-center">
@@ -53,8 +56,8 @@ export default function OurServices() {
                 <Image
                   src={service.image}
                   alt={service.title}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                   className="rounded-md"
                 />
               </div>

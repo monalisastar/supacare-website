@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React from "react";
 
-const projects = [
+const fallbackProjects = [
   {
     title: "Urban Cleanup & Audit, Nairobi",
     image: "/images/solution-cleanup-audit.png",
@@ -15,7 +15,7 @@ const projects = [
     tag: "♻️ Waste Management",
   },
   {
-    title: "School Waste Sorting ",
+    title: "School Waste Sorting",
     image: "/images/school-waste-sorting.png",
     tag: "🏫 Education",
   },
@@ -27,6 +27,8 @@ const projects = [
 ];
 
 const ProjectGallery = () => {
+  const projects = fallbackProjects;
+
   return (
     <section className="bg-[#e6f4ea] py-16 px-4">
       <div className="max-w-6xl mx-auto">
@@ -44,8 +46,8 @@ const ProjectGallery = () => {
                 <Image
                   src={project.image}
                   alt={project.title}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                   className="rounded-t-xl"
                   priority
                 />
