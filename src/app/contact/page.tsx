@@ -6,7 +6,8 @@ import ContactInfo from './components/ContactInfo';
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col items-center p-6 md:p-12">
+    <main className="min-h-screen bg-gray-50 flex flex-col items-center px-6 md:px-12 pt-28">
+      {/* ↑ pt-28 pushes content below navbar (adjust if your navbar is smaller/larger) */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

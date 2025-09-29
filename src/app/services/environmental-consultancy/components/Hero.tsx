@@ -1,19 +1,40 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 const HeroSection = () => {
+  const [offsetTop, setOffsetTop] = useState<number>(0);
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Dynamically calculate spacing based on navbar height
+  useEffect(() => {
+    const updateSpacing = () => {
+      const navbar = document.querySelector("[data-navbar]") as HTMLElement | null;
+      if (navbar) {
+        const extraSpacing = 20; // small breathing room
+        setOffsetTop(navbar.offsetHeight + extraSpacing);
+      }
+    };
+
+    updateSpacing();
+    window.addEventListener("resize", updateSpacing);
+    return () => window.removeEventListener("resize", updateSpacing);
+  }, []);
+
   return (
-    <section className="relative w-full h-[80vh] overflow-hidden">
+    <section
+      ref={heroRef}
+      style={{ marginTop: offsetTop || "6rem" }} // ✅ dynamic + fallback
+      className="relative w-full h-[80vh] overflow-hidden"
+    >
       {/* Background Image */}
       <Image
         src="/images/environmental consultancy/hero-environmental-consultancy.webp"
         alt="Environmental Consultancy Hero"
-        layout="fill"
-        objectFit="cover"
-        className="z-0"
+        fill
+        className="z-0 object-cover"
         priority
       />
 

@@ -11,29 +11,45 @@ const subtitles = [
 
 export default function Hero() {
   const [subtitleIndex, setSubtitleIndex] = useState(0);
+  const [navbarHeight, setNavbarHeight] = useState<number>(0);
 
+  // Rotate subtitles
   useEffect(() => {
     const interval = setInterval(() => {
       setSubtitleIndex((prev) => (prev + 1) % subtitles.length);
-    }, 5000); // change every 5 seconds
+    }, 5000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Detect header height (not just nav row)
+  useEffect(() => {
+    const updateHeight = () => {
+      const header = document.querySelector('header') as HTMLElement | null;
+      if (header) setNavbarHeight(header.offsetHeight);
+    };
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
   }, []);
 
   return (
     <section
-      className="relative flex flex-col items-center justify-center text-center text-white overflow-hidden"
+      className="relative flex flex-col items-center justify-center text-center text-white overflow-hidden pt-[7rem]" // fallback padding
       style={{
         backgroundImage: "url('/images/joinourteam.png')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '60vh',
-        padding: '4rem 1rem',
+        marginTop: `${navbarHeight}px`, // ensures Hero starts below fixed navbar
+        paddingBottom: '4rem',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
       }}
     >
-      {/* Overlay for mobile contrast */}
-      <div className="absolute inset-0 bg-green-900 opacity-50 md:opacity-40 backdrop-blur-sm md:backdrop-blur-0 pointer-events-none transition-all duration-300"></div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-green-900 opacity-50 md:opacity-40 backdrop-blur-sm md:backdrop-blur-0 pointer-events-none"></div>
 
-      {/* Animated main block */}
+      {/* Hero Content */}
       <motion.div
         className="relative max-w-3xl z-10"
         initial={{ opacity: 0, y: 40 }}
@@ -45,7 +61,6 @@ export default function Hero() {
           Join Our Team
         </h1>
 
-        {/* Auto-rotating subtitle */}
         <motion.p
           key={subtitleIndex}
           className="text-lg md:text-xl mb-8 drop-shadow-md"
@@ -64,7 +79,7 @@ export default function Hero() {
         </a>
       </motion.div>
 
-      {/* Scroll arrow */}
+      {/* Scroll Down Arrow */}
       <motion.div
         className="absolute bottom-6 z-10"
         animate={{ y: [0, 10, 0] }}

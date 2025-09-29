@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const defaultServices = [
   {
@@ -35,11 +35,32 @@ const defaultServices = [
 
 export default function ServicesPage() {
   const [services] = useState(defaultServices);
+  const [offsetTop, setOffsetTop] = useState<number>(0);
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Dynamically calculate spacing based on navbar height
+  useEffect(() => {
+    const updateSpacing = () => {
+      const navbar = document.querySelector('[data-navbar]') as HTMLElement | null;
+      if (navbar) {
+        const extraSpacing = 80; // bumped up for safety
+        setOffsetTop(navbar.offsetHeight + extraSpacing);
+      }
+    };
+
+    updateSpacing();
+    window.addEventListener('resize', updateSpacing);
+    return () => window.removeEventListener('resize', updateSpacing);
+  }, []);
 
   return (
     <main className="min-h-screen bg-[#eaf5ec] text-gray-800">
       {/* Hero Intro */}
-      <section className="text-center px-6 pt-36 pb-16 max-w-4xl mx-auto">
+      <section
+        ref={heroRef}
+        style={{ marginTop: offsetTop || '10rem' }} // ✅ dynamic + bigger fallback
+        className="text-center px-6 pt-12 pb-16 max-w-4xl mx-auto" // ✅ re-added pt-12 for breathing room
+      >
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

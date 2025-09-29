@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface ContactFormData {
@@ -34,6 +34,7 @@ export default function ContactForm() {
   const [recaptchaToken, setRecaptchaToken] = useState('');
 
   const generateRecaptchaToken = () => {
+    // Later you’ll replace this with real Google reCAPTCHA logic
     setRecaptchaToken('mocked-recaptcha-token');
   };
 
@@ -60,6 +61,7 @@ export default function ContactForm() {
         toast.success('Message sent successfully!');
         reset();
         setRecaptchaToken('');
+        generateRecaptchaToken(); // regenerate token for next submission
       } else {
         toast.error('Failed to send message');
       }
@@ -68,16 +70,16 @@ export default function ContactForm() {
     }
   };
 
-  // Generate token on mount
-  useState(() => {
+  // ✅ Generate token when component mounts
+  useEffect(() => {
     generateRecaptchaToken();
-  });
+  }, []);
 
   return (
     <section className="flex-1">
       <h1 className="text-4xl font-bold mb-6 text-green-700">Contact Us</h1>
       <form
-        onSubmit={handleSubmit(onSubmit)} // Removed <ContactFormData> generic here
+        onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-6"
         encType="multipart/form-data"
         noValidate
@@ -94,10 +96,14 @@ export default function ContactForm() {
             type="text"
             placeholder="Your Name"
             className={`w-full border-b-2 p-3 text-lg outline-none transition-colors ${
-              errors.name ? 'border-red-500' : 'border-green-400 focus:border-green-600'
+              errors.name
+                ? 'border-red-500'
+                : 'border-green-400 focus:border-green-600'
             }`}
           />
-          {errors.name && <p className="text-red-600 mt-1 text-sm">{errors.name.message}</p>}
+          {errors.name && (
+            <p className="text-red-600 mt-1 text-sm">{errors.name.message}</p>
+          )}
         </motion.div>
 
         {/* Email */}
@@ -112,10 +118,14 @@ export default function ContactForm() {
             type="email"
             placeholder="Your Email"
             className={`w-full border-b-2 p-3 text-lg outline-none transition-colors ${
-              errors.email ? 'border-red-500' : 'border-green-400 focus:border-green-600'
+              errors.email
+                ? 'border-red-500'
+                : 'border-green-400 focus:border-green-600'
             }`}
           />
-          {errors.email && <p className="text-red-600 mt-1 text-sm">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-red-600 mt-1 text-sm">{errors.email.message}</p>
+          )}
         </motion.div>
 
         {/* Subject */}
@@ -130,10 +140,16 @@ export default function ContactForm() {
             type="text"
             placeholder="Subject"
             className={`w-full border-b-2 p-3 text-lg outline-none transition-colors ${
-              errors.subject ? 'border-red-500' : 'border-green-400 focus:border-green-600'
+              errors.subject
+                ? 'border-red-500'
+                : 'border-green-400 focus:border-green-600'
             }`}
           />
-          {errors.subject && <p className="text-red-600 mt-1 text-sm">{errors.subject.message}</p>}
+          {errors.subject && (
+            <p className="text-red-600 mt-1 text-sm">
+              {errors.subject.message}
+            </p>
+          )}
         </motion.div>
 
         {/* Message */}
@@ -148,10 +164,16 @@ export default function ContactForm() {
             placeholder="Your Message"
             rows={5}
             className={`w-full border-b-2 p-3 text-lg outline-none transition-colors resize-none ${
-              errors.message ? 'border-red-500' : 'border-green-400 focus:border-green-600'
+              errors.message
+                ? 'border-red-500'
+                : 'border-green-400 focus:border-green-600'
             }`}
           />
-          {errors.message && <p className="text-red-600 mt-1 text-sm">{errors.message.message}</p>}
+          {errors.message && (
+            <p className="text-red-600 mt-1 text-sm">
+              {errors.message.message}
+            </p>
+          )}
         </motion.div>
 
         {/* Submit Button */}

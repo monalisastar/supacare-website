@@ -1,65 +1,63 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 type Announcement = {
-  message: string;
-  link?: string;
-  phone?: string;
-  email?: string;
-};
+  message: string
+  link?: string
+  phone?: string
+  email?: string
+}
 
 export default function AnnouncementBar() {
-  const [isVisible, setIsVisible] = useState(true);
-  const [announcement, setAnnouncement] = useState<Announcement | null>(null);
+  const [isVisible, setIsVisible] = useState(true)
+  const [announcement, setAnnouncement] = useState<Announcement | null>(null)
+  const barRef = useRef<HTMLDivElement | null>(null)
 
-  // Remember dismissal
-  useEffect(() => {
-    const dismissed = localStorage.getItem('announcementDismissed');
-    if (dismissed) setIsVisible(false);
-  }, []);
-
-  // Use static/fallback announcement
+  // ✅ Static/fallback announcement
   useEffect(() => {
     const fallbackAnnouncement: Announcement = {
       message:
         '📩 Contact us for direct consultancy: virginia.njat@gmail.com | 📞 0720096680',
-      link: undefined,
       phone: '0720096680',
       email: 'virginia.njat@gmail.com',
-    };
+    }
+    setAnnouncement(fallbackAnnouncement)
+  }, [])
 
-    setAnnouncement(fallbackAnnouncement);
-  }, []);
+  // ✅ Shift page down by bar height when visible
+  useEffect(() => {
+    if (isVisible && barRef.current) {
+      document.body.style.paddingTop = `${barRef.current.offsetHeight}px`
+    } else {
+      document.body.style.paddingTop = '0px'
+    }
+    return () => {
+      document.body.style.paddingTop = '0px'
+    }
+  }, [isVisible])
 
-  const handleDismiss = () => {
-    setIsVisible(false);
-    localStorage.setItem('announcementDismissed', 'true');
-  };
-
-  if (!announcement) return null;
+  if (!announcement) return null
 
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          id="announcement-bar"
+          ref={barRef}
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -50, opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full bg-blue-600 text-white px-4 py-2 flex justify-center items-center gap-4 fixed top-0 left-0 z-50 shadow-md"
+          className="w-full bg-blue-600 text-white px-4 py-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 fixed top-0 left-0 z-[60] shadow-md text-center"
         >
-          <span>{announcement.message}</span>
-          <button
-            onClick={handleDismiss}
-            className="ml-4 font-bold text-lg hover:text-gray-300"
-            aria-label="Dismiss announcement"
-          >
-            ×
-          </button>
+          <span className="text-sm md:text-base leading-snug">
+            {announcement.message}
+          </span>
+          {/* ⛔ Removed dismiss button since it's always visible */}
         </motion.div>
       )}
     </AnimatePresence>
-  );
+  )
 }

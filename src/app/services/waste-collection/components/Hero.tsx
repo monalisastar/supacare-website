@@ -2,10 +2,30 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 export default function Hero() {
+  const [offsetTop, setOffsetTop] = useState<number>(0);
+
+  useEffect(() => {
+    const updateSpacing = () => {
+      const navbar = document.querySelector('[data-navbar]') as HTMLElement | null;
+      if (navbar) {
+        const extraSpacing = 40; // Adjust if you want more breathing room
+        setOffsetTop(navbar.offsetHeight + extraSpacing);
+      }
+    };
+
+    updateSpacing();
+    window.addEventListener('resize', updateSpacing);
+    return () => window.removeEventListener('resize', updateSpacing);
+  }, []);
+
   return (
-    <section className="relative w-full h-screen overflow-hidden">
+    <section
+      className="relative w-full h-screen overflow-hidden"
+      style={{ marginTop: offsetTop || '6rem' }} // ✅ fallback spacing if JS hasn’t run yet
+    >
       {/* Video Background */}
       <video
         className="absolute top-0 left-0 w-full h-full object-cover z-0"

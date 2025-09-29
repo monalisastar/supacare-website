@@ -1,14 +1,33 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link' // ✅ Add this
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 
 export default function Hero() {
+  const [offsetTop, setOffsetTop] = useState(0)
+
+  useEffect(() => {
+    const updateOffset = () => {
+      const navbar = document.querySelector<HTMLElement>('[data-navbar]')
+      if (navbar) {
+        setOffsetTop(navbar.offsetHeight)
+      }
+    }
+
+    // Run immediately on mount
+    updateOffset()
+
+    // Recalculate on resize
+    window.addEventListener('resize', updateOffset)
+    return () => window.removeEventListener('resize', updateOffset)
+  }, [])
+
   return (
     <section
-      className="w-full py-16 px-6 md:px-12 lg:px-20 flex flex-col-reverse md:flex-row items-center justify-between gap-10"
-      style={{ backgroundColor: '#e7f3e4' }}
+      className="w-full py-16 px-6 md:px-12 lg:px-20 flex flex-col-reverse md:flex-row items-center justify-between gap-10 transition-all"
+      style={{ backgroundColor: '#e7f3e4', marginTop: offsetTop }}
     >
       {/* Left Text Content */}
       <motion.div
@@ -40,12 +59,11 @@ export default function Hero() {
         <Image
           src="/images/smart-waste/smartbins.webp"
           alt="Smart Supacare Waste Bin"
-          layout="fill"
-          objectFit="contain"
+          fill
+          style={{ objectFit: 'contain' }}
           priority
         />
       </motion.div>
     </section>
   )
 }
-

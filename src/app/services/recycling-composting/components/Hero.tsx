@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,8 +11,12 @@ const headlines = [
 ];
 
 export default function Hero() {
+  const FALLBACK_OFFSET = 112; // px - fallback while JS runs
+  const EXTRA_SPACING = 12; // extra breathing room so text isn't flush with navbar
   const [index, setIndex] = useState(0);
+  const [offsetTop, setOffsetTop] = useState<number>(FALLBACK_OFFSET + EXTRA_SPACING);
 
+  // Rotate headlines every 5s
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % headlines.length);
@@ -20,16 +24,55 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, []);
 
+  // Measure navbar and keep offset in sync (resize + ResizeObserver)
+  useEffect(() => {
+    let ro: ResizeObserver | null = null;
+
+    const updateOffset = () => {
+      const navbar = document.querySelector<HTMLElement>('[data-navbar]');
+      if (navbar) {
+        // use bounding rect for sub-pixel accuracy and round up
+        const navHeight = Math.ceil(navbar.getBoundingClientRect().height);
+        setOffsetTop(navHeight + EXTRA_SPACING);
+      } else {
+        setOffsetTop(FALLBACK_OFFSET + EXTRA_SPACING);
+      }
+    };
+
+    updateOffset();
+    window.addEventListener('resize', updateOffset);
+
+    const navbarEl = document.querySelector<HTMLElement>('[data-navbar]');
+    if (navbarEl && typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(updateOffset);
+      ro.observe(navbarEl);
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateOffset);
+      if (ro && navbarEl) ro.unobserve(navbarEl);
+    };
+  }, []);
+
   return (
-    <section className="relative w-full h-[80vh] overflow-hidden">
+    <section
+      className="relative w-full h-[80vh] overflow-hidden"
+      style={{
+        marginTop: offsetTop, // push whole hero below fixed navbar
+        transition: 'margin-top 220ms ease', // smooth reposition
+      }}
+    >
+      {/* Background Image */}
       <Image
         src="/images/recycling and composting/Supacarecompactmachine.png"
         alt="Supacare Composting Machine"
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: 'cover' }}
         className="z-0"
         priority
       />
+
+      {/* Overlay + Content */}
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center px-4 text-center">
         <motion.h1
           key={index}
@@ -63,5 +106,3 @@ export default function Hero() {
     </section>
   );
 }
-
-

@@ -3,67 +3,64 @@ import path from "path";
 import matter from "gray-matter";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { serialize } from "next-mdx-remote/serialize";
 
-import BlogClientComponents from "@/components/BlogClientComponents";
+import BlogClientWrapper from "@/components/BlogClientWrapper"; // ✅ wrapper with ssr: false
 
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
-// Generate static paths for all MDX files
 export async function generateStaticParams() {
-  const slugsFromMDX = fs
+  return fs
     .readdirSync(BLOG_DIR)
     .filter((file) => file.endsWith(".mdx"))
     .map((file) => ({ slug: file.replace(/\.mdx$/, "") }));
-
-  return slugsFromMDX;
 }
 
-// Generate metadata for SEO and social sharing
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const { slug } = await params; // ✅ await params
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
+  const { slug } = params;
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) return {};
+  if (!fs.existsSync(filePath)) return { title: "Blog Not Found" };
 
-  const file = fs.readFileSync(filePath, "utf-8");
-  const { data } = matter(file);
-
-  return {
-    title: data.title,
-    description: data.excerpt,
-    openGraph: {
+  try {
+    const file = fs.readFileSync(filePath, "utf-8");
+    const { data } = matter(file);
+    return {
       title: data.title,
       description: data.excerpt,
-      images: data.coverImage ? [data.coverImage] : [],
-    },
-  };
+      openGraph: {
+        title: data.title,
+        description: data.excerpt,
+        images: data.coverImage ? [data.coverImage] : [],
+      },
+    };
+  } catch {
+    return { title: "Blog Not Found" };
+  }
 }
 
-// Blog post page
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = await params; // ✅ await params
-
+export default async function BlogPostPage(
+  { params }: { params: { slug: string } }
+) {
+  const { slug } = params;
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) notFound();
+  if (!fs.existsSync(filePath)) return notFound();
 
   const file = fs.readFileSync(filePath, "utf-8");
   const { content, data } = matter(file);
 
+  const mdxSource = await serialize(content);
+
   return (
-    <BlogClientComponents
+    <BlogClientWrapper
       slug={slug}
-      title={data.title}
+      title={data.title || "Untitled"}
       coverImage={data.coverImage}
       author={data.author}
       publishedAt={data.publishedAt}
-      content={content}
+      content={mdxSource}
+      rawContent={content}
     />
   );
 }

@@ -18,9 +18,12 @@ function fetchAllBlogs() {
       const fileContents = fs.readFileSync(fullPath, "utf-8");
       const { data } = matter(fileContents);
 
-      // Ensure coverImage always starts with a slash for local images
       let coverImage = data.coverImage || "";
-      if (coverImage && !coverImage.startsWith("/") && !coverImage.startsWith("http")) {
+      if (
+        coverImage &&
+        !coverImage.startsWith("/") &&
+        !coverImage.startsWith("http")
+      ) {
         coverImage = `/${coverImage}`;
       }
 
@@ -39,7 +42,8 @@ export default function BlogPage() {
   const blogs = fetchAllBlogs();
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-50 via-green-100 to-green-50 px-4 py-10">
+    <main className="min-h-screen bg-gradient-to-br from-green-50 via-green-100 to-green-50 px-4 py-10 mt-[6rem] text-black">
+      {/* ✅ Added text-black for all text inside */}
       <HeroHeader />
 
       <section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_300px] gap-10">

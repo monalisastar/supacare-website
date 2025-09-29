@@ -11,16 +11,22 @@ import TeamMemberModal from './TeamMemberModal';
 
 export default function TeamSection() {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
-  const [paddingTop, setPaddingTop] = useState(0);
+  const [offsetTop, setOffsetTop] = useState<number>(0);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Dynamically calculate padding top based on navbar height
+  // Dynamically calculate margin top based on navbar height
   useEffect(() => {
-    const navbar = document.querySelector('nav'); // assuming your navbar uses <nav>
-    if (navbar) {
-      const extraSpacing = 80; // extra space so heading isn't too close
-      setPaddingTop(navbar.clientHeight + extraSpacing);
-    }
+    const updateSpacing = () => {
+      const navbar = document.querySelector('[data-navbar]') as HTMLElement | null;
+      if (navbar) {
+        const extraSpacing = 100; // ⬅️ more breathing room
+        setOffsetTop(navbar.offsetHeight + extraSpacing);
+      }
+    };
+
+    updateSpacing();
+    window.addEventListener('resize', updateSpacing);
+    return () => window.removeEventListener('resize', updateSpacing);
   }, []);
 
   const containerVariants = { hidden: {}, visible: { transition: { staggerChildren: 0.15 } } };
@@ -30,8 +36,8 @@ export default function TeamSection() {
     <>
       <section
         ref={sectionRef}
-        className="max-w-6xl mx-auto px-4 py-16"
-        style={{ paddingTop }}
+        className="max-w-6xl mx-auto px-4 pb-16 pt-24" // ⬅️ added pt-24 for heading spacing
+        style={{ marginTop: offsetTop || '10rem' }} // ⬅️ larger fallback offset
       >
         <h2 className="text-3xl sm:text-4xl font-bold text-green-800 mb-12 text-center">
           Our Team Members

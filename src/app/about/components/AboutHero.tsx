@@ -1,26 +1,47 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export default function AboutHero() {
+  const [navbarHeight, setNavbarHeight] = useState(0);
+
+  useEffect(() => {
+    const updateNavbarHeight = () => {
+      const nav = document.querySelector("nav") as HTMLElement | null;
+      if (nav) setNavbarHeight(nav.offsetHeight);
+    };
+
+    updateNavbarHeight();
+    window.addEventListener("resize", updateNavbarHeight);
+
+    return () => window.removeEventListener("resize", updateNavbarHeight);
+  }, []);
+
   return (
-    <section className="relative flex flex-col-reverse md:flex-row items-center justify-between gap-10 px-6 md:px-20 py-16 bg-green-50">
+    <section
+      className="relative flex flex-col-reverse md:flex-row items-center justify-between gap-10 px-6 md:px-20 py-16 bg-green-50"
+      style={{ paddingTop: `calc(${navbarHeight}px + 4rem)` }} 
+      // 4rem = py-16 top padding from Tailwind
+    >
       {/* Leafy vertical accent strip aligned with navbar height */}
       <div
         aria-hidden="true"
         className="hidden md:block absolute top-0 left-0 w-24 bg-gradient-to-b from-green-700 to-green-800 rounded-tr-xl rounded-br-xl shadow-lg z-0"
         style={{
-          height: "80px",
+          height: `${navbarHeight}px`,
           clipPath:
             "polygon(0 0, 100% 0, 100% 100%, 0% 100%, 30% 70%, 50% 50%, 30% 30%)",
         }}
       />
 
-      {/* Leafy vertical accent strip extending along hero's left side below navbar */}
+      {/* Leafy vertical accent strip extending below navbar */}
       <div
         aria-hidden="true"
-        className="hidden md:block absolute top-[80px] left-0 w-24 h-[calc(100%_-_80px)] bg-gradient-to-b from-green-600 to-green-700 shadow-lg z-0"
+        className="hidden md:block absolute left-0 w-24 bg-gradient-to-b from-green-600 to-green-700 shadow-lg z-0"
         style={{
+          top: `${navbarHeight}px`,
+          height: `calc(100% - ${navbarHeight}px)`,
           clipPath:
             "polygon(0 0, 100% 0, 100% 100%, 0% 100%, 30% 70%, 50% 50%, 30% 30%)",
         }}
@@ -32,8 +53,9 @@ export default function AboutHero() {
           OUR STORY
         </h1>
         <p className="text-lg text-green-900 max-w-xl mx-auto md:mx-0">
-          Supacare Solutions is transforming waste into wellness through community-powered programs,
-          clean cooking, composting, and climate-smart practices across Kenya.
+          Supacare Solutions is transforming waste into wellness through
+          community-powered programs, clean cooking, composting, and
+          climate-smart practices across Kenya.
         </p>
         <a
           href="/projects"

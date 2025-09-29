@@ -6,10 +6,16 @@ import {
   Mail, Phone, MapPin, Facebook, Linkedin, Instagram,
   Home, Wrench, PhoneCall, MessageCircle
 } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
   const [language, setLanguage] = useState('English')
+
+  const pathname = usePathname()
+
+  // ✅ Don't render footer on /dashboard/*
+  if (pathname?.startsWith('/dashboard')) return null
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -134,4 +140,3 @@ export default function Footer() {
     </>
   )
 }
-

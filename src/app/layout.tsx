@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import "./globals.css";
-import { Toaster } from "react-hot-toast";
+import NavbarFooterLayout from "./NavbarFooterLayout"; // ✅ new wrapper
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,24 +59,21 @@ export const metadata: Metadata = {
   },
 };
 
-// ✅ Correct viewport export
-export const viewport = {
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Navbar />
-        {children}
-        <Footer />
-        <Toaster position="top-right" />
+        {/* ✅ move client-only logic to wrapper */}
+        <NavbarFooterLayout>{children}</NavbarFooterLayout>
       </body>
     </html>
   );

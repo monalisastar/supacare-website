@@ -21,19 +21,20 @@ export default function HeroHeader() {
       {/* Hero background image */}
       <div className="absolute inset-0 -z-10 w-full h-full">
         <Image
-          src="/hero.png" // ✅ must start with a leading slash
+          src="/hero.png"
           alt="Hero Banner"
           fill
           style={{ objectFit: 'cover' }}
-          priority={true} // optional, ensures fast loading
+          priority={true}
         />
-        <div className="absolute inset-0 bg-green-900/20"></div> {/* subtle overlay */}
+        <div className="absolute inset-0 bg-white/60"></div> 
+        {/* ⬆️ Changed overlay to light (white/60) so dark text stands out */}
       </div>
 
-      <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-black drop-shadow-md mb-2">
         Supacare Insights
       </h1>
-      <p className="text-white text-lg">
+      <p className="text-black/90 text-lg font-medium drop-shadow-sm">
         Stories, strategies, and solutions for sustainable living
       </p>
     </section>

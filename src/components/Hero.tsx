@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
 
 type HeroData = {
   title?: string;
@@ -28,6 +29,9 @@ const defaultData: HeroData = {
 export default function Hero() {
   const [data] = useState<HeroData>(defaultData);
   const [current, setCurrent] = useState(0);
+  const [navbarHeight, setNavbarHeight] = useState(0);
+
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (!data?.taglines) return;
@@ -37,13 +41,38 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [data]);
 
+  useEffect(() => {
+    // detect navbar height
+    const nav = document.querySelector("nav") as HTMLElement | null;
+    if (nav) {
+      setNavbarHeight(nav.offsetHeight);
+    }
+
+    const handleResize = () => {
+      if (nav) setNavbarHeight(nav.offsetHeight);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const scrollToNextSection = () => {
     const section = document.getElementById("next-section");
-    if (section) section.scrollIntoView({ behavior: "smooth" });
+    if (section) {
+      const y =
+        section.getBoundingClientRect().top +
+        window.scrollY -
+        (document.querySelector("nav")?.offsetHeight || 0);
+
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
   };
 
   return (
-    <section className="relative min-h-[90vh] snap-start w-full overflow-hidden text-white">
+    <section
+      className="relative min-h-[90vh] snap-start w-full overflow-hidden text-white"
+      style={{ paddingTop: navbarHeight }}
+    >
       {/* Background Video */}
       {data.backgroundVideo && (
         <video
@@ -61,7 +90,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 z-10" />
 
       {/* Content */}
-      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-28 sm:py-40">
+      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-20">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -86,20 +115,46 @@ export default function Hero() {
           </AnimatePresence>
         )}
 
-        {data.ctaText && data.ctaLink && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-          >
+        {/* CTA + Auth Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="flex flex-col sm:flex-row gap-4 mt-6"
+        >
+          {data.ctaText && data.ctaLink && (
             <Link
               href={data.ctaLink}
-              className="mt-6 inline-block bg-[#f5b942] hover:bg-[#e8a933] text-white px-6 py-3 rounded-lg shadow-lg transition"
+              className="bg-[#f5b942] hover:bg-[#e8a933] text-white px-6 py-3 rounded-lg shadow-lg transition"
             >
               {data.ctaText}
             </Link>
-          </motion.div>
-        )}
+          )}
+
+          {!session ? (
+            <>
+              <Link
+                href="/auth/login"
+                className="bg-green-600 hover:bg-green-500 px-6 py-3 rounded-lg shadow-lg transition"
+              >
+                Login
+              </Link>
+              <Link
+                href="/auth/register"
+                className="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-lg shadow-lg transition"
+              >
+                Register
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={() => signOut()}
+              className="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-lg shadow-lg transition"
+            >
+              Logout
+            </button>
+          )}
+        </motion.div>
       </div>
 
       {/* Scroll Down Icon */}

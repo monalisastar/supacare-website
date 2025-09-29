@@ -20,7 +20,8 @@ out/
 
 # Build scripts & temporary files
 scripts/
-content/
+!content/blog
+
 *.local.*
 *.cache
 
