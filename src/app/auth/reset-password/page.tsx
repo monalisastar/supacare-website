@@ -1,13 +1,7 @@
-import NextDynamic from "next/dynamic"; // renamed import to avoid conflict
+"use client"; // make the page fully client-side
+
 import Image from "next/image";
-
-// Dynamically import the client-side ResetPasswordForm
-const ResetPasswordForm = NextDynamic(
-  () => import("@/components/ResetPasswordForm"),
-  { ssr: false } // client-only
-);
-
-export const dynamic = "force-dynamic"; // ensures no prerendering
+import ResetPasswordForm from "@/components/ResetPasswordForm";
 
 export default function ResetPasswordPage() {
   return (
