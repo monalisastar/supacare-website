@@ -4,9 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+     "postinstall": "prisma migrate deploy",
+    "prisma:seed": "prisma db seed"
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.10.0",
@@ -16,10 +21,13 @@
     "@fullcalendar/timegrid": "^6.1.19",
     "@hookform/resolvers": "^5.1.1",
     "@mdx-js/loader": "^3.1.0",
+    "@next-auth/prisma-adapter": "^1.0.7",
     "@next/mdx": "^15.4.2",
+    "@prisma/client": "^6.16.3",
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.8.1",
     "@tailwindcss/typography": "^0.5.16",
+    "bcryptjs": "^3.0.2",
     "fast-glob": "^3.3.3",
     "formidable": "^3.5.4",
     "framer-motion": "^12.23.6",
@@ -57,11 +65,13 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^20.19.18",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "prisma": "^6.16.3",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

@@ -49,18 +49,20 @@ export default function StatsGrid() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {stats.map((stat, idx) => (
-        <Card
-          key={idx}
-          title={stat.title}
-          value={stat.value}
-          icon={stat.icon}
-          progress={stat.progress}
-          trend={stat.trend}
-          link={stat.link}
-        />
-      ))}
+    <div className="px-2 sm:px-4 lg:px-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {stats.map((stat, idx) => (
+          <Card
+            key={idx}
+            title={stat.title}
+            value={stat.value}
+            icon={stat.icon}
+            progress={stat.progress}
+            trend={stat.trend}
+            link={stat.link}
+          />
+        ))}
+      </div>
     </div>
   );
 }

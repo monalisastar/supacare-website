@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin, { EventDropArg } from "@fullcalendar/interaction";
+import interactionPlugin from "@fullcalendar/interaction";
+import { EventDropArg } from "@fullcalendar/core";
 import { useRouter } from "next/navigation";
 
 export interface Schedule {

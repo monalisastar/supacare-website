@@ -3,14 +3,45 @@
 import Image from "next/image";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Trigger email provider login, redirect to dashboard
-    await signIn("email", { email, redirect: true, callbackUrl: "/dashboard" });
+    setError(null);
+    setLoading(true);
+
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+      callbackUrl: "/dashboard",
+    });
+
+    setLoading(false);
+
+    if (res?.error) {
+      // Map backend error → friendly message
+      const friendlyErrors: Record<string, string> = {
+        "No account found with this email":
+          "We couldn't find an account with that email.",
+        "Please log in with Google":
+          "This account is linked with Google. Please sign in with Google.",
+        "Invalid email or password": "Your email or password is incorrect.",
+      };
+
+      setError(
+        friendlyErrors[res.error] || "Something went wrong. Please try again."
+      );
+    } else {
+      router.push("/dashboard");
+    }
   };
 
   return (
@@ -29,38 +60,80 @@ export default function LoginPage() {
       {/* Overlay card */}
       <div className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center mb-6">Welcome Back</h1>
+
+        {/* Email/Password form */}
         <form onSubmit={handleLogin} className="space-y-4">
+          {error && (
+            <p className="text-red-500 text-sm text-center bg-red-50 border border-red-200 rounded p-2">
+              {error}
+            </p>
+          )}
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
           />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+          />
           <button
             type="submit"
-            className="w-full py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition"
+            disabled={loading}
+            className="w-full flex items-center justify-center py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50"
           >
-            Login with Email
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        <div className="mt-6 flex flex-col gap-3">
-          <button
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-            className="w-full py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition"
-          >
-            Login with Google
-          </button>
+        {/* Divider */}
+        <div className="flex items-center my-6">
+          <div className="flex-grow h-px bg-gray-300"></div>
+          <span className="px-3 text-sm text-gray-500">OR</span>
+          <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Don’t have an account?{" "}
-          <a href="/auth/register" className="text-green-600 font-medium hover:underline">
-            Register
-          </a>
-        </p>
+        {/* Google login button */}
+        <button
+          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          className="flex items-center justify-center gap-3 w-full py-3 border border-gray-300 rounded-lg font-medium text-gray-700 bg-white hover:bg-gray-50 transition shadow-sm"
+        >
+          <Image
+            src="/icons/google.svg"
+            alt="Google logo"
+            width={20}
+            height={20}
+          />
+          <span>Sign in with Google</span>
+        </button>
+
+        {/* Links */}
+        <div className="mt-6 text-center text-sm text-gray-600 space-y-2">
+          <p>
+            Don’t have an account?{" "}
+            <a
+              href="/auth/register"
+              className="text-green-600 font-medium hover:underline"
+            >
+              Register
+            </a>
+          </p>
+          <p>
+            <a
+              href="/auth/forgot-password"
+              className="text-green-600 font-medium hover:underline"
+            >
+              Forgot your password?
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

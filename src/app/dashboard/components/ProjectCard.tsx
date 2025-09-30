@@ -12,6 +12,7 @@ interface ProjectCardProps {
   onEdit?: () => void;
   onChangeStatus?: (status: string) => void;
   viewLink?: string; // new prop for "View Details" button
+  statusOptions?: string[]; // dynamically render buttons
 }
 
 export default function ProjectCard({
@@ -24,21 +25,35 @@ export default function ProjectCard({
   onEdit,
   onChangeStatus,
   viewLink,
+  statusOptions = [],
 }: ProjectCardProps) {
   return (
     <div className="bg-black/50 backdrop-blur-md border border-white/20 rounded-xl p-6 shadow-lg transition transform hover:scale-105">
       <h2 className="text-xl font-semibold mb-2 text-white">{title}</h2>
       <p className="text-sm text-white mb-3">{description}</p>
-      <p className="text-sm text-white mb-2"><strong>Deadline:</strong> {deadline}</p>
-      <p className="text-sm text-white mb-2"><strong>Team:</strong> {team.join(", ")}</p>
-      
-      {status && <p className="text-sm text-white mb-2"><strong>Status:</strong> {status}</p>}
+      <p className="text-sm text-white mb-2">
+        <strong>Deadline:</strong> {deadline}
+      </p>
+      <p className="text-sm text-white mb-2">
+        <strong>Team:</strong> {team.join(", ")}
+      </p>
+
+      {status && (
+        <p className="text-sm text-white mb-2">
+          <strong>Status:</strong> {status}
+        </p>
+      )}
 
       {files.length > 0 && (
         <div className="text-sm text-gray-300 mb-2">
           <strong>Files:</strong>{" "}
           {files.map((f) => (
-            <a key={f.url} href={f.url} target="_blank" className="underline mr-2">
+            <a
+              key={f.url}
+              href={f.url}
+              target="_blank"
+              className="underline mr-2"
+            >
               {f.name}
             </a>
           ))}
@@ -54,22 +69,24 @@ export default function ProjectCard({
             Edit
           </button>
         )}
-        {onChangeStatus && (
-          <>
+
+        {onChangeStatus &&
+          statusOptions.map((option) => (
             <button
-              onClick={() => onChangeStatus("active")}
-              className="text-sm bg-green-700 hover:bg-green-800 text-white px-3 py-1 rounded-md transition"
+              key={option}
+              onClick={() => onChangeStatus(option)}
+              className={`text-sm px-3 py-1 rounded-md transition ${
+                option === "ACTIVE"
+                  ? "bg-green-700 hover:bg-green-800 text-white"
+                  : option === "COMPLETED"
+                  ? "bg-blue-700 hover:bg-blue-800 text-white"
+                  : "bg-gray-700 hover:bg-gray-800 text-white"
+              }`}
             >
-              Mark Active
+              Mark {option.charAt(0) + option.slice(1).toLowerCase()}
             </button>
-            <button
-              onClick={() => onChangeStatus("completed")}
-              className="text-sm bg-blue-700 hover:bg-blue-800 text-white px-3 py-1 rounded-md transition"
-            >
-              Mark Completed
-            </button>
-          </>
-        )}
+          ))}
+
         {viewLink && (
           <Link
             href={viewLink}

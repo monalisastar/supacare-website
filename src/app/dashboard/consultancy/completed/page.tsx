@@ -1,31 +1,43 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import ProjectCard from "../../components/ProjectCard";
 
-
-const completedProjects = [
-  {
-    title: "River Cleanup Campaign",
-    description: "City-wide river cleanup program completed successfully.",
-    completedDate: "2025-08-15",
-    team: ["Alice", "Bob"],
-  },
-  {
-    title: "Solar Panel Installation Audit",
-    description: "Consultancy for installing solar panels in industrial zones completed.",
-    completedDate: "2025-07-30",
-    team: ["Charlie", "David"],
-  },
-  {
-    title: "Community Composting Program",
-    description: "Implemented composting solutions for residential communities.",
-    completedDate: "2025-06-20",
-    team: ["Eva", "Frank"],
-  },
-];
+type Project = {
+  id: string;
+  title: string;
+  description: string;
+  team: string[];
+  completedDate: string;
+  status: "COMPLETED";
+};
 
 export default function CompletedProjects() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch completed projects
+  useEffect(() => {
+    async function fetchCompletedProjects() {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/consultancy/projects/completed");
+        if (!res.ok) throw new Error("Failed to fetch completed projects");
+        const data = await res.json();
+        setProjects(data.projects || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCompletedProjects();
+  }, []);
+
+  if (loading) return <div className="p-6">Loading completed projects...</div>;
+
   return (
     <div className="p-6 md:p-10 bg-green-50 min-h-screen">
       {/* Return to Dashboard */}
@@ -42,17 +54,22 @@ export default function CompletedProjects() {
         Completed Environmental Consultancy Projects
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {completedProjects.map((project) => (
-          <ProjectCard
-            key={project.title}
-            title={project.title}
-            description={project.description}
-            deadline={project.completedDate} // reused as deadline/completion date
-            team={project.team}
-          />
-        ))}
-      </div>
+      {projects.length === 0 ? (
+        <div>No completed projects found.</div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
+              deadline={project.completedDate} // completion date
+              team={project.team}
+              status={project.status}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
