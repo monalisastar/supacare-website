@@ -42,7 +42,6 @@ export default function Hero() {
   }, [data]);
 
   useEffect(() => {
-    // detect navbar height
     const nav = document.querySelector("nav") as HTMLElement | null;
     if (nav) {
       setNavbarHeight(nav.offsetHeight);
@@ -115,7 +114,7 @@ export default function Hero() {
           </AnimatePresence>
         )}
 
-        {/* CTA + Auth Buttons */}
+        {/* CTA + Logout */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -131,22 +130,7 @@ export default function Hero() {
             </Link>
           )}
 
-          {!session ? (
-            <>
-              <Link
-                href="/auth/login"
-                className="bg-green-600 hover:bg-green-500 px-6 py-3 rounded-lg shadow-lg transition"
-              >
-                Login
-              </Link>
-              <Link
-                href="/auth/register"
-                className="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-lg shadow-lg transition"
-              >
-                Register
-              </Link>
-            </>
-          ) : (
+          {session && (
             <button
               onClick={() => signOut()}
               className="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-lg shadow-lg transition"
