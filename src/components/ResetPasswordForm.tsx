@@ -1,94 +1,79 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function ResetPasswordForm() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const token = searchParams?.get("token") || "";
-
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleResetPassword = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
+    if (!password || !confirmPassword) {
+      setError("Please fill in all fields.");
       return;
     }
 
-    if (!token) {
-      setError("Invalid or missing reset token");
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
       return;
     }
 
     setLoading(true);
-    setError(null);
-    setMessage(null);
 
     try {
       const res = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password }),
+        body: JSON.stringify({ password }), // no token
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || "Failed to reset password.");
-      }
+      const data = await res.json();
 
-      setMessage("Password successfully reset. Redirecting to login...");
-      setTimeout(() => router.push("/auth/login"), 2000);
-    } catch (err: any) {
-      setError(err.message);
+      if (!res.ok) {
+        setError(data.message || "Failed to reset password.");
+      } else {
+        setSuccess("Password reset successfully!");
+        setPassword("");
+        setConfirmPassword("");
+      }
+    } catch (err) {
+      setError("Failed to reset password. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleResetPassword} className="space-y-4">
-      {error && (
-        <p className="text-red-500 text-sm text-center bg-red-50 border border-red-200 rounded p-2">
-          {error}
-        </p>
-      )}
-      {message && (
-        <p className="text-green-600 text-sm text-center bg-green-50 border border-green-200 rounded p-2">
-          {message}
-        </p>
-      )}
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      {error && <p className="text-red-600">{error}</p>}
+      {success && <p className="text-green-600">{success}</p>}
 
       <input
         type="password"
-        placeholder="New password"
+        placeholder="New Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        required
-        minLength={6}
-        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+        className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       <input
         type="password"
-        placeholder="Confirm new password"
+        placeholder="Confirm Password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
-        required
-        minLength={6}
-        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+        className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full flex items-center justify-center py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50"
+        className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
       >
         {loading ? "Resetting..." : "Reset Password"}
       </button>
