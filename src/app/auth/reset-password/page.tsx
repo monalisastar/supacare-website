@@ -1,7 +1,10 @@
-"use client"; // make the page fully client-side
+"use client";
 
 import Image from "next/image";
 import ResetPasswordForm from "@/components/ResetPasswordForm";
+
+// Disable prerendering
+export const dynamic = "force-dynamic";
 
 export default function ResetPasswordPage() {
   return (
