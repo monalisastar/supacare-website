@@ -1,68 +1,29 @@
 "use client";
 
 import Card from "./Card";
-import { FaProjectDiagram, FaTrashAlt, FaChartLine, FaRecycle } from "react-icons/fa";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-interface Stat {
-  title: string;
-  value: string | number;
-  icon: React.ReactNode;
-  progress?: number;
-  trend?: { direction: "up" | "down"; percent: number };
-  link?: string;
-}
+const sampleData = [
+  { month: "Jan", compost: 200, co2: 15 },
+  { month: "Feb", compost: 300, co2: 20 },
+  { month: "Mar", compost: 250, co2: 18 },
+  { month: "Apr", compost: 400, co2: 22 },
+];
 
 export default function StatsGrid() {
-  const stats: Stat[] = [
-    {
-      title: "Consultancy Projects",
-      value: "5 Active",
-      icon: <FaProjectDiagram />,
-      progress: 40,
-      trend: { direction: "up", percent: 10 },
-      link: "/dashboard/consultancy/overview",
-    },
-    {
-      title: "Waste Collection",
-      value: "12 Active Routes",
-      icon: <FaTrashAlt />,
-      progress: 60,
-      trend: { direction: "up", percent: 15 },
-      link: "/dashboard/waste-collection/overview",
-    },
-    {
-      title: "Smart Tracking",
-      value: "8 Bins Online",
-      icon: <FaChartLine />,
-      progress: 50,
-      trend: { direction: "down", percent: 5 },
-      link: "/dashboard/smart-waste/overview",
-    },
-    {
-      title: "Recycling & Composting",
-      value: "3 Tons Recycled",
-      icon: <FaRecycle />,
-      progress: 30,
-      trend: { direction: "up", percent: 20 },
-      link: "/dashboard/composting/overview",
-    },
-  ];
-
   return (
-    <div className="px-2 sm:px-4 lg:px-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        {stats.map((stat, idx) => (
-          <Card
-            key={idx}
-            title={stat.title}
-            value={stat.value}
-            icon={stat.icon}
-            progress={stat.progress}
-            trend={stat.trend}
-            link={stat.link}
-          />
-        ))}
-      </div>
-    </div>
+    <Card className="mt-6">
+      <h3 className="text-xl font-semibold text-gray-100 mb-4">Analytics Overview</h3>
+
+      <ResponsiveContainer width="100%" height={250}>
+        <LineChart data={sampleData}>
+          <XAxis dataKey="month" stroke="#ffffffaa" />
+          <YAxis stroke="#ffffffaa" />
+          <Tooltip contentStyle={{ backgroundColor: "#1f2937" }} />
+          <Line type="monotone" dataKey="compost" stroke="#84cc16" strokeWidth={2} />
+          <Line type="monotone" dataKey="co2" stroke="#3b82f6" strokeWidth={2} />
+        </LineChart>
+      </ResponsiveContainer>
+    </Card>
   );
 }

@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
-import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -18,7 +18,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       .map((seg) => seg.charAt(0).toUpperCase() + seg.slice(1))
       .join(" / ") || "Overview";
 
-  // Prevent body scroll when sidebar open
+  // Prevent body scroll when mobile sidebar is open
   useEffect(() => {
     if (sidebarOpen) {
       document.body.classList.add("overflow-hidden");
@@ -28,24 +28,24 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [sidebarOpen]);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Desktop Sidebar */}
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+      {/* Sidebar (desktop) */}
       <div className="hidden md:block">
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       </div>
 
-      {/* Mobile Sidebar Drawer */}
+      {/* Sidebar (mobile drawer) */}
       <div className="fixed inset-0 z-40 flex md:hidden pointer-events-none">
         {/* Overlay */}
         <div
-          className={`fixed inset-0 bg-black transition-opacity duration-300 ${
-            sidebarOpen ? "opacity-50 pointer-events-auto" : "opacity-0"
+          className={`fixed inset-0 bg-black/60 transition-opacity duration-300 ${
+            sidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0"
           }`}
           onClick={() => setSidebarOpen(false)}
         />
         {/* Sidebar panel */}
         <div
-          className={`relative w-64 bg-white shadow-lg transform transition-transform duration-300 pointer-events-auto ${
+          className={`relative w-64 glassmorphism transform transition-transform duration-300 pointer-events-auto ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -59,14 +59,32 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           collapsed ? "md:ml-20" : "md:ml-64"
         } md:static`}
       >
-        {/* Header */}
+        {/* Header with breadcrumb + menu button */}
         <Header breadcrumb={breadcrumb} onMenuClick={() => setSidebarOpen(true)} />
 
-        {/* Page content */}
-        <main className="p-4 sm:p-6 flex-1 text-gray-800 overflow-y-auto">
-          {children}
+        {/* Scrollable content */}
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+          <div
+            className="
+              grid gap-6
+              grid-cols-1
+              md:grid-cols-2
+              lg:grid-cols-3
+              2xl:grid-cols-4
+              auto-rows-min
+            "
+          >
+            {/* Force every child (card) to span full width */}
+            {React.Children.map(children, (child) => (
+              <div className="col-span-full">{child}</div>
+            ))}
+          </div>
         </main>
       </div>
     </div>
   );
 }
+
+/* Glassmorphism helper class */
+const glassmorphism =
+  "bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl";

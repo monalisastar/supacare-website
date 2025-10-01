@@ -1,56 +1,99 @@
 "use client";
 
+import Image from "next/image";
+import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { FaBell, FaBars } from "react-icons/fa";
+import { FaBell, FaUserCircle, FaBars } from "react-icons/fa";
 
 interface HeaderProps {
   breadcrumb?: string;
-  onMenuClick?: () => void; // 👈 added
+  onMenuClick?: () => void;
 }
 
 export default function Header({ breadcrumb, onMenuClick }: HeaderProps) {
   const { data: session } = useSession();
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  // Safely get user name
+  const userName = session?.user?.name || "Guest";
 
   return (
-    <header className="backdrop-blur-md bg-white/30 shadow-md p-4 flex justify-between items-center rounded-b-xl mx-4 mt-4">
-      <div className="flex items-center gap-4">
-        {/* 👇 Hamburger menu for mobile only */}
+    <header className="w-full bg-white/15 backdrop-blur-xl border-b border-white/20 shadow-lg p-4 flex items-center justify-between">
+      {/* Left: Logo + Title + Breadcrumb */}
+      <div className="flex items-center gap-3">
+        {/* Mobile menu button */}
         {onMenuClick && (
           <button
+            className="lg:hidden text-gray-100 hover:text-white mr-2"
             onClick={onMenuClick}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-200 transition"
+            aria-label="Open sidebar"
           >
-            <FaBars size={20} className="text-gray-700" />
+            <FaBars className="text-2xl" />
           </button>
         )}
 
-        <div className="flex flex-col">
-          <h1 className="text-2xl font-bold text-gray-900">
-            {breadcrumb || "Dashboard"}
-          </h1>
-          <p className="text-sm text-gray-800 mt-1">
-            Welcome, {session?.user?.name || session?.user?.email}
-          </p>
+        <Image
+          src="/images/supalogo.png"
+          alt="Supacare Logo"
+          width={40}
+          height={40}
+          className="rounded-full"
+        />
+        <div>
+          <h1 className="text-2xl font-bold text-gray-100">Supacare Dashboard</h1>
+          {breadcrumb && (
+            <p className="text-sm text-gray-300 mt-1">{breadcrumb}</p>
+          )}
         </div>
       </div>
 
-      {/* Right side */}
-      <div className="flex items-center gap-4">
-        {/* Notification bell (hidden on mobile) */}
-        <div className="hidden md:flex items-center text-gray-700">
-          <FaBell
-            size={20}
-            className="hover:text-green-600 cursor-pointer transition"
-          />
-        </div>
-
-        {/* Logout */}
+      {/* Right: Notifications & Profile */}
+      <div className="flex items-center gap-4 relative">
+        {/* Notifications */}
         <button
-          onClick={() => signOut({ callbackUrl: "/auth/login" })}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition"
+          className="relative text-gray-100 hover:text-white"
+          aria-label="Notifications"
         >
-          Logout
+          <FaBell className="text-2xl" />
+          <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
         </button>
+
+        {/* User Profile */}
+        <div className="relative">
+          <button
+            onClick={() => setShowDropdown((prev) => !prev)}
+            className="flex items-center gap-2 text-gray-100 hover:text-white"
+            aria-haspopup="true"
+            aria-expanded={showDropdown}
+          >
+            <FaUserCircle className="text-2xl" />
+            <span className="hidden md:block font-medium">{userName}</span>
+          </button>
+
+          {/* Dropdown */}
+          {showDropdown && (
+            <div className="absolute right-0 mt-2 w-40 bg-white/30 backdrop-blur-md rounded shadow-lg text-gray-800 py-2 z-50">
+              <a
+                href="/dashboard/profile"
+                className="block px-4 py-2 hover:bg-gray-200"
+              >
+                Profile
+              </a>
+              <a
+                href="/dashboard/settings"
+                className="block px-4 py-2 hover:bg-gray-200"
+              >
+                Settings
+              </a>
+              <button
+                onClick={() => signOut()}
+                className="w-full text-left px-4 py-2 hover:bg-gray-200"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
