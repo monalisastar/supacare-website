@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaProjectDiagram, FaLeaf, FaClipboardCheck } from "react-icons/fa";
 import Card from "./Card"; // glassmorphism card
 
+// Shape of the consultancy overview data
 interface OverviewData {
   active: number;
   pending: number;
@@ -13,6 +14,7 @@ interface OverviewData {
   auditsPending: number;
 }
 
+// Default values (all zero) so card always renders
 const defaultData: OverviewData = {
   active: 0,
   pending: 0,
@@ -34,7 +36,7 @@ export default function ConsultancyCard() {
         setOverview(data);
       } catch (err) {
         console.error("Error loading consultancy data:", err);
-        // keep defaultData (0s) instead of breaking layout
+        // fallback to defaultData (all 0s)
         setOverview(defaultData);
       } finally {
         setLoading(false);
@@ -49,14 +51,19 @@ export default function ConsultancyCard() {
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
         <FaProjectDiagram className="text-lime-500 text-2xl" />
-        <h3 className="text-xl font-semibold text-gray-100">Consultancy Projects</h3>
+        <h3 className="text-xl font-semibold text-gray-100">
+          Consultancy Projects
+        </h3>
       </div>
 
-      {/* Project Metrics */}
+      {/* Content */}
       {loading ? (
-        <div className="flex justify-center items-center h-24 text-gray-400">Loading...</div>
+        <div className="flex justify-center items-center h-24 text-gray-400">
+          Loading...
+        </div>
       ) : (
         <>
+          {/* Project Metrics */}
           <div className="grid grid-cols-3 gap-4 mb-4">
             {[
               { label: "Active", value: overview.active },
