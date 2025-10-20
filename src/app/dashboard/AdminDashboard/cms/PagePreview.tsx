@@ -2,11 +2,10 @@
 
 import { motion } from "framer-motion";
 
-interface Section {
+export interface Section {
   id: string;
-  title: string;
-  content: string;
-  mediaUrl?: string;
+  type: "text" | "image" | "video" | "pdf";
+  content: string; // text or media URL
 }
 
 interface PagePreviewProps {
@@ -16,7 +15,9 @@ interface PagePreviewProps {
 export default function PagePreview({ sections }: PagePreviewProps) {
   if (!sections || sections.length === 0) {
     return (
-      <div className="p-6 text-white/70 text-center">No sections available. Add a section to preview it.</div>
+      <div className="p-6 text-white/70 text-center">
+        No sections available. Add a section to preview it.
+      </div>
     );
   }
 
@@ -28,20 +29,30 @@ export default function PagePreview({ sections }: PagePreviewProps) {
           layout
           className="p-6 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg text-white"
         >
-          <h2 className="text-2xl font-bold mb-2">{section.title}</h2>
-          <p className="text-white/80 mb-4">{section.content}</p>
+          {/* Section Header */}
+          {section.type === "text" && section.content && (
+            <p className="text-white/80">{section.content}</p>
+          )}
 
-          {section.mediaUrl && (
-            <div className="mt-2">
-              {section.mediaUrl.endsWith(".mp4") ? (
-                <video src={section.mediaUrl} controls className="w-full rounded-lg" />
-              ) : section.mediaUrl.endsWith(".pdf") ? (
-                <div className="bg-gray-800 rounded-lg p-4 font-bold">
-                  PDF Preview: {section.mediaUrl.split("/").pop()}
-                </div>
-              ) : (
-                <img src={section.mediaUrl} alt={section.title} className="w-full rounded-lg object-contain" />
-              )}
+          {section.type === "image" && section.content && (
+            <img
+              src={section.content}
+              alt="Image Section"
+              className="w-full rounded-lg object-contain"
+            />
+          )}
+
+          {section.type === "video" && section.content && (
+            <video
+              src={section.content}
+              controls
+              className="w-full rounded-lg"
+            />
+          )}
+
+          {section.type === "pdf" && section.content && (
+            <div className="bg-gray-800 rounded-lg p-4 font-bold">
+              PDF Preview: {section.content.split("/").pop()}
             </div>
           )}
         </motion.div>

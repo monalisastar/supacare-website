@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useSWR from "swr";
 import { FaEdit, FaTrash, FaSearch, FaTimes } from "react-icons/fa";
 
@@ -21,7 +21,7 @@ interface ModalProps {
 function UserModal({ user, onClose, onSave }: ModalProps) {
   const [formData, setFormData] = useState<User | null>(user);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFormData(user);
   }, [user]);
 
@@ -91,8 +91,8 @@ function UserModal({ user, onClose, onSave }: ModalProps) {
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function Users() {
-  const { data: users, error, isLoading } = useSWR<User[]>("/api/admin/users", fetcher);
-
+  const { data, error, isLoading } = useSWR<User[]>("/api/admin/users", fetcher);
+  const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<"ALL" | "CLIENT" | "ADMIN">("ALL");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -102,15 +102,20 @@ export default function Users() {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5;
 
+  // Sync SWR data into local state
+  useEffect(() => {
+    if (data) setUsers(data);
+  }, [data]);
+
   if (isLoading) return <p>Loading users...</p>;
   if (error) return <p className="text-red-500">Failed to load users</p>;
 
-  const filteredUsers = users?.filter(
+  const filteredUsers = users.filter(
     (user) =>
       (roleFilter === "ALL" || user.role === roleFilter) &&
       (user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase()))
-  ) || [];
+  );
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -119,14 +124,14 @@ export default function Users() {
 
   const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this user?")) {
-      // Optimistic UI update; ideally call API to delete
-      users && (users.splice(users.findIndex(u => u.id === id), 1));
+      setUsers(prev => prev.filter(u => u.id !== id));
+      // call API to delete user here
     }
   };
 
   const handleSave = (updatedUser: User) => {
-    // Optimistic UI update; ideally call API to save
-    users && users.map(u => (u.id === updatedUser.id ? updatedUser : u));
+    setUsers(prev => prev.map(u => (u.id === updatedUser.id ? updatedUser : u)));
+    // call API to update user here
   };
 
   return (

@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Page {
+// Page type
+export interface Page {
   id: string;
   title: string;
   slug: string;
@@ -12,7 +13,8 @@ interface Page {
   status: "draft" | "published";
 }
 
-interface PageListProps {
+// Props for PageList
+export interface PageListProps {
   pages: Page[];
   onEdit: (pageId: string) => void;
   onDelete: (pageId: string) => void;
@@ -46,15 +48,23 @@ export default function PageList({ pages, onEdit, onDelete, onPreview }: PageLis
             exit={{ opacity: 0, y: -10 }}
             className="p-6 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg text-white flex flex-col justify-between"
           >
+            {/* Page info */}
             <div>
               <h2 className="text-xl font-bold mb-1">{page.title}</h2>
               <p className="text-white/70 mb-2">Slug: {page.slug}</p>
-              <p className="text-white/50 text-sm">Last updated: {new Date(page.updatedAt).toLocaleString()}</p>
-              <p className={`text-sm font-semibold mt-1 ${page.status === "published" ? "text-green-400" : "text-yellow-400"}`}>
+              <p className="text-white/50 text-sm">
+                Last updated: {new Date(page.updatedAt).toLocaleString()}
+              </p>
+              <p
+                className={`text-sm font-semibold mt-1 ${
+                  page.status === "published" ? "text-green-400" : "text-yellow-400"
+                }`}
+              >
                 {page.status.toUpperCase()}
               </p>
             </div>
 
+            {/* Actions */}
             <div className="flex gap-3 mt-4">
               <button
                 onClick={() => onEdit(page.id)}

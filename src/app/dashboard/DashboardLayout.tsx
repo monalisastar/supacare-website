@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
@@ -10,7 +10,7 @@ interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+function LayoutContent({ children }: DashboardLayoutProps) {
   const { data: session } = useSession();
   const [collapsed, setCollapsed] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -76,7 +76,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
       {/* Main content */}
       <div className="flex-1 flex flex-col">
-        {/* Header wrapper (sticky) */}
         <div className="sticky top-0 z-50">
           <Header
             breadcrumb={breadcrumb}
@@ -86,7 +85,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           />
         </div>
 
-        {/* Scrollable main content */}
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
           {children}
         </main>
@@ -95,6 +93,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   );
 }
 
-/* Glassmorphism style for mobile drawer */
-const glassmorphism =
-  "bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl";
+export default function DashboardLayout(props: DashboardLayoutProps) {
+  return (
+    <Suspense fallback={<div className="text-white p-8">Loading dashboard...</div>}>
+      <LayoutContent {...props} />
+    </Suspense>
+  );
+}

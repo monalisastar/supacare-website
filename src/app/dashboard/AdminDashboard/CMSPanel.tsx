@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import PageList from "./cms/PageList";
-import PageEditor from "./cms/PageEditor";
+import PageList, { Page } from "./cms/PageList";
+import PageEditor, { Section } from "./cms/PageEditor";
 import PagePreview from "./cms/PagePreview";
 import MediaLibrary from "./cms/MediaLibrary";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -11,13 +11,44 @@ export default function CMSPanel() {
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
+  // Dummy Pages
+  const [pages, setPages] = useState<Page[]>([
+    { id: "1", title: "Home", slug: "home", updatedAt: new Date().toISOString(), status: "published" },
+    { id: "2", title: "About", slug: "about", updatedAt: new Date().toISOString(), status: "draft" },
+  ]);
+
+  // Sections for currently selected page
+  const [sections, setSections] = useState<Section[]>([]);
+
+  // Handlers for PageList
+  const handleEdit = (pageId: string) => {
+    setSelectedPageId(pageId);
+    // Load sections for that page (dummy)
+    setSections([
+      { id: crypto.randomUUID(), type: "text", content: "This is some sample content." },
+    ]);
+  };
+
+  const handleDelete = (pageId: string) => {
+    setPages(pages.filter((p) => p.id !== pageId));
+    if (selectedPageId === pageId) setSelectedPageId(null);
+  };
+
+  const handlePreview = (pageId: string) => {
+    setSelectedPageId(pageId);
+  };
+
+  // Handle Save from PageEditor
+  const handleSave = (pageId: string, updatedSections: Section[]) => {
+    console.log("Saved sections for page", pageId, updatedSections);
+    setSections(updatedSections);
+  };
+
   return (
     <div className="flex h-full w-full text-white">
       {/* Sidebar: Page List */}
       <div
-        className={`transition-all duration-300 ${
-          sidebarCollapsed ? "w-20" : "w-72"
-        } bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl p-4 flex flex-col`}
+        className={`transition-all duration-300 ${sidebarCollapsed ? "w-20" : "w-72"} bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl p-4 flex flex-col`}
       >
         <div className="flex items-center justify-between mb-4">
           {!sidebarCollapsed && <h2 className="text-xl font-semibold">Pages</h2>}
@@ -28,10 +59,12 @@ export default function CMSPanel() {
             {sidebarCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
           </button>
         </div>
+
         <PageList
-          onSelectPage={(id: string) => setSelectedPageId(id)}
-          selectedPageId={selectedPageId}
-          collapsed={sidebarCollapsed}
+          pages={pages}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onPreview={handlePreview}
         />
       </div>
 
@@ -41,7 +74,11 @@ export default function CMSPanel() {
           {/* Editor */}
           <div className="flex-1 glassmorphism p-4 overflow-auto">
             {selectedPageId ? (
-              <PageEditor pageId={selectedPageId} />
+              <PageEditor
+                pageId={selectedPageId}
+                initialSections={sections}
+                onSave={handleSave}
+              />
             ) : (
               <div className="flex items-center justify-center h-full text-gray-400">
                 Select a page to edit
@@ -52,7 +89,7 @@ export default function CMSPanel() {
           {/* Preview */}
           <div className="flex-1 glassmorphism p-4 overflow-auto">
             {selectedPageId ? (
-              <PagePreview pageId={selectedPageId} />
+              <PagePreview sections={sections} />
             ) : (
               <div className="flex items-center justify-center h-full text-gray-400">
                 Page preview will appear here
@@ -71,6 +108,6 @@ export default function CMSPanel() {
   );
 }
 
-/* Glassmorphism utility (can also be placed in a shared CSS file) */
+/* Glassmorphism utility */
 export const glassmorphism =
   "bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl";

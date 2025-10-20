@@ -4,13 +4,13 @@ import { useState } from "react";
 import { FaPlus, FaTrash, FaArrowsAlt } from "react-icons/fa";
 import { motion, AnimatePresence, Reorder } from "framer-motion";
 
-interface Section {
+export interface Section {
   id: string;
   type: "text" | "image" | "video" | "pdf";
-  content: string; // text or media URL
+  content: string;
 }
 
-interface PageEditorProps {
+export interface PageEditorProps {
   pageId: string;
   initialSections: Section[];
   onSave: (pageId: string, sections: Section[]) => void;
@@ -38,33 +38,28 @@ export default function PageEditor({ pageId, initialSections, onSave }: PageEdit
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex gap-3">
-        <button
-          onClick={() => addSection("text")}
-          className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/40 rounded-lg flex items-center gap-2"
-        >
-          <FaPlus /> Text
-        </button>
-        <button
-          onClick={() => addSection("image")}
-          className="px-4 py-2 bg-green-500/20 hover:bg-green-500/40 rounded-lg flex items-center gap-2"
-        >
-          <FaPlus /> Image
-        </button>
-        <button
-          onClick={() => addSection("video")}
-          className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/40 rounded-lg flex items-center gap-2"
-        >
-          <FaPlus /> Video
-        </button>
-        <button
-          onClick={() => addSection("pdf")}
-          className="px-4 py-2 bg-yellow-500/20 hover:bg-yellow-500/40 rounded-lg flex items-center gap-2"
-        >
-          <FaPlus /> PDF
-        </button>
+      {/* Section Add Buttons */}
+      <div className="flex gap-3 flex-wrap">
+        {(["text", "image", "video", "pdf"] as Section["type"][]).map((type) => (
+          <button
+            key={type}
+            onClick={() => addSection(type)}
+            className={`px-4 py-2 rounded-lg flex items-center gap-2 transition ${
+              type === "text"
+                ? "bg-blue-500/20 hover:bg-blue-500/40"
+                : type === "image"
+                ? "bg-green-500/20 hover:bg-green-500/40"
+                : type === "video"
+                ? "bg-purple-500/20 hover:bg-purple-500/40"
+                : "bg-yellow-500/20 hover:bg-yellow-500/40"
+            }`}
+          >
+            <FaPlus /> {type.charAt(0).toUpperCase() + type.slice(1)}
+          </button>
+        ))}
       </div>
 
+      {/* Section List with Reorder */}
       <Reorder.Group axis="y" values={sections} onReorder={setSections} className="flex flex-col gap-4">
         <AnimatePresence>
           {sections.map((section) => (
@@ -73,6 +68,7 @@ export default function PageEditor({ pageId, initialSections, onSave }: PageEdit
               value={section}
               className="p-6 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg flex flex-col gap-3"
             >
+              {/* Section Header */}
               <div className="flex justify-between items-center mb-2">
                 <span className="flex items-center gap-2">
                   <FaArrowsAlt className="cursor-grab" /> {section.type.toUpperCase()}
@@ -82,16 +78,15 @@ export default function PageEditor({ pageId, initialSections, onSave }: PageEdit
                 </button>
               </div>
 
-              {section.type === "text" && (
+              {/* Section Content */}
+              {section.type === "text" ? (
                 <textarea
                   className="w-full p-3 bg-white/10 rounded-lg border border-white/20 text-white placeholder-white/50"
                   placeholder="Enter text content..."
                   value={section.content}
                   onChange={(e) => updateSection(section.id, e.target.value)}
                 />
-              )}
-
-              {(section.type === "image" || section.type === "video" || section.type === "pdf") && (
+              ) : (
                 <input
                   type="text"
                   placeholder={`Enter ${section.type.toUpperCase()} URL`}
@@ -105,10 +100,11 @@ export default function PageEditor({ pageId, initialSections, onSave }: PageEdit
         </AnimatePresence>
       </Reorder.Group>
 
+      {/* Save Button */}
       <div className="flex justify-end mt-4">
         <button
           onClick={() => onSave(pageId, sections)}
-          className="px-6 py-3 bg-blue-500/30 hover:bg-blue-500/50 rounded-xl font-semibold"
+          className="px-6 py-3 bg-blue-500/30 hover:bg-blue-500/50 rounded-xl font-semibold transition"
         >
           Save Page
         </button>
