@@ -95,7 +95,7 @@ export default function ContactForm() {
             {...register('name')}
             type="text"
             placeholder="Your Name"
-            className={`w-full border-b-2 p-3 text-lg outline-none transition-colors ${
+            className={`w-full border-b-2 p-3 text-lg text-gray-900 placeholder-gray-500 outline-none transition-colors ${
               errors.name
                 ? 'border-red-500'
                 : 'border-green-400 focus:border-green-600'
@@ -117,7 +117,7 @@ export default function ContactForm() {
             {...register('email')}
             type="email"
             placeholder="Your Email"
-            className={`w-full border-b-2 p-3 text-lg outline-none transition-colors ${
+            className={`w-full border-b-2 p-3 text-lg text-gray-900 placeholder-gray-500 outline-none transition-colors ${
               errors.email
                 ? 'border-red-500'
                 : 'border-green-400 focus:border-green-600'
@@ -139,7 +139,7 @@ export default function ContactForm() {
             {...register('subject')}
             type="text"
             placeholder="Subject"
-            className={`w-full border-b-2 p-3 text-lg outline-none transition-colors ${
+            className={`w-full border-b-2 p-3 text-lg text-gray-900 placeholder-gray-500 outline-none transition-colors ${
               errors.subject
                 ? 'border-red-500'
                 : 'border-green-400 focus:border-green-600'
@@ -163,7 +163,7 @@ export default function ContactForm() {
             {...register('message')}
             placeholder="Your Message"
             rows={5}
-            className={`w-full border-b-2 p-3 text-lg outline-none transition-colors resize-none ${
+            className={`w-full border-b-2 p-3 text-lg text-gray-900 placeholder-gray-500 outline-none transition-colors resize-none ${
               errors.message
                 ? 'border-red-500'
                 : 'border-green-400 focus:border-green-600'
