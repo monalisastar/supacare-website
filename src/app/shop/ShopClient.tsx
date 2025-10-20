@@ -17,13 +17,13 @@ interface Product {
 }
 
 const allProducts: Product[] = [
-  { id: '1', name: 'Compost Delivery', image: '/images/shop/compostdelivery.png', alt: 'Supacare compost delivery truck unloading compost', category: 'Compost', price: 50 },
+  { id: '1', name: 'Compost Delivery per truck', image: '/images/shop/compostdelivery.png', alt: 'Supacare compost delivery truck unloading compost', category: 'Compost', price: 50 },
   { id: '2', name: 'Compost Curing Chamber', image: '/images/shop/curingchamber.png', alt: 'Supacare compost curing chamber wooden shed', category: 'Hardware', price: 300 },
   { id: '3', name: 'Enriched Compost Blend', image: '/images/shop/enriched blend.png', alt: 'Supacare enriched compost blend urban mix 25kg', category: 'Compost', price: 25 },
   { id: '4', name: 'Rotary Drum Composter', image: '/images/shop/rotarydrum.jpg', alt: 'Supacare rotary drum composting machine', category: 'Hardware', price: 1200 },
   { id: '5', name: 'Solar Dryer', image: '/images/shop/Solar Dryer.png', alt: 'Supacare solar dryer with mesh panels', category: 'Hardware', price: 400 },
   { id: '6', name: 'Site Assessment', image: '/images/shop/siteassement.png', alt: 'Supacare staff performing compost site assessment', category: 'Support', price: 80 },
-  { id: '7', name: 'Bagged Compost (25kg & 50kg)', image: '/images/shop/bagged compost.png', alt: 'Supacare branded compost bags 25kg and 50kg', category: 'Compost', price: 20 },
+  { id: '7', name: 'Compost (25kg & 50kg)', image: '/images/shop/bagged compost.png', alt: 'Supacare branded compost bags 25kg and 50kg', category: 'Compost', price: 20 },
   { id: '8', name: 'Biogas Digester', image: '/images/shop/biogasdigester.png', alt: 'Supacare dome-shaped biogas digester rural setup', category: 'Hardware', price: 1500 },
   { id: '9', name: 'Bokashi Bin', image: '/images/shop/bokashibin.jpg', alt: 'Supacare branded indoor bokashi compost bin', category: 'Hardware', price: 75 },
 ];
