@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import DashboardLayout from "./DashboardLayout";
 import AdminDashboard from "./AdminDashboard/AdminDashboard";
 import ClientDashboard from "./ClientDashboard/ClientDashboard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 const ADMIN_EMAILS = ["njatabrian648@gmail.com"]; // whitelist admin emails
 
@@ -24,12 +24,7 @@ export default function DashboardPage() {
     }
 
     const userEmail = session?.user?.email || "";
-    if (ADMIN_EMAILS.includes(userEmail)) {
-      setIsAdmin(true); // admin auto-redirect
-    } else {
-      setIsAdmin(false);
-    }
-
+    setIsAdmin(ADMIN_EMAILS.includes(userEmail));
     setLoadingView(false);
   }, [status, session, router]);
 
@@ -45,7 +40,9 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      {isAdmin ? <AdminDashboard /> : <ClientDashboard />}
+      <Suspense fallback={<div className="text-center text-white p-6">Loading dashboard...</div>}>
+        {isAdmin ? <AdminDashboard /> : <ClientDashboard />}
+      </Suspense>
     </DashboardLayout>
   );
 }
