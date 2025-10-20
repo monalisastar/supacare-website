@@ -1,58 +1,20 @@
 "use client";
+import { useCart } from "@/context/CartContext"
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+import { useEffect, useState } from "react";
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const { cartItems, removeFromCart, updateQuantity, subtotal, total, discount, applyPromo } =
+    useCart();
   const [promoCode, setPromoCode] = useState("");
-  const [discount, setDiscount] = useState(0);
   const [navbarHeight, setNavbarHeight] = useState(0);
 
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) setCartItems(JSON.parse(savedCart));
-
     const navbar = document.getElementById("navbar");
-    if (navbar) setNavbarHeight(navbar.offsetHeight);
-    else setNavbarHeight(80);
+    setNavbarHeight(navbar ? navbar.offsetHeight : 80);
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  const updateQuantity = (id: string, qty: number) => {
-    if (qty < 1) return;
-    setCartItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity: qty } : item))
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const total = subtotal - discount;
-
-  const applyPromo = () => {
-    if (promoCode === "DISCOUNT10") {
-      setDiscount(subtotal * 0.1);
-    } else {
-      alert("Invalid promo code");
-      setDiscount(0);
-    }
-  };
 
   return (
     <div
@@ -103,7 +65,7 @@ export default function CartPage() {
                       className="w-16 border rounded px-2 py-1 bg-white/50 backdrop-blur-sm"
                     />
                     <button
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeFromCart(item.id)}
                       className="text-red-500 hover:underline"
                     >
                       Remove
@@ -139,7 +101,7 @@ export default function CartPage() {
                   className="w-full border px-3 py-2 rounded mb-2 bg-white/50 backdrop-blur-sm text-green-900"
                 />
                 <button
-                  onClick={applyPromo}
+                  onClick={() => applyPromo(promoCode)}
                   className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
                 >
                   Apply

@@ -1,51 +1,51 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import DashboardLayout from "./DashboardLayout";
-import ConsultancyCard from "./components/ConsultancyCard";
-import CompostingCard from "./components/CompostingCard";
-import WasteManagementCard from "./components/WasteManagementCard";
-import SmartWasteCard from "./components/SmartWasteCard";
-import PaymentsCard from "./components/PaymentsCard";
-import ChatCard from "./components/ChatCard";
-import StatsGrid from "./components/StatsGrid";
+import AdminDashboard from "./AdminDashboard/AdminDashboard";
+import ClientDashboard from "./ClientDashboard/ClientDashboard";
+import { useEffect, useState } from "react";
+
+const ADMIN_EMAILS = ["njatabrian648@gmail.com"]; // whitelist admin emails
 
 export default function DashboardPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [loadingView, setLoadingView] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (status === "loading") return;
+
+    if (status === "unauthenticated") {
+      router.push("/auth/login");
+      return;
+    }
+
+    const userEmail = session?.user?.email || "";
+    if (ADMIN_EMAILS.includes(userEmail)) {
+      setIsAdmin(true); // admin auto-redirect
+    } else {
+      setIsAdmin(false);
+    }
+
+    setLoadingView(false);
+  }, [status, session, router]);
+
+  if (status === "loading" || loadingView) {
+    return (
+      <DashboardLayout>
+        <div className="flex justify-center items-center h-64 text-white text-lg">
+          Loading dashboard...
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   return (
     <DashboardLayout>
-      {/* Payments - Full Row */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 2xl:col-span-4">
-        <PaymentsCard />
-      </div>
-
-      {/* Waste Management - Full Row */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 2xl:col-span-4">
-        <WasteManagementCard />
-      </div>
-
-      {/* Smart Waste - Full Row */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 2xl:col-span-4">
-        <SmartWasteCard />
-      </div>
-
-      {/* Consultancy - Full Row */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 2xl:col-span-4">
-        <ConsultancyCard />
-      </div>
-
-      {/* Composting - Full Row */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 2xl:col-span-4">
-        <CompostingCard />
-      </div>
-
-      {/* Chat - Full Row */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 2xl:col-span-4">
-        <ChatCard />
-      </div>
-
-      {/* Stats - Full Row */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 2xl:col-span-4">
-        <StatsGrid />
-      </div>
+      {isAdmin ? <AdminDashboard /> : <ClientDashboard />}
     </DashboardLayout>
   );
 }

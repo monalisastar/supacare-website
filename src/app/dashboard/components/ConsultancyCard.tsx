@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaProjectDiagram, FaLeaf, FaClipboardCheck } from "react-icons/fa";
-import Card from "./Card"; // glassmorphism card
+import Card from "./Card";
 
-// Shape of the consultancy overview data
 interface OverviewData {
   active: number;
   pending: number;
@@ -14,7 +13,6 @@ interface OverviewData {
   auditsPending: number;
 }
 
-// Default values (all zero) so card always renders
 const defaultData: OverviewData = {
   active: 0,
   pending: 0,
@@ -26,24 +24,33 @@ const defaultData: OverviewData = {
 export default function ConsultancyCard() {
   const [overview, setOverview] = useState<OverviewData>(defaultData);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  // Fetch consultancy overview
+  const fetchOverview = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const res = await fetch("/api/consultancy/overview", { cache: "no-store" });
+      if (!res.ok) throw new Error(`Status ${res.status}: Failed to fetch consultancy overview`);
+
+      const data: OverviewData = await res.json();
+      setOverview(data);
+    } catch (err: any) {
+      console.error("Error loading consultancy data:", err);
+      setError(err.message || "Failed to load consultancy overview");
+      setOverview(defaultData);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial fetch + polling every 30 seconds
   useEffect(() => {
-    const fetchOverview = async () => {
-      try {
-        const res = await fetch("/api/consultancy/overview");
-        if (!res.ok) throw new Error("Failed to fetch consultancy overview");
-        const data = await res.json();
-        setOverview(data);
-      } catch (err) {
-        console.error("Error loading consultancy data:", err);
-        // fallback to defaultData (all 0s)
-        setOverview(defaultData);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchOverview();
+    const interval = setInterval(fetchOverview, 30000); // 30s polling
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -51,15 +58,17 @@ export default function ConsultancyCard() {
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
         <FaProjectDiagram className="text-lime-500 text-2xl" />
-        <h3 className="text-xl font-semibold text-gray-100">
-          Consultancy Projects
-        </h3>
+        <h3 className="text-xl font-semibold text-gray-100">Consultancy Projects</h3>
       </div>
 
       {/* Content */}
       {loading ? (
         <div className="flex justify-center items-center h-24 text-gray-400">
           Loading...
+        </div>
+      ) : error ? (
+        <div className="text-red-400 text-center h-24 flex items-center justify-center">
+          {error}
         </div>
       ) : (
         <>
@@ -70,10 +79,7 @@ export default function ConsultancyCard() {
               { label: "Pending", value: overview.pending },
               { label: "Completed", value: overview.completed },
             ].map((metric) => (
-              <div
-                key={metric.label}
-                className="bg-white/30 p-3 rounded text-center"
-              >
+              <div key={metric.label} className="bg-white/30 p-3 rounded text-center">
                 <p className="text-lg font-bold">{metric.value}</p>
                 <p>{metric.label}</p>
               </div>
@@ -99,16 +105,16 @@ export default function ConsultancyCard() {
       )}
 
       {/* Quick Actions */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-col md:flex-row">
         <Link
           href="/dashboard/consultancy/overview"
-          className="bg-lime-500 text-white px-4 py-2 rounded hover:bg-lime-600"
+          className="bg-lime-500 text-white px-4 py-2 rounded hover:bg-lime-600 transition"
         >
           View Projects
         </Link>
         <Link
           href="/dashboard/consultancy/new"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
         >
           New Project
         </Link>

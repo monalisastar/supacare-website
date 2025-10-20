@@ -1,16 +1,36 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import { useSession } from "next-auth/react";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
+  const { data: session } = useSession();
   const [collapsed, setCollapsed] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  // Breadcrumb from pathname
+  const sessionRole = session?.user?.role || "CLIENT";
+
+  const [role, setRole] = useState<"ADMIN" | "CLIENT">(
+    (searchParams.get("view") as "ADMIN" | "CLIENT") || sessionRole
+  );
+
+  useEffect(() => {
+    const viewParam = searchParams.get("view");
+    if (viewParam === "ADMIN" || viewParam === "CLIENT") {
+      setRole(viewParam);
+    }
+  }, [searchParams]);
+
   const breadcrumb =
     pathname
       .split("/")
@@ -18,20 +38,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       .map((seg) => seg.charAt(0).toUpperCase() + seg.slice(1))
       .join(" / ") || "Overview";
 
-  // Prevent body scroll when mobile sidebar is open
   useEffect(() => {
-    if (sidebarOpen) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
+    if (sidebarOpen) document.body.classList.add("overflow-hidden");
+    else document.body.classList.remove("overflow-hidden");
   }, [sidebarOpen]);
 
+  const handleSwitchRole = (newRole: "ADMIN" | "CLIENT") => {
+    setRole(newRole);
+    router.push(`${pathname}?view=${newRole}`);
+  };
+
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
       {/* Sidebar (desktop) */}
-      <div className="hidden md:block">
-        <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <div className="hidden md:block w-64 flex-shrink-0">
+        <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} role={role} />
       </div>
 
       {/* Sidebar (mobile drawer) */}
@@ -43,48 +64,37 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           }`}
           onClick={() => setSidebarOpen(false)}
         />
-        {/* Sidebar panel */}
+        {/* Drawer */}
         <div
           className={`relative w-64 glassmorphism transform transition-transform duration-300 pointer-events-auto ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <Sidebar collapsed={false} setCollapsed={setCollapsed} />
+          <Sidebar collapsed={false} setCollapsed={setCollapsed} role={role} />
         </div>
       </div>
 
       {/* Main content */}
-      <div
-        className={`flex-1 flex flex-col transition-all duration-300 ${
-          collapsed ? "md:ml-20" : "md:ml-64"
-        } md:static`}
-      >
-        {/* Header with breadcrumb + menu button */}
-        <Header breadcrumb={breadcrumb} onMenuClick={() => setSidebarOpen(true)} />
+      <div className="flex-1 flex flex-col">
+        {/* Header wrapper (sticky) */}
+        <div className="sticky top-0 z-50">
+          <Header
+            breadcrumb={breadcrumb}
+            onMenuClick={() => setSidebarOpen(true)}
+            role={role}
+            onSwitchRole={handleSwitchRole}
+          />
+        </div>
 
-        {/* Scrollable content */}
+        {/* Scrollable main content */}
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
-          <div
-            className="
-              grid gap-6
-              grid-cols-1
-              md:grid-cols-2
-              lg:grid-cols-3
-              2xl:grid-cols-4
-              auto-rows-min
-            "
-          >
-            {/* Force every child (card) to span full width */}
-            {React.Children.map(children, (child) => (
-              <div className="col-span-full">{child}</div>
-            ))}
-          </div>
+          {children}
         </main>
       </div>
     </div>
   );
 }
 
-/* Glassmorphism helper class */
+/* Glassmorphism style for mobile drawer */
 const glassmorphism =
   "bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl";

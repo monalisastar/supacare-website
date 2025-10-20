@@ -6,6 +6,9 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
+// List of admin emails
+const adminEmails = ["njatabriang48@gmail.com", "virginia.njata@gmail.com"];
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
 
@@ -48,19 +51,28 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
+    // Add isAdmin and role to session
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.sub ?? "";
         session.user.role = (token.role as string) ?? "CLIENT";
+        session.user.isAdmin = token.isAdmin ?? false;
       }
       return session;
     },
 
+    // Add role and isAdmin to JWT token
     async jwt({ token, user }) {
-      if (user) token.role = (user as any).role ?? "CLIENT";
+      if (user) {
+        token.role = (user as any).role ?? "CLIENT";
+        if ("email" in user && user.email) {
+          token.isAdmin = adminEmails.includes(user.email);
+        }
+      }
       return token;
     },
 
+    // Handle Google sign-in linking and new users
     async signIn({ user, account }) {
       if (account?.provider === "google" && user.email) {
         const existingUser = await prisma.user.findUnique({
@@ -68,7 +80,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (existingUser) {
-          // Link googleId to user if not already linked
+          // Link googleId if missing
           if (!existingUser.googleId) {
             await prisma.user.update({
               where: { id: existingUser.id },
@@ -102,7 +114,7 @@ export const authOptions: NextAuthOptions = {
             });
           }
         } else {
-          // New user + Account entry
+          // New user + Account
           await prisma.user.create({
             data: {
               email: user.email,
@@ -126,6 +138,23 @@ export const authOptions: NextAuthOptions = {
         }
       }
       return true;
+    },
+
+    // Redirect after login
+    async redirect({ url, baseUrl }) {
+      // fetch session to determine admin
+      try {
+        const session = await fetch(`${baseUrl}/api/auth/session`).then((res) =>
+          res.json().catch(() => null)
+        );
+
+        const isAdmin = session?.user?.isAdmin;
+        if (isAdmin) return `${baseUrl}/dashboard/admin`;
+      } catch {
+        // fallback
+      }
+
+      return `${baseUrl}/dashboard`;
     },
   },
 };

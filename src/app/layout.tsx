@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import NavbarFooterLayout from "./NavbarFooterLayout"; // ✅ new wrapper
+import NavbarFooterLayout from "./NavbarFooterLayout";
+import { CartProvider } from "@/context/CartContext"; // ✅ Correct provider import
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,8 +73,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* ✅ move client-only logic to wrapper */}
-        <NavbarFooterLayout>{children}</NavbarFooterLayout>
+        {/* ✅ Wrap entire app with global Cart state */}
+        <CartProvider>
+          <NavbarFooterLayout>{children}</NavbarFooterLayout>
+        </CartProvider>
       </body>
     </html>
   );

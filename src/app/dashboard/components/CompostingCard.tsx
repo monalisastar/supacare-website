@@ -1,6 +1,7 @@
-"use client";
+'use client'
 
 import Link from "next/link";
+import useSWR from "swr";
 import { FaRecycle, FaTruck, FaSeedling } from "react-icons/fa";
 import Card from "./Card"; // glassmorphism card
 
@@ -11,13 +12,21 @@ interface CompostingData {
   trainingSessions: number;
 }
 
+// Fetcher function for SWR
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+
 export default function CompostingCard() {
-  // Placeholder data
+  const { data: machinesData } = useSWR('/api/composting/machines', fetcher);
+  const { data: salesData } = useSWR('/api/composting/sales', fetcher);
+  const { data: trainingData } = useSWR('/api/composting/training', fetcher);
+  const { data: agricultureData } = useSWR('/api/composting/agriculture', fetcher);
+
+  // Compose final stats (default to 0 if data not loaded)
   const data: CompostingData = {
-    machines: 5,
-    compostProduced: 1200,
-    sales: 450,
-    trainingSessions: 3,
+    machines: machinesData?.length ?? 0,
+    compostProduced: agricultureData?.reduce((sum: number, item: any) => sum + (item.compostProduced ?? 0), 0) ?? 0,
+    sales: salesData?.reduce((sum: number, sale: any) => sum + (sale.amount ?? 0), 0) ?? 0,
+    trainingSessions: trainingData?.length ?? 0,
   };
 
   return (
@@ -60,6 +69,12 @@ export default function CompostingCard() {
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
           Request Training
+        </Link>
+        <Link
+          href="/dashboard/composting/compost"
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        >
+          Order Compost
         </Link>
       </div>
     </Card>

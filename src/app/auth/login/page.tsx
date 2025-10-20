@@ -5,6 +5,8 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+const ADMIN_EMAILS = ["njatabrian648@gmail.com"]; // whitelist admin emails
+
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -12,6 +14,7 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // ---------- EMAIL/PASSWORD LOGIN ----------
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -21,32 +24,44 @@ export default function LoginPage() {
       redirect: false,
       email,
       password,
-      callbackUrl: "/dashboard",
     });
 
     setLoading(false);
 
     if (res?.error) {
-      // Map backend error → friendly message
       const friendlyErrors: Record<string, string> = {
         "No account found with this email":
           "We couldn't find an account with that email.",
-        "Please log in with Google":
+        "This account uses Google login":
           "This account is linked with Google. Please sign in with Google.",
         "Invalid email or password": "Your email or password is incorrect.",
       };
-
       setError(
         friendlyErrors[res.error] || "Something went wrong. Please try again."
       );
+      return;
+    }
+
+    // Auto-redirect based on email
+    if (ADMIN_EMAILS.includes(email)) {
+      router.push("/dashboard");
     } else {
       router.push("/dashboard");
     }
   };
 
+  // ---------- GOOGLE LOGIN ----------
+  const handleGoogleLogin = async () => {
+    setError(null);
+    setLoading(true);
+
+    // ✅ Let NextAuth handle redirect via callbacks
+    await signIn("google");
+  };
+
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      {/* Background hero image */}
+      {/* Background */}
       <div className="absolute inset-0">
         <Image
           src="/images/recycling-composting.png"
@@ -57,11 +72,10 @@ export default function LoginPage() {
         />
       </div>
 
-      {/* Overlay card */}
+      {/* Login Card */}
       <div className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center mb-6">Welcome Back</h1>
 
-        {/* Email/Password form */}
         <form onSubmit={handleLogin} className="space-y-4">
           {error && (
             <p className="text-red-500 text-sm text-center bg-red-50 border border-red-200 rounded p-2">
@@ -93,28 +107,21 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Divider */}
         <div className="flex items-center my-6">
           <div className="flex-grow h-px bg-gray-300"></div>
           <span className="px-3 text-sm text-gray-500">OR</span>
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        {/* Google login button */}
         <button
-          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          onClick={handleGoogleLogin}
+          disabled={loading}
           className="flex items-center justify-center gap-3 w-full py-3 border border-gray-300 rounded-lg font-medium text-gray-700 bg-white hover:bg-gray-50 transition shadow-sm"
         >
-          <Image
-            src="/icons/google.svg"
-            alt="Google logo"
-            width={20}
-            height={20}
-          />
+          <Image src="/icons/google.svg" alt="Google logo" width={20} height={20} />
           <span>Sign in with Google</span>
         </button>
 
-        {/* Links */}
         <div className="mt-6 text-center text-sm text-gray-600 space-y-2">
           <p>
             Don’t have an account?{" "}

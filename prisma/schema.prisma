@@ -1,3 +1,10 @@
+// schema.prisma
+// Refactored Prisma schema for MongoDB
+// - Unified Message model (was ChatMessage)
+// - Unified MessageAttachment (was ChatAttachment)
+// - Payments: supports full, milestone, or installment
+// - Restored fields for compatibility with existing API routes
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -67,11 +74,27 @@ enum ChatMessageType {
   IMAGE
 }
 
+enum MessageRole {
+  USER
+  AI
+  SYSTEM
+}
+
 enum NotificationType {
   BIN_FULL
   MACHINE_OFFLINE
   PAYMENT_RECEIVED
   PROJECT_UPDATE
+}
+
+enum ContentType {
+  TEXT
+  RICH_TEXT
+  IMAGE
+  VIDEO
+  PDF
+  GALLERY
+  COMPONENT
 }
 
 /// ==========================
@@ -83,27 +106,27 @@ model User {
   email          String   @unique
   passwordHash   String?
   googleId       String?  @unique
-  role           UserRole
+  role           UserRole @default(CLIENT)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   deletedAt      DateTime?
 
-  // Relations
-  accounts           Account[]
-  sessions           Session[]
-  projects           Project[]     @relation("ClientProjects")
-  consulting         Project[]     @relation("ConsultantProjects")
-  messages           ChatMessage[]
-  payments           Payment[]
-  compostingMachines CompostingMachine[]
-  smartAuditRequests SmartAuditRequest[]
-  threadParticipants ThreadParticipant[]
+  accounts            Account[]
+  sessions            Session[]
+  projects            Project[]    @relation("ClientProjects")
+  consulting          Project[]    @relation("ConsultantProjects")
+  messages            Message[]    // unified messages
+  payments            Payment[]
+  compostingMachines  CompostingMachine[]
+  smartAuditRequests  SmartAuditRequest[]
+  threadParticipants  ThreadParticipant[]
   passwordResetTokens PasswordResetToken[]
-  activityLogs       ActivityLog[]
-  compostSales       CompostSale[]
-  trainingSessions   TrainingSession[]
-  farmSupplies       FarmSupply[]
-  insightReports     InsightReport[]
+  activityLogs        ActivityLog[]
+  compostSales        CompostSale[]
+  trainingSessions    TrainingSession[]
+  farmSupplies        FarmSupply[]
+  insightReports      InsightReport[]
+  blogPosts           BlogPost[]
 }
 
 model Account {
@@ -163,37 +186,62 @@ model ActivityLog {
 }
 
 /// ==========================
-/// Communication
+/// Communication (Chat)
 /// ==========================
 model ChatThread {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  serviceType String
-  entityId    String?  @db.ObjectId
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          String              @id @default(auto()) @map("_id") @db.ObjectId
+  serviceType String?
+  entityId    String?             @db.ObjectId
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
 
   participants ThreadParticipant[]
-  messages     ChatMessage[]
+  messages     Message[]
 }
 
 model ThreadParticipant {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId   String     @db.ObjectId
-  threadId String     @db.ObjectId
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String    @db.ObjectId
+  threadId String    @db.ObjectId
 
-  user     User       @relation(fields: [userId], references: [id])
-  thread   ChatThread @relation(fields: [threadId], references: [id])
+  user   User       @relation(fields: [userId], references: [id])
+  thread ChatThread @relation(fields: [threadId], references: [id])
+
+  @@index([userId])
+  @@index([threadId])
 }
 
-model ChatMessage {
-  id        String          @id @default(auto()) @map("_id") @db.ObjectId
-  type      ChatMessageType @default(TEXT)
-  content   String
-  senderId  String          @db.ObjectId
-  threadId  String          @db.ObjectId
-  sender    User            @relation(fields: [senderId], references: [id])
-  thread    ChatThread      @relation(fields: [threadId], references: [id])
-  createdAt DateTime        @default(now())
+/// Unified Message model
+model Message {
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  type       ChatMessageType @default(TEXT)
+  role       MessageRole     @default(USER)
+  content    String?
+  senderId   String?         @db.ObjectId
+  threadId   String          @db.ObjectId
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  sender      User?              @relation(fields: [senderId], references: [id])
+  thread      ChatThread         @relation(fields: [threadId], references: [id])
+  attachments MessageAttachment[]
+
+  @@index([threadId, createdAt])
+  @@index([senderId])
+}
+
+model MessageAttachment {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  messageId  String   @db.ObjectId
+  url        String
+  mimeType   String?
+  fileName   String?
+  size       Int?
+  createdAt  DateTime @default(now())
+
+  message Message @relation(fields: [messageId], references: [id])
+
+  @@index([messageId])
 }
 
 /// ==========================
@@ -205,7 +253,13 @@ model Payment {
   user          User               @relation(fields: [userId], references: [id])
   entityType    PaymentEntityType
   entityId      String?            @db.ObjectId
-  milestone     Milestone?         @relation(fields: [entityId], references: [id])
+
+  milestoneId   String?            @db.ObjectId
+  milestone     Milestone?         @relation(fields: [milestoneId], references: [id])
+
+  installmentNo Int?
+  totalParts    Int?
+
   amount        Float
   currency      String
   status        PaymentStatus
@@ -214,6 +268,8 @@ model Payment {
   updatedAt     DateTime           @updatedAt
 
   @@index([entityId])
+  @@index([userId])
+  @@index([milestoneId])
 }
 
 /// ==========================
@@ -226,7 +282,7 @@ model Project {
   status       ProjectStatus @default(NEW)
   clientId     String        @db.ObjectId
   consultantId String?       @db.ObjectId
-  team         String[]      @default([])  // 👈 NEW FIELD
+  team         String[]      @default([])
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   deletedAt    DateTime?
@@ -235,6 +291,9 @@ model Project {
   consultant User?    @relation("ConsultantProjects", fields: [consultantId], references: [id])
   milestones Milestone[]
   insightReports InsightReport[]
+
+  @@index([clientId])
+  @@index([consultantId])
 }
 
 model Milestone {
@@ -248,8 +307,10 @@ model Milestone {
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
-  project Project @relation(fields: [projectId], references: [id])
+  project  Project @relation(fields: [projectId], references: [id])
   payments Payment[]
+
+  @@index([projectId])
 }
 
 /// ==========================
@@ -270,6 +331,9 @@ model CompostingMachine {
   sales     CompostSale[]
   trainings TrainingSession[]
   alerts    Alert[]
+  inquiries MachineInquiry[]
+
+  @@index([clientId])
 }
 
 model CompostSale {
@@ -281,43 +345,56 @@ model CompostSale {
   clientId  String?            @db.ObjectId
   machineId String?            @db.ObjectId
 
-  client  User?              @relation(fields: [clientId], references: [id])
-  machine CompostingMachine? @relation(fields: [machineId], references: [id])
+  client    User?              @relation(fields: [clientId], references: [id])
+  machine   CompostingMachine? @relation(fields: [machineId], references: [id])
+  inquiries CompostSaleInquiry[]
+
+  @@index([clientId])
+  @@index([machineId])
 }
 
 model TrainingSession {
-  id        String             @id @default(auto()) @map("_id") @db.ObjectId
-  topic     String
-  trainer   String
-  date      DateTime
-  completed Boolean            @default(false)
-  clientId  String?            @db.ObjectId
-  machineId String?            @db.ObjectId
+  id          String             @id @default(auto()) @map("_id") @db.ObjectId
+  topic       String
+  description String?
+  trainer     String
+  date        DateTime
+  completed   Boolean            @default(false)
+  clientId    String?            @db.ObjectId
+  machineId   String?            @db.ObjectId
 
   client  User?              @relation(fields: [clientId], references: [id])
   machine CompostingMachine? @relation(fields: [machineId], references: [id])
 }
 
 model CompostingProcess {
-  id         String            @id @default(auto()) @map("_id") @db.ObjectId
-  stage      String
-  inputKg    Float
-  outputKg   Float
-  efficiency Float
-  machineId  String            @db.ObjectId
-  date       DateTime          @default(now())
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  stage       String
+  description String?
+  quantity    Float?
+  inputKg     Float
+  outputKg    Float
+  efficiency  Float
+  machineId   String            @db.ObjectId
+  date        DateTime          @default(now())
 
   machine CompostingMachine @relation(fields: [machineId], references: [id])
+
+  @@index([machineId])
 }
 
 model FarmSupply {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   farmName     String
+  description  String?
+  quantity     Float?
   volumeKg     Float
   deliveryDate DateTime
   clientId     String?  @db.ObjectId
 
   client User? @relation(fields: [clientId], references: [id])
+
+  @@index([clientId])
 }
 
 /// ==========================
@@ -343,18 +420,22 @@ model Bin {
   routeId    String       @db.ObjectId
   deletedAt  DateTime?
 
-  route      Route        @relation(fields: [routeId], references: [id])
-  readings   BinReading[]
-  alerts     Alert[]
+  route    Route        @relation(fields: [routeId], references: [id])
+  readings BinReading[]
+  alerts   Alert[]
+
+  @@index([routeId])
 }
 
 model BinReading {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  binId     String   @db.ObjectId
-  level     Float
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  binId      String   @db.ObjectId
+  level      Float
   recordedAt DateTime @default(now())
 
   bin Bin @relation(fields: [binId], references: [id])
+
+  @@index([binId])
 }
 
 model Schedule {
@@ -364,6 +445,8 @@ model Schedule {
   routeId String   @db.ObjectId
 
   route Route @relation(fields: [routeId], references: [id])
+
+  @@index([routeId])
 }
 
 /// ==========================
@@ -376,6 +459,8 @@ model SmartAuditRequest {
   requestedAt DateTime    @default(now())
 
   client User @relation(fields: [clientId], references: [id])
+
+  @@index([clientId])
 }
 
 model Alert {
@@ -388,6 +473,9 @@ model Alert {
 
   bin     Bin?              @relation(fields: [binId], references: [id])
   machine CompostingMachine? @relation(fields: [machineId], references: [id])
+
+  @@index([binId])
+  @@index([machineId])
 }
 
 model InsightReport {
@@ -400,4 +488,109 @@ model InsightReport {
 
   client  User?    @relation(fields: [clientId], references: [id])
   project Project? @relation(fields: [projectId], references: [id])
+
+  @@index([clientId])
+  @@index([projectId])
+}
+
+/// ==========================
+/// Blog System
+/// ==========================
+model BlogPost {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  slug        String         @unique
+  authorId    String         @db.ObjectId
+  author      User           @relation(fields: [authorId], references: [id])
+  content     Json
+  excerpt     String?
+  coverImage  String?
+  published   Boolean        @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  categories BlogPostCategory[]
+  tags       BlogPostTag[]
+
+  @@index([authorId])
+}
+
+model Category {
+  id    String             @id @default(auto()) @map("_id") @db.ObjectId
+  name  String             @unique
+  blogs BlogPostCategory[]
+}
+
+model Tag {
+  id    String          @id @default(auto()) @map("_id") @db.ObjectId
+  name  String          @unique
+  blogs BlogPostTag[]
+}
+
+model BlogPostCategory {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  blogId     String    @db.ObjectId
+  categoryId String    @db.ObjectId
+
+  blog     BlogPost @relation(fields: [blogId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@unique([blogId, categoryId])
+}
+
+model BlogPostTag {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  blogId String @db.ObjectId
+  tagId  String @db.ObjectId
+
+  blog BlogPost @relation(fields: [blogId], references: [id])
+  tag  Tag      @relation(fields: [tagId], references: [id])
+
+  @@unique([blogId, tagId])
+}
+
+/// ==========================
+/// CMS Content
+/// ==========================
+model PageContent {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  page      String
+  section   String
+  type      ContentType
+  content   Json
+  order     Int         @default(0)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+/// ==========================
+/// Client Inquiries
+/// ==========================
+model MachineInquiry {
+  id          String             @id @default(auto()) @map("_id") @db.ObjectId
+  clientName  String
+  clientEmail String
+  machineId   String?            @db.ObjectId
+  message     String
+  status      String             @default("pending")
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  machine CompostingMachine? @relation(fields: [machineId], references: [id])
+
+  @@index([machineId])
+}
+
+model CompostSaleInquiry {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  clientName  String
+  clientEmail String
+  volumeKg    Float?
+  message     String
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  compostSale CompostSale? @relation(fields: [id], references: [id])
 }

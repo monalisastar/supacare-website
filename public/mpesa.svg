@@ -1,0 +1,12 @@
+<!-- M-PESA Logo SVG -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100" width="300" height="100" role="img" aria-label="M-PESA logo">
+  <defs>
+    <linearGradient id="mpesaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8CC63F"></stop>
+      <stop offset="100%" stop-color="#6DAF2A"></stop>
+    </linearGradient>
+  </defs>
+  <text x="0" y="72" font-family="Arial, sans-serif" font-weight="bold" font-size="80" fill="url(#mpesaGrad)">
+    <tspan>MP</tspan><tspan fill="#000000">ESA</tspan>
+  </text>
+</svg>
