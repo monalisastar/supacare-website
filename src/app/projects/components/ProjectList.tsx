@@ -17,14 +17,14 @@ type ProjectType = {
   }
 }
 
-// Hardcoded projects
+// ✅ Correct image paths (Next.js automatically serves /public as root)
 const projects: ProjectType[] = [
   {
-    title: 'Tree Planting for Watershed Restoration – Kiambu',
-    location: 'Kiambu, Kenya',
+    title: 'Tree Planting for Watershed Restoration – Kirinyaga',
+    location: 'Kirinyaga, Kenya',
     description:
       'Restoring degraded landscapes with native tree species along rivers and hills.',
-    image: '/images/tree-planting-kiambu.webp',
+    image: '/images/tree-planting-kiambu.png', // ✅ Updated to .png
     slug: 'tree-planting-kiambu',
     tag: { name: 'Climate', emoji: '♻️' },
   },
@@ -33,7 +33,7 @@ const projects: ProjectType[] = [
     location: 'Nairobi, Kenya',
     description:
       'Street-level cleanup and sanitation campaign involving local youth and vendors.',
-    image: '/images/urban-sanitation-nairob.webp',
+    image: '/images/urban-sanitation-nairob.png', // ✅ Updated to .png
     slug: 'urban-sanitation-nairobi',
     tag: { name: 'Sanitation', emoji: '🧼' },
   },
@@ -42,7 +42,7 @@ const projects: ProjectType[] = [
     location: 'Mombasa, Kenya',
     description:
       'Partnering with vendors to eliminate single-use plastics in local markets.',
-    image: '/images/plastic-free-mombasa.webp',
+    image: '/images/plastic-free-mombasa.webp', // keep .webp if this file exists
     slug: 'plastic-free-mombasa',
     tag: { name: 'Sanitation', emoji: '🧼' },
   },

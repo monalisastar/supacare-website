@@ -21,15 +21,15 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="px-4 py-16" style={{ backgroundColor: '#e5f7eb' }}>
-      <div className="max-w-7xl mx-auto text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-green-800">What Our Partners Say</h2>
-        <p className="mt-2 text-gray-600">
+    <section className="px-4 py-10 md:py-14" style={{ backgroundColor: '#e5f7eb' }}>
+      <div className="max-w-7xl mx-auto text-center mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-green-800">What Our Partners Say</h2>
+        <p className="mt-1 text-gray-600 text-sm md:text-base">
           Real impact, real voices — how Supacare composting is changing lives.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
         {testimonials.map((t, index) => (
           <motion.div
             key={index}
@@ -37,9 +37,9 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.2 }}
             viewport={{ once: true }}
-            className="bg-white p-6 rounded-xl shadow-md flex flex-col md:flex-row gap-4"
+            className="bg-white p-4 md:p-5 rounded-xl shadow flex flex-col md:flex-row gap-3 md:gap-4"
           >
-            <div className="relative w-full md:w-40 h-40 rounded overflow-hidden">
+            <div className="relative w-full md:w-32 h-32 md:h-32 rounded overflow-hidden flex-shrink-0">
               <Image
                 src={t.image}
                 alt={t.name}
@@ -49,9 +49,9 @@ export default function Testimonials() {
               />
             </div>
             <div>
-              <p className="text-gray-700 italic mb-3">“{t.quote}”</p>
-              <p className="text-green-700 font-semibold">{t.name}</p>
-              <p className="text-sm text-gray-500">{t.role}</p>
+              <p className="text-gray-700 italic mb-2 text-sm md:text-base">“{t.quote}”</p>
+              <p className="text-green-700 font-semibold text-sm">{t.name}</p>
+              <p className="text-xs md:text-sm text-gray-500">{t.role}</p>
             </div>
           </motion.div>
         ))}

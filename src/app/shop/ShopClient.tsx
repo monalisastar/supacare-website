@@ -4,54 +4,30 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
-
-type Category = 'All' | 'Hardware' | 'Compost' | 'Support';
-
-interface Product {
-  id: string;
-  name: string;
-  image: string;
-  alt: string;
-  category: Category;
-  price: number;
-}
-
-const allProducts: Product[] = [
-  { id: '1', name: 'Compost Delivery per truck', image: '/images/shop/compostdelivery.png', alt: 'Supacare compost delivery truck unloading compost', category: 'Compost', price: 50 },
-  { id: '2', name: 'Compost Curing Chamber', image: '/images/shop/curingchamber.png', alt: 'Supacare compost curing chamber wooden shed', category: 'Hardware', price: 300 },
-  { id: '3', name: 'Enriched Compost Blend', image: '/images/shop/enriched blend.png', alt: 'Supacare enriched compost blend urban mix 25kg', category: 'Compost', price: 25 },
-  { id: '4', name: 'Rotary Drum Composter', image: '/images/shop/rotarydrum.jpg', alt: 'Supacare rotary drum composting machine', category: 'Hardware', price: 1200 },
-  { id: '5', name: 'Solar Dryer', image: '/images/shop/Solar Dryer.png', alt: 'Supacare solar dryer with mesh panels', category: 'Hardware', price: 400 },
-  { id: '6', name: 'Site Assessment', image: '/images/shop/siteassement.png', alt: 'Supacare staff performing compost site assessment', category: 'Support', price: 80 },
-  { id: '7', name: 'Compost (25kg & 50kg)', image: '/images/shop/bagged compost.png', alt: 'Supacare branded compost bags 25kg and 50kg', category: 'Compost', price: 20 },
-  { id: '8', name: 'Biogas Digester', image: '/images/shop/biogasdigester.png', alt: 'Supacare dome-shaped biogas digester rural setup', category: 'Hardware', price: 1500 },
-  { id: '9', name: 'Bokashi Bin', image: '/images/shop/bokashibin.jpg', alt: 'Supacare branded indoor bokashi compost bin', category: 'Hardware', price: 75 },
-];
+import { allProducts, Product, Category } from '@/lib/products';
 
 export default function ShopClient() {
   const [activeCategory, setActiveCategory] = useState<Category>('All');
-  const { addToCart } = useCart(); // ✅ use CartContext
+  const { addToCart } = useCart();
 
-  const handleAddToCart = (product: Product) => {
-    addToCart({ ...product, quantity: 1 }); // add with quantity 1
-    alert(`${product.name} added to cart`);
-  };
-
+  // Filter products based on selected category
   const filteredProducts =
     activeCategory === 'All'
       ? allProducts
       : allProducts.filter((p) => p.category === activeCategory);
 
+  // Define category filter buttons
   const categories: Category[] = ['All', 'Hardware', 'Compost', 'Support'];
 
   return (
     <main className="min-h-screen bg-[#c1e3c3] px-4 pt-32 pb-12 sm:px-6 lg:px-20">
-      <h1 className="text-3xl sm:text-4xl font-bold text-center text-green-900 mb-8 scroll-mt-32">
+      {/* Header */}
+      <h1 className="text-3xl sm:text-4xl font-bold text-center text-green-900 mb-8">
         Supacare Shop
       </h1>
-
       <p className="text-center max-w-3xl mx-auto text-green-800 mb-8">
-        Discover our range of composting machines, enriched blends, and sustainable tools for communities, institutions, and urban farms.
+        Discover our range of composting machines, enriched blends, and sustainable tools
+        for communities, institutions, and urban farms.
       </p>
 
       {/* Category Filter */}
@@ -78,14 +54,17 @@ export default function ShopClient() {
             key={product.id}
             className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden flex flex-col"
           >
+            {/* Product Image */}
             <div className="relative w-full h-52 sm:h-64 md:h-56 lg:h-60">
               <Image
-                src={product.image}
+                src={product.images[0]}
                 alt={product.alt}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
+
+            {/* Product Info */}
             <div className="p-4 flex-1 flex flex-col justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-green-900">
@@ -93,24 +72,41 @@ export default function ShopClient() {
                 </h3>
                 <p className="text-green-700 mt-1">${product.price.toFixed(2)}</p>
               </div>
-              <div className="mt-4 flex gap-2">
+
+              {/* Buttons */}
+              <div className="mt-4 flex flex-col gap-2">
+                <Link
+                  href={`/shop/${product.id}`}
+                  className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 text-center transition"
+                >
+                  View Details
+                </Link>
+
                 <button
-                  onClick={() => handleAddToCart(product)}
-                  className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+                  onClick={() => {
+                    addToCart({
+                      id: product.id,
+                      name: product.name,
+                      image: product.images[0], // ✅ Only first image for the cart
+                      price: product.price,
+                      quantity: 1,
+                    });
+                    alert(`${product.name} added to cart`);
+                  }}
+                  className="flex-1 border border-green-600 text-green-600 py-2 rounded hover:bg-green-100 transition"
                 >
                   Add to Cart
                 </button>
-                <Link
-                  href="/cart"
-                  className="flex-1 border border-green-600 text-green-600 py-2 rounded hover:bg-green-100 text-center transition"
-                >
-                  Go to Cart
-                </Link>
               </div>
             </div>
           </div>
         ))}
       </section>
+
+      {/* No Products Fallback */}
+      {filteredProducts.length === 0 && (
+        <p className="text-center text-green-900 mt-10">No products found.</p>
+      )}
     </main>
   );
 }

@@ -66,7 +66,7 @@ export default function CompostingExplained() {
               <li>In-vessel composting for safe processing of food and green waste</li>
               <li>Open windrow composting for garden and green waste</li>
               <li>Monitored for temperature, moisture, and nutrient content</li>
-              <li>Produces peat-free PAS100 certified compost for agriculture</li>
+              <li>Produces peat-free certified compost for agriculture</li>
             </ul>
           </div>
         </div>
@@ -80,7 +80,6 @@ export default function CompostingExplained() {
             Learn More
           </a>
         </div>
-
       </div>
     </section>
   );

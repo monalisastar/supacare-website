@@ -8,7 +8,7 @@ export default function ADGritRecycling() {
   const features = [
     { icon: <FaRecycle className="text-lime-500 w-6 h-6" />, text: "Recycles AD grit from biogas production" },
     { icon: <FaLeaf className="text-lime-500 w-6 h-6" />, text: "Processed into high-quality compost soil improver" },
-    { icon: <FaSeedling className="text-lime-500 w-6 h-6" />, text: "Peat-free and PAS100 certified" },
+    { icon: <FaSeedling className="text-lime-500 w-6 h-6" />, text: "Peat-free and certified" },
     { icon: <FaIndustry className="text-lime-500 w-6 h-6" />, text: "Supports sustainable agriculture and waste reduction" },
   ];
 
@@ -21,10 +21,10 @@ export default function ADGritRecycling() {
         </h2>
 
         {/* Block 1 - Image Left */}
-        <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
+        <div className="flex flex-col md:flex-row items-center mb-16 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/composting-process.jpg"
+              src="/images/recycling and composting/ad grit.png"
               alt="AD Grit Processing"
               fill
               className="object-cover"
@@ -38,7 +38,10 @@ export default function ADGritRecycling() {
             </p>
             <div className="grid grid-cols-1 gap-4">
               {features.map((feature, idx) => (
-                <div key={idx} className="flex items-center bg-white rounded-lg p-4 shadow hover:shadow-lg transition">
+                <div
+                  key={idx}
+                  className="flex items-center bg-white rounded-lg p-4 shadow hover:shadow-lg transition"
+                >
                   {feature.icon}
                   <span className="ml-3">{feature.text}</span>
                 </div>
@@ -51,8 +54,8 @@ export default function ADGritRecycling() {
         <div className="flex flex-col md:flex-row-reverse items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/Supacarecompactmachine.png"
-              alt="Supacare Machinery"
+              src="/images/recycling and composting/Supacare In-Vessel ad grit.png"
+              alt="Supacare In-Vessel AD Grit System"
               fill
               className="object-cover"
             />
@@ -62,26 +65,7 @@ export default function ADGritRecycling() {
               Supacare carefully processes AD grit alongside green and food waste using
               in-vessel composting technology. After 6–8 weeks of maturation, the material
               is screened and sorted to remove inorganics, resulting in nutrient-rich,
-              peat-free PAS100 soil improver.
-            </p>
-          </div>
-        </div>
-
-        {/* Block 3 - Image Left */}
-        <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
-          <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
-            <Image
-              src="/images/recycling and composting/compost-use.png"
-              alt="Final Compost Product"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div className="md:w-1/2 text-green-800 space-y-4">
-            <p>
-              Recycling AD grit responsibly helps maintain biogas plant efficiency,
-              prevents equipment damage, and converts potential waste into a sustainable
-              agricultural product.
+              peat-free soil improver that enhances soil structure and fertility.
             </p>
           </div>
         </div>

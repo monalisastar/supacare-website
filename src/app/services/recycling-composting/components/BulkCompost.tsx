@@ -13,13 +13,13 @@ export default function BulkCompost() {
   ];
 
   const deliveryPoints = [
-    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Huntingdon, Cambridgeshire" },
-    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Chertsey, Surrey" },
-    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Newyears Green, Uxbridge, West London" },
-    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Kilsby, Northamptonshire" },
-    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Ongar, Essex" },
-    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Swanley, Kent" },
-    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Lackford, Suffolk" },
+    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Dandora, Nairobi County" },
+    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Sagana, Kirinyaga" },
+    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Kisumu, Kisumu County" },
+    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Eldoret, Uasin Gishu County" },
+    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Naivasha, Nakuru County" },
+    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Kutus, Kirinyaga" },
+    { icon: <FaTruck className="text-lime-500 w-5 h-5" />, text: "Malindi, Kilifi County" },
   ];
 
   return (
@@ -34,8 +34,8 @@ export default function BulkCompost() {
         <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/composting-site.png"
-              alt="Composting Site"
+              src={encodeURI("/images/recycling and composting/supacare-compost.png")}
+              alt="Supacare Compost"
               fill
               className="object-cover"
             />
@@ -43,12 +43,15 @@ export default function BulkCompost() {
           <div className="md:w-1/2 text-green-800 space-y-4">
             <p>
               Supacare supplies high-quality bulk compost soil improver for farmers,
-              horticulturists, and viticulturists. Our PAS100-certified compost improves
+              horticulturists, and viticulturists. Our certified compost improves
               soil health, aids carbon sequestration, and naturally boosts crop yield.
             </p>
             <div className="grid grid-cols-1 gap-4">
               {features.map((feature, idx) => (
-                <div key={idx} className="flex items-center bg-white rounded-lg p-4 shadow hover:shadow-lg transition">
+                <div
+                  key={idx}
+                  className="flex items-center bg-white rounded-lg p-4 shadow hover:shadow-lg transition"
+                >
                   {feature.icon}
                   <span className="ml-3">{feature.text}</span>
                 </div>
@@ -61,8 +64,8 @@ export default function BulkCompost() {
         <div className="flex flex-col md:flex-row-reverse items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/composting facility.png"
-              alt="Composting Facility"
+              src={encodeURI("/images/recycling and composting/why compost.png")}
+              alt="Why Compost"
               fill
               className="object-cover"
             />
@@ -85,8 +88,8 @@ export default function BulkCompost() {
         <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/compost-use.png"
-              alt="Using Compost"
+              src={encodeURI("/images/recycling and composting/why choose supacare.png")}
+              alt="Why Choose Supacare"
               fill
               className="object-cover"
             />
@@ -95,7 +98,7 @@ export default function BulkCompost() {
             <h3 className="text-xl font-semibold">Why Choose Supacare?</h3>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <li className="flex items-center bg-white rounded-lg p-3 shadow hover:shadow-lg transition">
-                <FaLeaf className="text-lime-500 w-5 h-5 mr-2" /> Certified PAS100 soil improver
+                <FaLeaf className="text-lime-500 w-5 h-5 mr-2" /> Certified soil improver
               </li>
               <li className="flex items-center bg-white rounded-lg p-3 shadow hover:shadow-lg transition">
                 <FaSeedling className="text-lime-500 w-5 h-5 mr-2" /> Peat-free and sustainable

@@ -24,7 +24,7 @@ export default function MuckHeapRemoval() {
         <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/farmer.jpg"
+              src="/images/recycling and composting/Muck Heap Removal.png" // ✅ Updated
               alt="Muck Heap Collection"
               fill
               className="object-cover"
@@ -38,7 +38,10 @@ export default function MuckHeapRemoval() {
             </p>
             <div className="grid grid-cols-1 gap-4">
               {features.map((feature, idx) => (
-                <div key={idx} className="flex items-center bg-white rounded-lg p-4 shadow hover:shadow-lg transition">
+                <div
+                  key={idx}
+                  className="flex items-center bg-white rounded-lg p-4 shadow hover:shadow-lg transition"
+                >
                   {feature.icon}
                   <span className="ml-3">{feature.text}</span>
                 </div>
@@ -51,8 +54,8 @@ export default function MuckHeapRemoval() {
         <div className="flex flex-col md:flex-row-reverse items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/Supacaretruck.png"
-              alt="Supacare Truck"
+              src="/images/recycling and composting/muck heaps delivery.png" // ✅ Updated
+              alt="Supacare Truck Delivering"
               fill
               className="object-cover"
             />
@@ -69,8 +72,8 @@ export default function MuckHeapRemoval() {
         <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/compost-use.png"
-              alt="Compost Soil Improver"
+              src="/images/recycling and composting/muck heap benefits.png" // ✅ Updated
+              alt="Compost Soil Improver Benefits"
               fill
               className="object-cover"
             />

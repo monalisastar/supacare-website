@@ -2,8 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavbarFooterLayout from "./NavbarFooterLayout";
-import { CartProvider } from "@/context/CartContext"; // ✅ Correct provider import
+import { CartProvider } from "@/context/CartContext";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"; // ✅ new import
 
+// ✅ Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -14,6 +16,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// ✅ Metadata
 export const metadata: Metadata = {
   title: "Supacare Solutions - Sustainable Waste Management in Kenya",
   description:
@@ -60,11 +63,13 @@ export const metadata: Metadata = {
   },
 };
 
+// ✅ Viewport settings
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
 
+// ✅ Root layout
 export default function RootLayout({
   children,
 }: {
@@ -72,10 +77,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* ✅ Wrap entire app with global Cart state */}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+      >
+        {/* ✅ Global cart state */}
         <CartProvider>
           <NavbarFooterLayout>{children}</NavbarFooterLayout>
+
+          {/* ✅ Floating WhatsApp Button (always visible) */}
+          <FloatingWhatsAppButton />
         </CartProvider>
       </body>
     </html>

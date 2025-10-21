@@ -4,25 +4,10 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const headlines = [
-  "Transform Waste into Growth with Supacare",
-  "Compost Today for Greener Communities",
-  "Smart Waste Solutions for Every Space",
-];
-
 export default function Hero() {
   const FALLBACK_OFFSET = 112; // px - fallback while JS runs
   const EXTRA_SPACING = 12; // extra breathing room so text isn't flush with navbar
-  const [index, setIndex] = useState(0);
   const [offsetTop, setOffsetTop] = useState<number>(FALLBACK_OFFSET + EXTRA_SPACING);
-
-  // Rotate headlines every 5s
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % headlines.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Measure navbar and keep offset in sync (resize + ResizeObserver)
   useEffect(() => {
@@ -31,7 +16,6 @@ export default function Hero() {
     const updateOffset = () => {
       const navbar = document.querySelector<HTMLElement>('[data-navbar]');
       if (navbar) {
-        // use bounding rect for sub-pixel accuracy and round up
         const navHeight = Math.ceil(navbar.getBoundingClientRect().height);
         setOffsetTop(navHeight + EXTRA_SPACING);
       } else {
@@ -58,8 +42,8 @@ export default function Hero() {
     <section
       className="relative w-full h-[80vh] overflow-hidden"
       style={{
-        marginTop: offsetTop, // push whole hero below fixed navbar
-        transition: 'margin-top 220ms ease', // smooth reposition
+        marginTop: offsetTop,
+        transition: 'margin-top 220ms ease',
       }}
     >
       {/* Background Image */}
@@ -74,16 +58,6 @@ export default function Hero() {
 
       {/* Overlay + Content */}
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center px-4 text-center">
-        <motion.h1
-          key={index}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-white text-3xl md:text-5xl font-bold max-w-4xl"
-        >
-          {headlines[index]}
-        </motion.h1>
-
         <p className="text-white mt-4 max-w-xl text-base md:text-lg">
           Empowering homes, estates, and institutions through sustainable composting.
         </p>

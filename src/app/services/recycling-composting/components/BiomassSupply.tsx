@@ -25,7 +25,7 @@ export default function BiomassSupply() {
         <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/composting-process.jpg"
+              src="/images/recycling and composting/biomass production.png"  // ✅ updated image
               alt="Biomass Production"
               fill
               className="object-cover"
@@ -45,8 +45,8 @@ export default function BiomassSupply() {
         <div className="flex flex-col md:flex-row-reverse items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/shop/Solar Dryer.png"
-              alt="Solar Dryer"
+              src="/images/recycling and composting/supacare-woodchip.png"  // ✅ updated image
+              alt="Supacare Woodchip"
               fill
               className="object-cover"
             />
@@ -63,7 +63,10 @@ export default function BiomassSupply() {
         {/* Feature Cards */}
         <div className="max-w-5xl mx-auto mb-10 grid md:grid-cols-2 gap-6">
           {features.map((feature, idx) => (
-            <div key={idx} className="flex items-center bg-white rounded-lg p-4 shadow hover:shadow-lg transition">
+            <div
+              key={idx}
+              className="flex items-center bg-white rounded-lg p-4 shadow hover:shadow-lg transition"
+            >
               {feature.icon}
               <span className="ml-3 text-green-900">{feature.text}</span>
             </div>

@@ -62,7 +62,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-3">Get in Touch</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li className="flex items-center gap-2"><Mail size={16} /> contact@Supacare.org</li>
+              <li className="flex items-center gap-2"><Mail size={16} /> contact@Supacare.co.ke</li>
               <li className="flex items-center gap-2"><Phone size={16} /> 0720096680</li>
               <li className="flex items-center gap-2"><MapPin size={16} /> Nairobi, Kenya</li>
             </ul>
