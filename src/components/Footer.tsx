@@ -40,9 +40,9 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-3">Services</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/services/waste-collection" className="hover:text-[#fcbf49]">Waste Collection & Disposal</Link></li>
-              <li><Link href="/services/carbon-advisory" className="hover:text-[#fcbf49]">Carbon Advisory</Link></li>
               <li><Link href="/services/recycling-composting" className="hover:text-[#fcbf49]">Recycling & Composting</Link></li>
+              <li><Link href="/services/environmental-consultancy" className="hover:text-[#fcbf49]">Environmental Consultancy </Link></li>
+              <li><Link href="/services/waste-collection" className="hover:text-[#fcbf49]">Waste Collection & Disposal </Link></li>
               <li><Link href="/services/smart-waste" className="hover:text-[#fcbf49]">Smart Waste Tracking</Link></li>
             </ul>
           </div>

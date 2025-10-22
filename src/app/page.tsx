@@ -3,14 +3,14 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
+import SustainabilityActions from '../components/SustainabilityActions'
 import About from '../components/About'
+import ApproachSection from '../components/ApproachSection'
 import WhySupaCare from '../components/WhySupaCare'
 import Projects from '../components/Projects'
-import SustainabilityBanner from '../components/SustainabilityBanner'
 import DemandSolutionCarousel from '../components/DemandSolutionCarousel'
 import GetInTouch from '../components/GetInTouch'
 import ImpactSection from '../components/ImpactSection'
-
 import { motion } from 'framer-motion'
 
 export default function HomePage() {
@@ -18,10 +18,17 @@ export default function HomePage() {
     <main className="bg-white text-gray-900 overflow-x-hidden">
       <Navbar />
 
+      {/* Hero Section */}
       <section id="hero">
         <Hero />
       </section>
 
+      {/* ✅ Floating Sustainable Actions Section */}
+      <section id="actions">
+        <SustainabilityActions />
+      </section>
+
+      {/* About Section */}
       <motion.section
         id="about"
         initial={{ opacity: 0, y: 50 }}
@@ -33,17 +40,19 @@ export default function HomePage() {
         <About />
       </motion.section>
 
+      {/* ✅ New Approach Section (bridge before Projects) */}
       <motion.section
-        id="solutions"
-        initial={{ opacity: 0, y: 40 }}
+        id="approach"
+        initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1 }}
         viewport={{ once: true }}
-        className="py-12 bg-gray-50"
+        className="relative"
       >
-        <DemandSolutionCarousel />
+        <ApproachSection />
       </motion.section>
 
+      {/* Projects Section */}
       <motion.section
         id="projects"
         initial={{ opacity: 0, y: 50 }}
@@ -55,17 +64,7 @@ export default function HomePage() {
         <Projects />
       </motion.section>
 
-      <motion.section
-        id="sustainability"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
-        className="py-10"
-      >
-        <SustainabilityBanner />
-      </motion.section>
-
+      {/* Why Supacare */}
       <motion.section
         id="why-Supacare"
         initial={{ opacity: 0, y: 50 }}
@@ -77,6 +76,7 @@ export default function HomePage() {
         <WhySupaCare />
       </motion.section>
 
+      {/* Impact Section */}
       <motion.section
         id="impact"
         initial={{ opacity: 0, y: 40 }}
@@ -88,6 +88,7 @@ export default function HomePage() {
         <ImpactSection />
       </motion.section>
 
+      {/* Contact Section */}
       <motion.section
         id="get-in-touch"
         initial={{ opacity: 0, y: 50 }}

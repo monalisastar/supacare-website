@@ -10,7 +10,7 @@ const WhyChooseSupaCare = () => {
         {/* Left: Image */}
         <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md">
           <Image
-            src="/images/environmental consultancy/why-choose-Supacare.webp"
+            src="/images/environmental consultancy/supacare.webp"
             alt="Community members smiling outdoors"
             layout="fill"
             objectFit="cover"

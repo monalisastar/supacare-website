@@ -2,7 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 
 interface ProjectCardProps {
@@ -52,12 +51,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
         <p className="text-sm text-gray-500 mb-2">{location}</p>
         <p className="text-sm text-gray-700 line-clamp-3">{description}</p>
-        <Link
-          href={`/projects/${slug}`}
-          className="text-green-700 text-sm font-medium mt-3 inline-block hover:underline"
-        >
-          Read More →
-        </Link>
       </div>
     </motion.div>
   );

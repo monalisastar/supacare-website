@@ -27,7 +27,7 @@ const ProjectsHero = () => {
         className="relative z-20 h-full flex flex-col items-center justify-center text-white text-center px-6"
       >
         <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg">
-          Our Impact Projects
+         
         </h1>
         <p className="mt-4 max-w-2xl text-lg md:text-xl text-green-100 font-light">
           Explore how Supacare is changing lives through sustainability, clean energy, and carbon action across Kenya.

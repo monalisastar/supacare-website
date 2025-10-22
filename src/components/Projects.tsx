@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 type Project = {
@@ -49,8 +50,7 @@ export default function Projects() {
         <div className="mt-6 overflow-x-auto sm:overflow-visible">
           <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 min-w-[700px] sm:min-w-0">
             {projects.map((project, index) => (
-              <motion.a
-                href="#"
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -72,19 +72,24 @@ export default function Projects() {
                 <div className="p-3 text-left text-xs sm:text-sm text-gray-800">
                   <p className="font-medium text-[#1b4332]">{project.location}</p>
                   <p className="mt-1">{project.description}</p>
-                  <span className="mt-2 inline-block text-[#e0ac00] font-semibold hover:underline">
+                  <Link
+                    href="/projects"
+                    className="mt-2 inline-block text-[#e0ac00] font-semibold hover:underline"
+                  >
                     View Project →
-                  </span>
+                  </Link>
                 </div>
-              </motion.a>
+              </motion.div>
             ))}
           </div>
         </div>
 
         <div className="mt-5">
-          <button className="bg-[#fcbf49] text-white font-medium px-5 py-2 rounded-full hover:bg-[#e0ac00] text-sm transition">
-            View All Projects
-          </button>
+          <Link href="/projects">
+            <button className="bg-[#fcbf49] text-white font-medium px-5 py-2 rounded-full hover:bg-[#e0ac00] text-sm transition">
+              View All Projects
+            </button>
+          </Link>
         </div>
       </div>
     </section>

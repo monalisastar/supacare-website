@@ -32,7 +32,7 @@ const services = [
   },
   {
     title: "Carbon Footprint Assessment",
-    image: "/images/carbon-advisory/carbon-definition.webp",
+    image: "/images/carbon-advisory/footprint.png",
     alt: "Carbon assessment process",
   },
   {
