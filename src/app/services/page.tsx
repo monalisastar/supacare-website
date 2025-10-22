@@ -67,7 +67,7 @@ export default function ServicesPage() {
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold text-green-800 mb-4"
         >
-          Explore Our Impactful Services
+          
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}

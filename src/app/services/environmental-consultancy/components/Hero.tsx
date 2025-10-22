@@ -44,7 +44,7 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-4 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-[#2e3e30] drop-shadow-md">
-          Environmental Consultancy Services
+         
         </h1>
         <p className="mt-4 text-lg md:text-xl text-[#2e3e30] max-w-2xl">
           Tailored solutions for sustainable impact, regulatory compliance, and climate resilience across Kenya’s communities and industries.

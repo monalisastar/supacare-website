@@ -37,7 +37,7 @@ export default function Hero() {
         className="max-w-xl text-center md:text-left"
       >
         <h1 className="text-4xl md:text-5xl font-bold text-[#2f4d2c] leading-tight">
-          Smart Waste Management, Reinvented
+          Smart Waste Management
         </h1>
         <p className="mt-4 text-lg text-[#3b5c35]">
           Real-time tracking. Lower emissions. Cleaner neighborhoods.
