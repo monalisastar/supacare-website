@@ -24,7 +24,7 @@ const projects: ProjectType[] = [
     location: 'Kirinyaga, Kenya',
     description:
       'Restoring degraded landscapes with native tree species along rivers and hills.',
-    image: '/images/tree-planting-kiambu.png', // ✅ Updated to .png
+    image: '/images/tree-planting-kiambu.png',
     slug: 'tree-planting-kiambu',
     tag: { name: 'Climate', emoji: '♻️' },
   },
@@ -33,7 +33,7 @@ const projects: ProjectType[] = [
     location: 'Nairobi, Kenya',
     description:
       'Street-level cleanup and sanitation campaign involving local youth and vendors.',
-    image: '/images/urban-sanitation-nairob.png', // ✅ Updated to .png
+    image: '/images/urban-sanitation-nairob.png',
     slug: 'urban-sanitation-nairobi',
     tag: { name: 'Sanitation', emoji: '🧼' },
   },
@@ -42,27 +42,20 @@ const projects: ProjectType[] = [
     location: 'Mombasa, Kenya',
     description:
       'Partnering with vendors to eliminate single-use plastics in local markets.',
-    image: '/images/plastic-free-mombasa.webp', // keep .webp if this file exists
+    image: '/images/plastic-free-mombasa.webp',
     slug: 'plastic-free-mombasa',
     tag: { name: 'Sanitation', emoji: '🧼' },
   },
 ]
 
 const ITEMS_PER_PAGE = 3
-const tags = ['All', 'Climate', 'Sanitation', 'Business']
 
 const ProjectList = () => {
   const [currentPage, setCurrentPage] = useState(0)
   const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null)
-  const [activeTag, setActiveTag] = useState('All')
 
-  const filteredProjects =
-    activeTag.toLowerCase() === 'all'
-      ? projects
-      : projects.filter((p) => p.tag.name.toLowerCase() === activeTag.toLowerCase())
-
-  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE)
-  const paginatedProjects = filteredProjects.slice(
+  const totalPages = Math.ceil(projects.length / ITEMS_PER_PAGE)
+  const paginatedProjects = projects.slice(
     currentPage * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE + ITEMS_PER_PAGE
   )
@@ -74,26 +67,7 @@ const ProjectList = () => {
           Featured Projects
         </h2>
 
-        {/* Tag Filter */}
-        <div className="flex justify-center flex-wrap gap-3 mb-8">
-          {tags.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => {
-                setActiveTag(tag)
-                setCurrentPage(0)
-              }}
-              aria-pressed={activeTag === tag}
-              className={`px-4 py-1 border rounded-full text-sm ${
-                activeTag === tag
-                  ? 'bg-green-600 text-white'
-                  : 'border-green-400 text-green-700'
-              }`}
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
+        {/* 🟢 Removed Tag Filter section */}
 
         {/* Project Grid */}
         <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
