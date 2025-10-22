@@ -46,7 +46,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative bg-[#eaf7ec] pt-20 pb-0 md:pb-2 overflow-hidden"
+      className="relative -mt-8 bg-[#eaf7ec] pt-0 pb-0 md:pb-2 overflow-hidden"
     >
       {/* Decorative gradient behind image */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-300/20 blur-3xl rounded-full -z-10"></div>

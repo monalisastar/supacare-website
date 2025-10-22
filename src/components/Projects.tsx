@@ -21,7 +21,7 @@ const projects: Project[] = [
     image: '/images/waste-tracking.png',
   },
   {
-    title: 'Carbon Advisory & environmental consultancy',
+    title: 'Carbon Advisory & Environmental Consultancy',
     location: 'Kisumu, Kenya',
     description:
       'Community engagement on LPG, E-Jikos, and household carbon savings with token-based incentives.',
@@ -38,8 +38,8 @@ const projects: Project[] = [
 
 export default function Projects() {
   return (
-    <section className="bg-gradient-to-b from-[#e6f5ea] to-white py-6 sm:py-8 px-3 sm:px-6">
-      <div className="max-w-7xl mx-auto text-center">
+    <section className="relative z-20 -mt-[40px] bg-gradient-to-b from-[#e6f5ea] via-[#d8f1dc] to-[#bfeec6] py-12 px-3 sm:px-6 overflow-hidden">
+      <div className="max-w-7xl mx-auto text-center relative z-20">
         <h2 className="text-xl sm:text-2xl font-semibold text-[#1b4332] mb-2">
           What We’re Doing
         </h2>
@@ -84,14 +84,17 @@ export default function Projects() {
           </div>
         </div>
 
-        <div className="mt-5">
+        <div className="mt-6">
           <Link href="/projects">
-            <button className="bg-[#fcbf49] text-white font-medium px-5 py-2 rounded-full hover:bg-[#e0ac00] text-sm transition">
+            <button className="bg-[#fcbf49] text-white font-medium px-6 py-2 rounded-full hover:bg-[#e0ac00] text-sm transition shadow-lg">
               View All Projects
             </button>
           </Link>
         </div>
       </div>
+
+      {/* 🌿 Moved gradient behind the content */}
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-[#bfeec6]/60 to-green-950/70 z-0" />
     </section>
   )
 }

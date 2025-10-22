@@ -10,7 +10,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import AnnouncementBar from './AnnouncementBar'
-import { useSession, signOut } from 'next-auth/react' // ✅ NextAuth
+import { useSession, signOut } from 'next-auth/react'
 
 const navItems = [
   { name: 'Projects', href: '/projects' },
@@ -21,7 +21,7 @@ const services = [
   { name: 'Environmental & Carbon Consultancy', href: '/services/environmental-consultancy', icon: <Leaf size={16} /> },
   { name: 'Waste Collection & Disposal', href: '/services/waste-collection', icon: <Trash2 size={16} /> },
   { name: 'Smart Waste Tracking & Management', href: '/services/smart-waste', icon: <ListChecks size={16} /> },
-  { name: 'Recycling & Composting', href: '/services/recycling-composting', icon: <RefreshCcw size={16} /> }
+  { name: 'Recycling & Composting', href: '/services/recycling-composting', icon: <RefreshCcw size={16} /> },
 ]
 
 export default function Navbar() {
@@ -35,11 +35,9 @@ export default function Navbar() {
 
   const { data: session, status } = useSession()
   const isAuthenticated = status === 'authenticated'
-
   const pathname = usePathname()
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // ✅ Detect scroll state
   useEffect(() => {
     if (typeof window === 'undefined') return
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
@@ -47,7 +45,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // ✅ Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -60,7 +57,6 @@ export default function Navbar() {
     return () => document.removeEventListener('click', handleClickOutside)
   }, [])
 
-  // ✅ NEW: Auto-close mobile menu & dropdowns on route change
   useEffect(() => {
     setMenuOpen(false)
     setMobileAboutOpen(false)
@@ -95,112 +91,116 @@ export default function Navbar() {
             <AnnouncementBar />
           </div>
 
-          <header
-            style={{ top: 'env(safe-area-inset-top)' }}
-            className={`fixed w-full z-50 transition-all ${
-              isScrolled ? 'bg-[#F4B940] border-b border-orange-200/40' : 'bg-[#F4B940]'
-            }`}
-          >
-            <div className="w-full px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center h-24 md:h-28">
-                {/* Logo */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="mt-6 md:mt-8"
-                >
-                  <Link href="/" className="flex items-center">
-                    <Image
-                      src="/images/supalogo.png"
-                      alt="Supacare Solutions Logo"
-                      width={224}
-                      height={112}
-                      className="object-contain w-[11vw] min-w-[170px] max-w-[240px] h-auto scale-110"
-                      priority
-                    />
-                  </Link>
-                </motion.div>
-
-                {/* Right Side Desktop */}
-                <div className="hidden md:flex items-center gap-4 mt-8">
-                  {isAuthenticated ? (
-                    <div className="relative" ref={dropdownRef}>
-                      <button
-                        onClick={() => setUserMenuOpen(!userMenuOpen)}
-                        className="flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
-                      >
-                        <User size={18} />
-                        <span>{session?.user?.name ?? 'My Account'}</span>
-                        <ChevronDown size={14} />
-                      </button>
-                      <AnimatePresence>
-                        {userMenuOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden z-50"
+          <header className="fixed w-full z-50 transition-all">
+            {/* 🌿 Transparent Top Navbar */}
+            <div
+              className={`absolute top-0 left-0 w-full flex justify-between items-center px-8 py-4 transition-all mt-[40px] ${
+                isScrolled ? 'bg-transparent' : 'bg-transparent'
+              }`}
+              style={{
+                backdropFilter: 'none',
+                backgroundColor: 'transparent',
+                zIndex: 45, // below logo but above background
+              }}
+            >
+              {/* ✅ Transparent Top Buttons */}
+              <div className="hidden md:flex items-center gap-4 ml-auto mr-6">
+                {isAuthenticated ? (
+                  <div className="relative" ref={dropdownRef}>
+                    <button
+                      onClick={() => setUserMenuOpen(!userMenuOpen)}
+                      className="flex items-center gap-2 border border-white text-white px-4 py-2 rounded-lg hover:bg-white/10 transition"
+                    >
+                      <User size={18} />
+                      <span>{session?.user?.name ?? 'My Account'}</span>
+                      <ChevronDown size={14} />
+                    </button>
+                    <AnimatePresence>
+                      {userMenuOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden z-50"
+                        >
+                          <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 text-green-800">
+                            Dashboard
+                          </Link>
+                          <button
+                            onClick={() => signOut({ callbackUrl: '/' })}
+                            className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
                           >
-                            <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 text-green-800">
-                              Dashboard
-                            </Link>
-                            <button
-                              onClick={() => signOut({ callbackUrl: '/' })}
-                              className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
-                            >
-                              Logout
-                            </button>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  ) : (
-                    <>
-                      <Link
-                        href="/auth/register"
-                        className="bg-white text-green-700 px-4 py-2 rounded-lg hover:bg-green-100 transition"
-                      >
-                        Register
-                      </Link>
-                      <Link
-                        href="/auth/login"
-                        className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
-                      >
-                        Login
-                      </Link>
-                    </>
-                  )}
+                            Logout
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <>
+                    <Link
+                      href="/auth/register"
+                      className="border border-white text-white px-4 py-2 rounded-lg hover:bg-white/10 transition"
+                    >
+                      Register
+                    </Link>
+                    <Link
+                      href="/auth/login"
+                      className="border border-white text-white px-4 py-2 rounded-lg hover:bg-white/10 transition"
+                    >
+                      Login
+                    </Link>
+                  </>
+                )}
 
-                  <Link
-                    href="/shop"
-                    className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
-                  >
-                    Visit Shop
-                  </Link>
-                  <Link
-                    href="/cart"
-                    aria-label="Cart"
-                    className="text-green-700 hover:text-green-900"
-                  >
-                    <ShoppingCart size={22} />
-                  </Link>
-                </div>
-
-                {/* Mobile Menu Button */}
-                <div className="md:hidden flex items-center mt-6">
-                  <button
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    className="text-green-700"
-                  >
-                    {menuOpen ? <X size={28} /> : <Menu size={28} />}
-                  </button>
-                </div>
+                <Link
+                  href="/shop"
+                  className="border border-white text-white px-4 py-2 rounded-lg hover:bg-white/10 transition"
+                >
+                  Visit Shop
+                </Link>
+                <Link href="/cart" aria-label="Cart" className="text-white hover:text-green-200 transition">
+                  <ShoppingCart size={22} />
+                </Link>
               </div>
 
-              {/* Desktop Nav */}
-              <div className="hidden md:flex justify-center border-t border-orange-200/40 mt-2">
+              {/* Mobile Menu Button */}
+              <div className="md:hidden flex items-center">
+                <button onClick={() => setMenuOpen(!menuOpen)} className="text-white">
+                  {menuOpen ? <X size={28} /> : <Menu size={28} />}
+                </button>
+              </div>
+            </div>
+
+            {/* ✅ Independent Floating Logo */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="absolute top-0 left-8 z-[60]"
+              style={{
+                transform: 'translateY(65px)', // logo position independent of buttons
+              }}
+            >
+              <Link href="/" className="flex items-center">
+                <Image
+                  src="/images/supalogo.png"
+                  alt="Supacare Solutions Logo"
+                  width={400}
+                  height={180}
+                  className="object-contain w-auto h-[110px] md:h-[130px] lg:h-[150px]"
+                  style={{
+                    filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.3))',
+                  }}
+                  priority
+                />
+              </Link>
+            </motion.div>
+
+            {/* 🟡 Main Navbar */}
+            <div className="relative mt-[130px] bg-[#F4B940] border-t border-orange-200/40 z-[40]">
+              <div className="flex justify-center">
                 <nav ref={dropdownRef} className="flex items-center gap-4 text-sm font-semibold py-2">
                   <Link href="/" className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg transition shadow">
                     Home
@@ -264,26 +264,19 @@ export default function Navbar() {
                   </div>
 
                   {navItems.map(item => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg transition shadow"
-                    >
+                    <Link key={item.name} href={item.href} className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg transition shadow">
                       {item.name}
                     </Link>
                   ))}
 
-                  <Link
-                    href="/contact"
-                    className="ml-2 hover:bg-green-700 hover:text-white text-green-800 px-4 py-2 rounded-lg transition shadow"
-                  >
+                  <Link href="/contact" className="ml-2 hover:bg-green-700 hover:text-white text-green-800 px-4 py-2 rounded-lg transition shadow">
                     Request Service
                   </Link>
                 </nav>
               </div>
             </div>
 
-            {/* Mobile Menu */}
+            {/* 📱 Mobile Menu */}
             <AnimatePresence>
               {menuOpen && (
                 <motion.div
@@ -291,13 +284,13 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.2 }}
-                  className="md:hidden bg-[#F4B940] text-green-700 border-t border-orange-200/40 px-6 py-4 space-y-4"
+                  className="md:hidden bg-[#F4B940] text-green-700 border-t border-orange-200/40 px-6 py-4 space-y-4 mt-[100px]"
                 >
                   <Link href="/" className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg">
                     Home
                   </Link>
 
-                  {/* About */}
+                  {/* About (Mobile) */}
                   <div>
                     <button
                       onClick={toggleMobileAbout}
@@ -315,7 +308,7 @@ export default function Navbar() {
                     )}
                   </div>
 
-                  {/* Services */}
+                  {/* Services (Mobile) */}
                   <div>
                     <button
                       onClick={toggleMobileServices}
@@ -339,11 +332,7 @@ export default function Navbar() {
                   </div>
 
                   {navItems.map(item => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg"
-                    >
+                    <Link key={item.name} href={item.href} className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg">
                       {item.name}
                     </Link>
                   ))}

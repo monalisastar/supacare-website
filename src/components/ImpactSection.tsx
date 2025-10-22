@@ -36,8 +36,10 @@ export default function ImpactSection() {
   }, [])
 
   return (
-    <section className="relative z-20 bg-gradient-to-b from-[#e6f4e6] to-white py-12 px-4 sm:px-6">
-      <div className="max-w-5xl mx-auto text-center">
+    <section className="relative z-20 -mt-[26px] py-14 px-4 sm:px-6 bg-gradient-to-b from-[#e6f5ea] via-[#f3faf4] to-white overflow-hidden">
+      {/* ✅ Removed top fade (Why Supacare already ends with a fade) */}
+
+      <div className="relative max-w-5xl mx-auto text-center z-[2]">
         <h2 className="text-3xl font-bold text-green-800 mb-2 tracking-tight">
           Community Voices
         </h2>
@@ -45,6 +47,7 @@ export default function ImpactSection() {
           Real stories from individuals and communities impacted by Supacare.
         </p>
 
+        {/* Testimonial Card Container */}
         <div className="relative h-[220px] sm:h-[200px]">
           <AnimatePresence mode="wait">
             <motion.div
@@ -53,16 +56,21 @@ export default function ImpactSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.6 }}
-              className="absolute inset-0 mx-auto max-w-xl bg-white/80 backdrop-blur-md border border-green-100 rounded-xl shadow-md p-6 text-left hover:shadow-lg hover:border-green-300 transition-all"
+              className="absolute inset-0 mx-auto max-w-xl bg-white/85 backdrop-blur-md border border-green-100 rounded-xl shadow-lg p-6 text-left hover:shadow-xl hover:border-green-300 transition-all"
             >
+              {/* Star Rating */}
               <div className="flex gap-1 text-yellow-400 text-xs mb-3">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={14} fill="currentColor" stroke="none" />
                 ))}
               </div>
+
+              {/* Testimonial Text */}
               <p className="text-[15px] text-gray-800 italic leading-relaxed mb-3">
                 “{testimonials[index].quote}”
               </p>
+
+              {/* Author */}
               <div className="text-green-900 font-semibold text-sm">
                 {testimonials[index].name}
               </div>
@@ -73,6 +81,9 @@ export default function ImpactSection() {
           </AnimatePresence>
         </div>
       </div>
+
+      {/* ✅ Subtle bottom blend for next section (white fade only) */}
+      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-b from-transparent to-white z-[1]" />
     </section>
   )
 }

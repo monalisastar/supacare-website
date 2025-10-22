@@ -36,3 +36,14 @@ body {
 .about-left-curve {
   clip-path: ellipse(140% 100% at 0% 50%);
 }
+:root {
+  --background: transparent !important;
+  --foreground: #ffffff !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  overflow-x: hidden;
+}

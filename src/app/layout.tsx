@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavbarFooterLayout from "./NavbarFooterLayout";
 import { CartProvider } from "@/context/CartContext";
-import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"; // ✅ new import
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"; // ✅ Floating WhatsApp Button
 
 // ✅ Fonts
 const geistSans = Geist({
@@ -63,13 +63,13 @@ export const metadata: Metadata = {
   },
 };
 
-// ✅ Viewport settings
+// ✅ Viewport
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
 
-// ✅ Root layout
+// ✅ Root Layout
 export default function RootLayout({
   children,
 }: {
@@ -77,14 +77,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      {/* ✅ Body set to fully transparent to remove white gap */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-transparent`}
       >
-        {/* ✅ Global cart state */}
         <CartProvider>
           <NavbarFooterLayout>{children}</NavbarFooterLayout>
 
-          {/* ✅ Floating WhatsApp Button (always visible) */}
+          {/* ✅ Floating WhatsApp button stays visible globally */}
           <FloatingWhatsAppButton />
         </CartProvider>
       </body>

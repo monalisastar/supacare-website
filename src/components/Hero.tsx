@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { ChevronDown } from "lucide-react";
-import { useSession, signOut } from "next-auth/react";
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
 
 type HeroData = {
   title?: string;
@@ -15,24 +15,23 @@ type HeroData = {
 };
 
 const defaultData: HeroData = {
-  title: "Revitalizing Nature, Empowering Communities",
+  title: 'Revitalizing Nature, Empowering Communities',
   taglines: [
-    "Building a greener tomorrow through community action",
-    "Nature-first solutions for real-world impact",
-    "From waste to wealth: Sustainable change starts here",
+    'Building a greener tomorrow through community action',
+    'Nature-first solutions for real-world impact',
+    'From waste to wealth: Sustainable change starts here',
   ],
-  backgroundVideo: "/videos/hero-video.webm",
-  ctaText: "Explore Our Work",
-  ctaLink: "/projects",
+  backgroundVideo: '/videos/hero-video.webm',
+  ctaText: 'Explore Our Work',
+  ctaLink: '/projects',
 };
 
 export default function Hero() {
   const [data] = useState<HeroData>(defaultData);
   const [current, setCurrent] = useState(0);
-  const [navbarHeight, setNavbarHeight] = useState(0);
-
   const { data: session } = useSession();
 
+  // cycle through taglines
   useEffect(() => {
     if (!data?.taglines) return;
     const interval = setInterval(() => {
@@ -41,36 +40,20 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [data]);
 
-  useEffect(() => {
-    const nav = document.querySelector("nav") as HTMLElement | null;
-    if (nav) {
-      setNavbarHeight(nav.offsetHeight);
-    }
-
-    const handleResize = () => {
-      if (nav) setNavbarHeight(nav.offsetHeight);
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   const scrollToNextSection = () => {
-    const section = document.getElementById("next-section");
+    const section = document.getElementById('next-section');
     if (section) {
       const y =
         section.getBoundingClientRect().top +
         window.scrollY -
-        (document.querySelector("nav")?.offsetHeight || 0);
-
-      window.scrollTo({ top: y, behavior: "smooth" });
+        (document.querySelector('nav')?.offsetHeight || 0);
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
   return (
     <section
-      className="relative min-h-[90vh] snap-start w-full overflow-hidden text-white"
-      style={{ paddingTop: navbarHeight }}
+      className="relative w-full min-h-[110vh] flex flex-col justify-end pb-32 overflow-hidden text-white bg-transparent pt-24"
     >
       {/* Background Video */}
       {data.backgroundVideo && (
@@ -89,7 +72,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 z-10" />
 
       {/* Content */}
-      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-20">
+      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-32">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -144,14 +127,14 @@ export default function Hero() {
       {/* Scroll Down Icon */}
       <div
         onClick={scrollToNextSection}
-        className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 z-30 cursor-pointer"
+        className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-30 cursor-pointer"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
           className="text-white opacity-80"
         >
-          <ChevronDown size={32} />
+          <ChevronDown size={36} />
         </motion.div>
       </div>
     </section>

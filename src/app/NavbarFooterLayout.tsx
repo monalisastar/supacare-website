@@ -8,31 +8,40 @@ import SessionProviderWrapper from "./providers/SessionProviderWrapper";
 import { usePathname } from "next/navigation";
 
 export default function NavbarFooterLayout({ children }: { children: React.ReactNode }) {
-  const [offsetTop, setOffsetTop] = useState(112); // fallback height
+  const [offsetTop, setOffsetTop] = useState(0);
   const pathname = usePathname();
 
   useEffect(() => {
     const navbar = document.querySelector<HTMLElement>("[data-navbar]");
     if (navbar) {
       setOffsetTop(navbar.offsetHeight);
-      const ro = new ResizeObserver(() => {
-        setOffsetTop(navbar.offsetHeight);
-      });
+      const ro = new ResizeObserver(() => setOffsetTop(navbar.offsetHeight));
       ro.observe(navbar);
       return () => ro.disconnect();
     }
   }, []);
 
+  const isDashboard = pathname?.startsWith("/dashboard");
+
   return (
     <SessionProviderWrapper>
-      {/* ✅ Hide Navbar + Footer only on dashboard routes */}
-      {!pathname?.startsWith("/dashboard") && <Navbar />}
+      {/* ✅ Navbar (only once, not duplicated) */}
+      {!isDashboard && <Navbar />}
 
-      <main style={{ marginTop: offsetTop, transition: "margin-top 0.2s ease-in-out" }}>
+      {/* ✅ Transparent section under navbar */}
+      <main
+        style={{
+          marginTop: offsetTop,
+          transition: "margin-top 0.2s ease-in-out",
+          backgroundColor: "transparent",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
         {children}
       </main>
 
-      {!pathname?.startsWith("/dashboard") && <Footer />}
+      {!isDashboard && <Footer />}
 
       <Toaster position="top-right" />
     </SessionProviderWrapper>
