@@ -10,7 +10,7 @@ export default function FloatingWhatsAppButton() {
       href={whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-all transform hover:scale-110 z-50 flex items-center justify-center w-14 h-14 animate-fade-in"
+      className="hidden md:flex fixed bottom-6 right-6 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-all transform hover:scale-110 z-50 w-14 h-14 items-center justify-center animate-fade-in"
     >
       <MessageCircle size={28} />
     </a>
