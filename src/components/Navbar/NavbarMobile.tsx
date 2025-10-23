@@ -44,150 +44,162 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
 
   return (
     <div className="md:hidden">
-      {/* 📱 Top bar: only the hamburger menu (no Register/Login/Cart) */}
-      <div className="flex items-center justify-end px-6 py-4 text-white">
+      {/* 📱 Top bar: hamburger only */}
+      <div className="flex items-center justify-end px-6 py-4 text-white z-[70] relative">
         <button onClick={() => setMenuOpen(!menuOpen)} className="text-white">
           {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* 📜 Mobile Dropdown Menu */}
+      {/* 📜 Full-screen overlay dropdown */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25 }}
-            className="bg-[#F4B940] text-green-700 border-t border-orange-200/40 px-6 py-4 space-y-4"
-          >
-            <Link href="/" className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg">
-              Home
-            </Link>
+          <>
+            {/* Semi-transparent overlay to block background and logo */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black z-[70]"
+              onClick={() => setMenuOpen(false)}
+            />
 
-            {/* About Dropdown */}
-            <div>
-              <button
-                onClick={toggleAbout}
-                className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-700 px-3 py-2 rounded-lg"
-              >
-                About Us
-                <ChevronDown
-                  size={16}
-                  className={`${aboutOpen ? 'rotate-180' : ''} transition-transform`}
-                />
-              </button>
-              <AnimatePresence>
-                {aboutOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="pl-4 mt-2 space-y-1"
-                  >
-                    <Link href="/about" className="block text-sm">Who We Are</Link>
-                    <Link href="/team" className="block text-sm">Our Team</Link>
-                    <Link href="/careers" className="block text-sm">Careers</Link>
-                    <Link href="/contact" className="block text-sm">Contact</Link>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Services Dropdown */}
-            <div>
-              <button
-                onClick={toggleServices}
-                className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-700 px-3 py-2 rounded-lg"
-              >
-                Services & Products
-                <ChevronDown
-                  size={16}
-                  className={`${servicesOpen ? 'rotate-180' : ''} transition-transform`}
-                />
-              </button>
-              <AnimatePresence>
-                {servicesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="pl-4 mt-2 space-y-1"
-                  >
-                    <Link href="/services" className="block text-sm font-medium text-green-800">
-                      🌿 View All Services
-                    </Link>
-                    {services.map(({ name, href, icon }) => (
-                      <Link
-                        key={href}
-                        href={href}
-                        className="flex items-center gap-2 text-sm py-1"
-                      >
-                        {icon}
-                        {name}
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Static nav links */}
-            {navItems.map(item => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg"
-              >
-                {item.name}
-              </Link>
-            ))}
-
-            {/* CTA */}
-            <Link
-              href="/contact"
-              className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-4 text-center transition"
+            {/* Actual menu content */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.25 }}
+              className="fixed top-0 left-0 w-full h-full overflow-y-auto bg-[#F4B940] text-green-800 z-[80] px-6 py-6 space-y-4"
             >
-              Request Service
-            </Link>
+              <Link href="/" className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg">
+                Home
+              </Link>
 
-            {/* Auth / Dashboard Options */}
-            {!isAuthenticated && (
-              <>
-                <Link
-                  href="/auth/register"
-                  className="block bg-white text-green-700 px-4 py-2 rounded-lg mt-2 text-center"
-                >
-                  Register
-                </Link>
-                <Link
-                  href="/auth/login"
-                  className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-2 text-center"
-                >
-                  Login
-                </Link>
-              </>
-            )}
-
-            {isAuthenticated && (
-              <div className="pt-2 border-t border-orange-300 mt-4 space-y-2">
-                <Link
-                  href="/dashboard"
-                  className="block text-center bg-white text-green-700 px-4 py-2 rounded-lg"
-                >
-                  Dashboard
-                </Link>
+              {/* About Dropdown */}
+              <div>
                 <button
-                  onClick={() => signOut({ callbackUrl: '/' })}
-                  className="block w-full text-center bg-red-600 text-white px-4 py-2 rounded-lg"
+                  onClick={toggleAbout}
+                  className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-700 px-3 py-2 rounded-lg"
                 >
-                  Logout
+                  About Us
+                  <ChevronDown
+                    size={16}
+                    className={`${aboutOpen ? 'rotate-180' : ''} transition-transform`}
+                  />
                 </button>
+                <AnimatePresence>
+                  {aboutOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="pl-4 mt-2 space-y-1"
+                    >
+                      <Link href="/about" className="block text-sm">Who We Are</Link>
+                      <Link href="/team" className="block text-sm">Our Team</Link>
+                      <Link href="/careers" className="block text-sm">Careers</Link>
+                      <Link href="/contact" className="block text-sm">Contact</Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            )}
-          </motion.div>
+
+              {/* Services Dropdown */}
+              <div>
+                <button
+                  onClick={toggleServices}
+                  className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-700 px-3 py-2 rounded-lg"
+                >
+                  Services & Products
+                  <ChevronDown
+                    size={16}
+                    className={`${servicesOpen ? 'rotate-180' : ''} transition-transform`}
+                  />
+                </button>
+                <AnimatePresence>
+                  {servicesOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="pl-4 mt-2 space-y-1"
+                    >
+                      <Link href="/services" className="block text-sm font-medium text-green-800">
+                        🌿 View All Services
+                      </Link>
+                      {services.map(({ name, href, icon }) => (
+                        <Link
+                          key={href}
+                          href={href}
+                          className="flex items-center gap-2 text-sm py-1"
+                        >
+                          {icon}
+                          {name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Static nav links */}
+              {navItems.map(item => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg"
+                >
+                  {item.name}
+                </Link>
+              ))}
+
+              {/* CTA */}
+              <Link
+                href="/contact"
+                className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-4 text-center transition"
+              >
+                Request Service
+              </Link>
+
+              {/* Auth / Dashboard Options */}
+              {!isAuthenticated && (
+                <>
+                  <Link
+                    href="/auth/register"
+                    className="block bg-white text-green-700 px-4 py-2 rounded-lg mt-2 text-center"
+                  >
+                    Register
+                  </Link>
+                  <Link
+                    href="/auth/login"
+                    className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-2 text-center"
+                  >
+                    Login
+                  </Link>
+                </>
+              )}
+
+              {isAuthenticated && (
+                <div className="pt-2 border-t border-orange-300 mt-4 space-y-2">
+                  <Link
+                    href="/dashboard"
+                    className="block text-center bg-white text-green-700 px-4 py-2 rounded-lg"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    className="block w-full text-center bg-red-600 text-white px-4 py-2 rounded-lg"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
