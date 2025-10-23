@@ -16,7 +16,7 @@ export default function Navbar() {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  // ✅ Detect scroll (for future styling if needed)
+  // ✅ Detect scroll (optional for later styling)
   useEffect(() => {
     if (typeof window === 'undefined') return
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
@@ -54,8 +54,9 @@ export default function Navbar() {
         }`}
       >
         {/* 🌿 Top Row: Logo (left) and UserMenu (right on desktop only) */}
-        <div className="flex items-center justify-between w-full px-6 pt-4 md:pt-0 absolute top-0 left-0 z-[60]">
-          
+        <div
+          className="flex items-center justify-between w-full px-6 pt-4 md:pt-0 absolute top-0 left-0 z-[60]"
+        >
           {/* ✅ Logo (always visible) */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -89,13 +90,13 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* 🟡 Desktop Navigation (unchanged) */}
+        {/* 🟡 Desktop Navigation */}
         <div className="hidden md:block relative mt-[130px] z-[40]">
           <NavbarDesktop />
         </div>
 
-        {/* 📱 Mobile Navigation (unchanged, hamburger + menu) */}
-        <div className="md:hidden">
+        {/* 📱 Mobile Navigation (hamburger + menu only) */}
+        <div className="md:hidden flex items-center justify-between px-6 pt-[90px] z-[50]">
           <NavbarMobile menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         </div>
       </header>
