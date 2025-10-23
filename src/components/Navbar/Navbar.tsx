@@ -16,6 +16,7 @@ export default function Navbar() {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
+  // ✅ Detect scroll (for future styling if needed)
   useEffect(() => {
     if (typeof window === 'undefined') return
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
@@ -23,12 +24,15 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // ✅ Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false)
   }, [pathname])
 
+  // 🚫 Hide navbar on dashboard routes
   if (pathname?.startsWith('/dashboard')) return null
 
+  // ✅ Pages with bright backgrounds
   const brightPages = ['/', '/projects']
   const isBright = brightPages.includes(pathname)
 
@@ -49,11 +53,10 @@ export default function Navbar() {
             : 'bg-white/95 backdrop-blur-sm border-b border-gray-100'
         }`}
       >
-        {/* 🌿 Top Row (Logo left, UserMenu right) */}
-        <div
-          className="flex items-center justify-between w-full px-6 pt-4 md:pt-0 absolute top-0 left-0 z-[60]"
-        >
-          {/* ✅ Logo (left-aligned) */}
+        {/* 🌿 Top Row: Logo (left) and UserMenu (right on desktop only) */}
+        <div className="flex items-center justify-between w-full px-6 pt-4 md:pt-0 absolute top-0 left-0 z-[60]">
+          
+          {/* ✅ Logo (always visible) */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -65,7 +68,7 @@ export default function Navbar() {
                 alt="Supacare Solutions Logo"
                 width={400}
                 height={180}
-                className="object-contain w-auto h-[90px] md:h-[130px] lg:h-[150px]"
+                className="object-contain w-auto h-[80px] md:h-[130px] lg:h-[150px]"
                 style={{
                   filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.3))',
                 }}
@@ -74,9 +77,9 @@ export default function Navbar() {
             </Link>
           </motion.div>
 
-          {/* ✅ User Menu (right-aligned) */}
+          {/* ✅ User Menu (desktop only) */}
           <div
-            className={`flex items-center ${
+            className={`hidden md:flex items-center ${
               isBright
                 ? 'text-yellow-400 hover:text-yellow-300 transition-colors drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]'
                 : 'text-green-800 hover:text-green-600 transition-colors'
@@ -91,7 +94,7 @@ export default function Navbar() {
           <NavbarDesktop />
         </div>
 
-        {/* 📱 Mobile Navigation (unchanged) */}
+        {/* 📱 Mobile Navigation (unchanged, hamburger + menu) */}
         <div className="md:hidden">
           <NavbarMobile menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         </div>
