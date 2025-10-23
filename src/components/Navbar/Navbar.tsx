@@ -16,7 +16,6 @@ export default function Navbar() {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  // ✅ Detect scroll for optional styling (if needed later)
   useEffect(() => {
     if (typeof window === 'undefined') return
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
@@ -24,15 +23,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // ✅ Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false)
   }, [pathname])
 
-  // 🚫 Hide navbar on dashboard routes
   if (pathname?.startsWith('/dashboard')) return null
 
-  // ✅ Pages with dark or image backgrounds
   const brightPages = ['/', '/projects']
   const isBright = brightPages.includes(pathname)
 
@@ -53,48 +49,49 @@ export default function Navbar() {
             : 'bg-white/95 backdrop-blur-sm border-b border-gray-100'
         }`}
       >
-        {/* 🌿 Floating User Menu (Register / Login / Shop) */}
+        {/* 🌿 Top Row (Logo left, UserMenu right) */}
         <div
-          className={`absolute top-0 right-6 flex justify-end items-center mt-[40px] z-[60] ${
-            isBright
-              ? 'text-yellow-400 hover:text-yellow-300 transition-colors drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]'
-              : 'text-green-800 hover:text-green-600 transition-colors'
-          }`}
+          className="flex items-center justify-between w-full px-6 pt-4 md:pt-0 absolute top-0 left-0 z-[60]"
         >
-          <UserMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+          {/* ✅ Logo (left-aligned) */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/images/supalogo.png"
+                alt="Supacare Solutions Logo"
+                width={400}
+                height={180}
+                className="object-contain w-auto h-[90px] md:h-[130px] lg:h-[150px]"
+                style={{
+                  filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.3))',
+                }}
+                priority
+              />
+            </Link>
+          </motion.div>
+
+          {/* ✅ User Menu (right-aligned) */}
+          <div
+            className={`flex items-center ${
+              isBright
+                ? 'text-yellow-400 hover:text-yellow-300 transition-colors drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]'
+                : 'text-green-800 hover:text-green-600 transition-colors'
+            }`}
+          >
+            <UserMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+          </div>
         </div>
 
-        {/* ✅ Floating Logo */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="absolute top-0 left-8 z-[60]"
-          style={{
-            transform: 'translateY(65px)',
-          }}
-        >
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/supalogo.png"
-              alt="Supacare Solutions Logo"
-              width={400}
-              height={180}
-              className="object-contain w-auto h-[110px] md:h-[130px] lg:h-[150px]"
-              style={{
-                filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.3))',
-              }}
-              priority
-            />
-          </Link>
-        </motion.div>
-
-        {/* 🟡 Desktop Navigation */}
+        {/* 🟡 Desktop Navigation (unchanged) */}
         <div className="hidden md:block relative mt-[130px] z-[40]">
           <NavbarDesktop />
         </div>
 
-        {/* 📱 Mobile Navigation */}
+        {/* 📱 Mobile Navigation (unchanged) */}
         <div className="md:hidden">
           <NavbarMobile menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         </div>
