@@ -50,12 +50,11 @@ export default function AnnouncementBar() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -50, opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full bg-blue-600 text-white px-4 py-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 fixed top-0 left-0 z-[60] shadow-md text-center"
+          className="w-full bg-transparent text-white px-4 py-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 fixed top-0 left-0 z-[60] text-center backdrop-blur-0"
         >
           <span className="text-sm md:text-base leading-snug">
             {announcement.message}
           </span>
-          {/* ⛔ Removed dismiss button since it's always visible */}
         </motion.div>
       )}
     </AnimatePresence>
