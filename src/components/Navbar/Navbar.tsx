@@ -16,7 +16,6 @@ export default function Navbar() {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  // ✅ Detect scroll (optional for later styling)
   useEffect(() => {
     if (typeof window === 'undefined') return
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
@@ -24,28 +23,24 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // ✅ Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false)
   }, [pathname])
 
-  // 🚫 Hide navbar on dashboard routes
   if (pathname?.startsWith('/dashboard')) return null
 
-  // ✅ Pages with bright backgrounds
   const brightPages = ['/', '/projects']
   const isBright = brightPages.includes(pathname)
 
   return (
     <>
-      {/* ✅ Announcement Bar — Only show on homepage */}
+      {/* ✅ Announcement Bar — Only on homepage */}
       {isHome && (
         <div className="hidden md:block">
           <AnnouncementBar />
         </div>
       )}
 
-      {/* 🧭 Main Navbar */}
       <header
         className={`fixed w-full z-50 transition-all ${
           isBright
@@ -53,11 +48,10 @@ export default function Navbar() {
             : 'bg-white/95 backdrop-blur-sm border-b border-gray-100'
         }`}
       >
-        {/* 🌿 Top Row: Logo (left) and UserMenu (right on desktop only) */}
-        <div
-          className="flex items-center justify-between w-full px-6 pt-4 md:pt-0 absolute top-0 left-0 z-[60]"
-        >
-          {/* ✅ Logo (always visible) */}
+        {/* 🌿 Top Row (shared for all screens) */}
+        <div className="flex items-center justify-between w-full px-6 pt-3 md:pt-0 absolute top-0 left-0 z-[60]">
+
+          {/* ✅ Logo on the left */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -69,16 +63,17 @@ export default function Navbar() {
                 alt="Supacare Solutions Logo"
                 width={400}
                 height={180}
-                className="object-contain w-auto h-[80px] md:h-[130px] lg:h-[150px]"
+                className="object-contain w-auto h-[110px] sm:h-[120px] md:h-[130px] lg:h-[150px]"
                 style={{
                   filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.3))',
+                  marginTop: '4px',
                 }}
                 priority
               />
             </Link>
           </motion.div>
 
-          {/* ✅ User Menu (desktop only) */}
+          {/* ✅ Desktop user menu on the right */}
           <div
             className={`hidden md:flex items-center ${
               isBright
@@ -88,16 +83,16 @@ export default function Navbar() {
           >
             <UserMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
           </div>
+
+          {/* ✅ Mobile hamburger on the right */}
+          <div className="md:hidden flex items-center justify-end">
+            <NavbarMobile menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+          </div>
         </div>
 
         {/* 🟡 Desktop Navigation */}
         <div className="hidden md:block relative mt-[130px] z-[40]">
           <NavbarDesktop />
-        </div>
-
-        {/* 📱 Mobile Navigation (hamburger + menu only) */}
-        <div className="md:hidden flex items-center justify-between px-6 pt-[90px] z-[50]">
-          <NavbarMobile menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         </div>
       </header>
     </>
