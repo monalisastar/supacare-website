@@ -47,8 +47,9 @@ export default function Projects() {
           We deliver programs that combine community action and eco-friendly innovation.
         </p>
 
-        <div className="mt-6 overflow-x-auto sm:overflow-visible">
-          <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 min-w-[700px] sm:min-w-0">
+        {/* 🌿 Responsive Project Grid */}
+        <div className="mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {projects.map((project, index) => (
               <motion.div
                 key={index}
@@ -56,9 +57,10 @@ export default function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
                 viewport={{ once: true }}
-                className="flex-shrink-0 bg-white/80 backdrop-blur-lg border border-green-100 rounded-lg shadow-md hover:shadow-lg transition w-[280px] sm:w-auto"
+                className="w-full bg-white/80 backdrop-blur-lg border border-green-100 rounded-lg shadow-md hover:shadow-lg transition"
               >
-                <div className="h-48 sm:h-56 relative rounded-t-lg overflow-hidden">
+                {/* Project Image */}
+                <div className="h-52 sm:h-56 relative rounded-t-lg overflow-hidden">
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -66,10 +68,14 @@ export default function Projects() {
                     className="object-cover"
                   />
                 </div>
+
+                {/* Title */}
                 <div className="bg-[#1b4332] text-white px-4 py-2 text-sm font-semibold">
                   🇰🇪 {project.title}
                 </div>
-                <div className="p-3 text-left text-xs sm:text-sm text-gray-800">
+
+                {/* Details */}
+                <div className="p-4 text-left text-xs sm:text-sm text-gray-800">
                   <p className="font-medium text-[#1b4332]">{project.location}</p>
                   <p className="mt-1">{project.description}</p>
                   <Link
@@ -84,7 +90,8 @@ export default function Projects() {
           </div>
         </div>
 
-        <div className="mt-6">
+        {/* 🌿 View All Button */}
+        <div className="mt-10">
           <Link href="/projects">
             <button className="bg-[#fcbf49] text-white font-medium px-6 py-2 rounded-full hover:bg-[#e0ac00] text-sm transition shadow-lg">
               View All Projects
@@ -93,7 +100,7 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* 🌿 Moved gradient behind the content */}
+      {/* 🌿 Decorative gradient behind section */}
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-[#bfeec6]/60 to-green-950/70 z-0" />
     </section>
   )

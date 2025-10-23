@@ -94,16 +94,16 @@ export default function Navbar() {
           <header className="fixed w-full z-50 transition-all">
             {/* 🌿 Transparent Top Navbar */}
             <div
-              className={`absolute top-0 left-0 w-full flex justify-between items-center px-8 py-4 transition-all mt-[40px] ${
+              className={`absolute top-0 left-0 w-full flex justify-between items-center px-6 py-4 transition-all mt-[40px] ${
                 isScrolled ? 'bg-transparent' : 'bg-transparent'
               }`}
               style={{
                 backdropFilter: 'none',
                 backgroundColor: 'transparent',
-                zIndex: 45, // below logo but above background
+                zIndex: 45,
               }}
             >
-              {/* ✅ Transparent Top Buttons */}
+              {/* ✅ Desktop Buttons */}
               <div className="hidden md:flex items-center gap-4 ml-auto mr-6">
                 {isAuthenticated ? (
                   <div className="relative" ref={dropdownRef}>
@@ -165,22 +165,31 @@ export default function Navbar() {
                 </Link>
               </div>
 
-              {/* Mobile Menu Button */}
-              <div className="md:hidden flex items-center">
+              {/* 📱 Mobile Right Section */}
+              <div className="md:hidden flex items-center gap-3">
+                <Link href="/shop" aria-label="Shop" className="text-white hover:text-green-200 transition">
+                  <ShoppingCart size={22} />
+                </Link>
+                <Link href="/auth/register" className="text-white text-sm font-semibold">
+                  Register
+                </Link>
+                <Link href="/auth/login" className="text-white text-sm font-semibold">
+                  Login
+                </Link>
                 <button onClick={() => setMenuOpen(!menuOpen)} className="text-white">
                   {menuOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
               </div>
             </div>
 
-            {/* ✅ Independent Floating Logo */}
+            {/* ✅ Floating Logo */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               className="absolute top-0 left-8 z-[60]"
               style={{
-                transform: 'translateY(65px)', // logo position independent of buttons
+                transform: 'translateY(65px)',
               }}
             >
               <Link href="/" className="flex items-center">
@@ -198,8 +207,8 @@ export default function Navbar() {
               </Link>
             </motion.div>
 
-            {/* 🟡 Main Navbar */}
-            <div className="relative mt-[130px] bg-[#F4B940] border-t border-orange-200/40 z-[40]">
+            {/* 🟡 Main Navbar — hidden on mobile */}
+            <div className="hidden md:block relative mt-[130px] bg-[#F4B940] border-t border-orange-200/40 z-[40]">
               <div className="flex justify-center">
                 <nav ref={dropdownRef} className="flex items-center gap-4 text-sm font-semibold py-2">
                   <Link href="/" className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg transition shadow">
