@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
 
-// ✅ Add prop types
 type UserMenuProps = {
   menuOpen: boolean
   setMenuOpen: Dispatch<SetStateAction<boolean>>
@@ -32,7 +31,6 @@ export default function UserMenu({ menuOpen, setMenuOpen }: UserMenuProps) {
     return () => document.removeEventListener('click', handleClickOutside)
   }, [])
 
-  // ✅ Dynamic colors based on route
   const baseBtn = isHome
     ? 'border-white text-white hover:bg-white/10'
     : 'border-green-800 text-green-800 hover:bg-green-50'
@@ -40,27 +38,33 @@ export default function UserMenu({ menuOpen, setMenuOpen }: UserMenuProps) {
     ? 'text-white hover:text-green-100'
     : 'text-green-800 hover:text-green-600'
 
-  // ✅ Optional: close mobile menu when user interacts
   const handleInteraction = () => {
     if (menuOpen) setMenuOpen(false)
   }
 
   return (
-    <div className="flex items-center gap-4 ml-auto mr-6">
+    <div
+      className="flex items-center flex-nowrap gap-1 sm:gap-2 md:gap-4 ml-auto mr-2 md:mr-6"
+      style={{
+        overflow: 'hidden',
+        flexShrink: 1,
+        maxWidth: '80vw', // prevent overflow on smaller screens
+      }}
+    >
       {/* 👤 User or Auth Buttons */}
       {!isAuthenticated ? (
         <>
           <Link
             href="/auth/register"
             onClick={handleInteraction}
-            className={`border px-4 py-2 rounded-lg transition ${baseBtn}`}
+            className={`border px-2 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm md:text-base transition ${baseBtn}`}
           >
             Register
           </Link>
           <Link
             href="/auth/login"
             onClick={handleInteraction}
-            className={`border px-4 py-2 rounded-lg transition ${baseBtn}`}
+            className={`border px-2 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm md:text-base transition ${baseBtn}`}
           >
             Login
           </Link>
@@ -69,7 +73,7 @@ export default function UserMenu({ menuOpen, setMenuOpen }: UserMenuProps) {
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`flex items-center gap-2 border px-4 py-2 rounded-lg transition ${baseBtn}`}
+            className={`flex items-center gap-1 sm:gap-2 border px-2 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm md:text-base transition ${baseBtn}`}
           >
             <User size={18} />
             <span>{session?.user?.name ?? 'My Account'}</span>
@@ -117,7 +121,7 @@ export default function UserMenu({ menuOpen, setMenuOpen }: UserMenuProps) {
       <Link
         href="/shop"
         onClick={handleInteraction}
-        className={`border px-4 py-2 rounded-lg transition ${baseBtn}`}
+        className={`border px-2 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm md:text-base transition ${baseBtn}`}
       >
         Visit Shop
       </Link>
@@ -128,7 +132,7 @@ export default function UserMenu({ menuOpen, setMenuOpen }: UserMenuProps) {
         aria-label="Cart"
         className={`${iconColor} transition`}
       >
-        <ShoppingCart size={22} />
+        <ShoppingCart size={20} />
       </Link>
     </div>
   )
