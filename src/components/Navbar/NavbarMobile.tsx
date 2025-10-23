@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
-import { usePathname } from 'next/navigation' // ✅ added
+import { usePathname } from 'next/navigation'
 
 type NavbarMobileProps = {
   menuOpen: boolean
@@ -34,7 +34,6 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
   const isAuthenticated = status === 'authenticated'
   const pathname = usePathname()
 
-  // ✅ Detect bright pages (white background)
   const brightPages = ['/', '/projects']
   const isBright = brightPages.includes(pathname)
 
@@ -51,7 +50,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
   return (
     <div className="md:hidden">
       {/* 📱 Top bar: hamburger color adapts to background */}
-      <div className="flex items-center justify-end px-6 py-4 z-[70] relative">
+      <div className="flex items-center justify-end px-6 py-4 z-[100] relative">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className={`transition-colors ${
@@ -66,12 +65,12 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Semi-transparent overlay */}
+            {/* Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.6 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black z-[70]"
+              className="fixed inset-0 bg-black z-[9997]"
               onClick={() => setMenuOpen(false)}
             />
 
@@ -81,7 +80,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.25 }}
-              className="fixed top-0 left-0 w-full h-full overflow-y-auto bg-[#F4B940] text-green-800 z-[80] px-6 py-6 space-y-4"
+              className="fixed top-0 left-0 w-full h-full overflow-y-auto bg-[#F4B940] text-green-800 z-[9999] px-6 py-6 space-y-4"
             >
               <Link href="/" className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg">
                 Home
@@ -175,7 +174,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                 Request Service
               </Link>
 
-              {/* Auth / Dashboard Options */}
+              {/* Auth / Dashboard */}
               {!isAuthenticated && (
                 <>
                   <Link
