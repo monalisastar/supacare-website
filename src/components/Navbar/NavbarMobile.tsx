@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
+import { usePathname } from 'next/navigation' // ✅ added
 
 type NavbarMobileProps = {
   menuOpen: boolean
@@ -31,6 +32,11 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
   const [servicesOpen, setServicesOpen] = useState(false)
   const { data: session, status } = useSession()
   const isAuthenticated = status === 'authenticated'
+  const pathname = usePathname()
+
+  // ✅ Detect bright pages (white background)
+  const brightPages = ['/', '/projects']
+  const isBright = brightPages.includes(pathname)
 
   const toggleAbout = () => {
     setAboutOpen(!aboutOpen)
@@ -44,9 +50,14 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
 
   return (
     <div className="md:hidden">
-      {/* 📱 Top bar: hamburger only */}
-      <div className="flex items-center justify-end px-6 py-4 text-white z-[70] relative">
-        <button onClick={() => setMenuOpen(!menuOpen)} className="text-white">
+      {/* 📱 Top bar: hamburger color adapts to background */}
+      <div className="flex items-center justify-end px-6 py-4 z-[70] relative">
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className={`transition-colors ${
+            isBright ? 'text-yellow-400 hover:text-yellow-300' : 'text-green-800 hover:text-green-600'
+          }`}
+        >
           {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
@@ -55,7 +66,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Semi-transparent overlay to block background and logo */}
+            {/* Semi-transparent overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.6 }}
@@ -64,7 +75,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
               onClick={() => setMenuOpen(false)}
             />
 
-            {/* Actual menu content */}
+            {/* Dropdown menu content */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
