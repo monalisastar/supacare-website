@@ -4,12 +4,11 @@ import { useState, Dispatch, SetStateAction } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ChevronDown, Menu, X,
-  Leaf, Trash2, ListChecks, RefreshCcw, ShoppingCart
+  Leaf, Trash2, ListChecks, RefreshCcw
 } from 'lucide-react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 
-// ✅ Props expected from Navbar parent
 type NavbarMobileProps = {
   menuOpen: boolean
   setMenuOpen: Dispatch<SetStateAction<boolean>>
@@ -45,20 +44,8 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
 
   return (
     <div className="md:hidden">
-      {/* 📱 Top Row */}
-      <div className="flex items-center justify-between px-6 py-4 text-white">
-        <div className="flex items-center gap-3">
-          <Link href="/shop" aria-label="Shop" className="text-white hover:text-green-200 transition">
-            <ShoppingCart size={22} />
-          </Link>
-          {!isAuthenticated && (
-            <>
-              <Link href="/auth/register" className="text-white text-sm font-semibold">Register</Link>
-              <Link href="/auth/login" className="text-white text-sm font-semibold">Login</Link>
-            </>
-          )}
-        </div>
-
+      {/* 📱 Top bar: only the hamburger menu (no Register/Login/Cart) */}
+      <div className="flex items-center justify-end px-6 py-4 text-white">
         <button onClick={() => setMenuOpen(!menuOpen)} className="text-white">
           {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
