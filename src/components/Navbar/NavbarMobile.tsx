@@ -70,7 +70,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.6 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black z-[9997]"
+              className="fixed inset-0 bg-black z-[10000]" // 🟩 highest layer
               onClick={() => setMenuOpen(false)}
             />
 
@@ -80,7 +80,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.25 }}
-              className="fixed top-0 left-0 w-full h-full overflow-y-auto bg-[#F4B940] text-green-800 z-[9999] px-6 py-6 space-y-4"
+              className="fixed top-0 left-0 w-full h-full overflow-y-auto bg-[#F4B940] text-green-800 z-[10001] px-6 py-6 space-y-4" // 🟩 slightly higher than overlay
             >
               <Link href="/" className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg">
                 Home
