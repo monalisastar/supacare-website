@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export default function AboutHero() {
-  const [navbarHeight, setNavbarHeight] = useState(0);
+  const [navbarHeight, setNavbarHeight] = useState<number>(100); // default fallback
 
   useEffect(() => {
     const updateNavbarHeight = () => {
@@ -14,68 +14,46 @@ export default function AboutHero() {
 
     updateNavbarHeight();
     window.addEventListener("resize", updateNavbarHeight);
-
     return () => window.removeEventListener("resize", updateNavbarHeight);
   }, []);
 
   return (
     <section
-      className="relative flex flex-col-reverse md:flex-row items-center justify-between gap-10 px-6 md:px-20 py-16 bg-green-50"
-      style={{ paddingTop: `calc(${navbarHeight}px + 4rem)` }} 
-      // 4rem = py-16 top padding from Tailwind
+      className="relative flex items-center justify-center text-center md:text-left overflow-hidden"
+      style={{
+        paddingTop: `${navbarHeight + 140}px`,
+        paddingBottom: "160px",
+        minHeight: "92vh",
+      }}
     >
-      {/* Leafy vertical accent strip aligned with navbar height */}
-      <div
-        aria-hidden="true"
-        className="hidden md:block absolute top-0 left-0 w-24 bg-gradient-to-b from-green-700 to-green-800 rounded-tr-xl rounded-br-xl shadow-lg z-0"
-        style={{
-          height: `${navbarHeight}px`,
-          clipPath:
-            "polygon(0 0, 100% 0, 100% 100%, 0% 100%, 30% 70%, 50% 50%, 30% 30%)",
-        }}
-      />
+      {/* ✅ Background Image */}
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/images/about-hero.png"
+          alt="Supacare community fieldwork"
+          fill
+          priority
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/70 via-green-800/60 to-green-700/50" />
+      </div>
 
-      {/* Leafy vertical accent strip extending below navbar */}
-      <div
-        aria-hidden="true"
-        className="hidden md:block absolute left-0 w-24 bg-gradient-to-b from-green-600 to-green-700 shadow-lg z-0"
-        style={{
-          top: `${navbarHeight}px`,
-          height: `calc(100% - ${navbarHeight}px)`,
-          clipPath:
-            "polygon(0 0, 100% 0, 100% 100%, 0% 100%, 30% 70%, 50% 50%, 30% 30%)",
-        }}
-      />
-
-      {/* Text Section */}
-      <div className="relative flex-1 space-y-6 text-center md:text-left z-10 md:pl-16 lg:pl-24">
-        <h1 className="text-4xl md:text-5xl font-bold text-green-800">
-          OUR STORY
+      {/* ✅ Text Content */}
+      <div className="relative z-10 max-w-3xl px-6 md:px-20">
+        <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg mb-6 leading-tight">
+          Transforming Waste into Wellness For Communities and Climate
         </h1>
-        <p className="text-lg text-green-900 max-w-xl mx-auto md:mx-0">
+        <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed">
           Supacare Solutions is transforming waste into wellness through
           community-powered programs, clean cooking, composting, and
           climate-smart practices across Kenya.
         </p>
         <a
           href="/projects"
-          className="inline-block bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-full transition"
+          className="inline-block bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full transition backdrop-blur-sm shadow-md"
         >
           See Our Work
         </a>
-      </div>
-
-      {/* Image Section */}
-      <div className="relative flex-1 w-full max-w-md z-10">
-        <div className="w-full h-96 overflow-hidden rounded-[40%_60%_60%_40%/60%_40%_60%_40%] shadow-lg">
-          <Image
-            src="/images/about-hero.png"
-            alt="Supacare community fieldwork"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
       </div>
     </section>
   );

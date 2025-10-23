@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 
 type Announcement = {
   message: string
@@ -14,6 +15,8 @@ export default function AnnouncementBar() {
   const [isVisible, setIsVisible] = useState(true)
   const [announcement, setAnnouncement] = useState<Announcement | null>(null)
   const barRef = useRef<HTMLDivElement | null>(null)
+  const pathname = usePathname()
+  const isHome = pathname === '/'
 
   // ✅ Static/fallback announcement
   useEffect(() => {
@@ -26,8 +29,9 @@ export default function AnnouncementBar() {
     setAnnouncement(fallbackAnnouncement)
   }, [])
 
-  // ✅ Shift page down by bar height when visible
+  // ✅ Shift page down by bar height when visible (only if home)
   useEffect(() => {
+    if (!isHome) return
     if (isVisible && barRef.current) {
       document.body.style.paddingTop = `${barRef.current.offsetHeight}px`
     } else {
@@ -36,9 +40,10 @@ export default function AnnouncementBar() {
     return () => {
       document.body.style.paddingTop = '0px'
     }
-  }, [isVisible])
+  }, [isVisible, isHome])
 
-  if (!announcement) return null
+  // ✅ Only render the bar on homepage
+  if (!isHome || !announcement) return null
 
   return (
     <AnimatePresence>
@@ -50,7 +55,7 @@ export default function AnnouncementBar() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -50, opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full bg-transparent text-white px-4 py-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 fixed top-0 left-0 z-[60] text-center backdrop-blur-0"
+          className="w-full px-4 py-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 fixed top-0 left-0 z-[60] text-center transition-all duration-500 bg-transparent text-white backdrop-blur-0"
         >
           <span className="text-sm md:text-base leading-snug">
             {announcement.message}

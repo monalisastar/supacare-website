@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from '@/components/Navbar'
+
 import Footer from "../components/Footer";
 import { Toaster } from "react-hot-toast";
 import SessionProviderWrapper from "./providers/SessionProviderWrapper";

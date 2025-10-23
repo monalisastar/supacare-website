@@ -3,60 +3,78 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+/**
+ * OUR STORY SECTION
+ * - Full background image (always visible)
+ * - Text sits on the left half
+ * - Heading matches navbar yellow
+ */
 export default function OurStory() {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-between gap-10 px-6 md:px-20 py-20 bg-white">
-      {/* Image Section on Left */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        viewport={{ once: true }}
-        className="flex-1 w-full max-w-md relative"
-      >
-        <div
-          className="w-full h-96 overflow-hidden shadow-lg"
-          style={{
-            clipPath:
-              "polygon(50% 0%, 80% 20%, 100% 50%, 80% 80%, 50% 100%, 20% 80%, 0% 50%, 20% 20%)",
-            filter: "drop-shadow(0 4px 6px rgba(34, 139, 34, 0.3))", // subtle green shadow
-          }}
-        >
-          <Image
-            src="/images/our-story.png"
-            alt="Supacare composting fieldwork"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      </motion.div>
+    <section
+      id="our-story"
+      className="relative flex items-center justify-start
+                 overflow-hidden min-h-screen w-full
+                 bg-black text-white scroll-smooth"
+      style={{
+        margin: 0,
+        paddingTop: "0",
+        paddingBottom: "0",
+      }}
+    >
+      {/* ✅ Full background image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/our-story.png"
+          alt="Supacare composting fieldwork"
+          fill
+          priority
+          className="object-cover object-center opacity-90"
+        />
+        {/* Soft gradient overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-transparent" />
+      </div>
 
-      {/* Text Section on Right */}
+      {/* ✅ Left text block */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className="flex-1 space-y-6 text-center md:text-left"
+        className="relative z-10 w-full md:w-1/2 px-6 md:px-12 lg:px-20 py-24 space-y-6"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-green-800">
-          Born from Urgency. Built on Purpose.
+        <h2
+          className="text-3xl md:text-4xl font-semibold mb-4"
+          style={{ color: "#f4b400" }} // ✅ navbar yellow tone
+        >
+          Who We Are
         </h2>
-        <p className="text-lg text-gray-800 max-w-xl mx-auto md:mx-0">
-          Supacare began where most others looked away — in the overlooked
-          alleys, waste sites, and underserved communities. We saw not just
-          problems, but possibilities: the opportunity to transform waste into
-          dignity, and action into long-term
-          climate solutions.
+
+        <p className="text-lg md:text-xl leading-relaxed text-justify">
+          Supacare Solutions is a climate innovation company driving circular,
+          low-carbon transformation across Africa. We turn community waste,
+          clean energy, and sustainability initiatives into measurable climate
+          impact through verified carbon projects, environmental consultancy,
+          and regenerative practices.
         </p>
-        <p className="text-lg text-gray-800 max-w-xl mx-auto md:mx-0">
+
+        <p className="text-lg md:text-xl leading-relaxed text-justify">
+          Guided by data, science, and inclusivity, we empower local
+          institutions, businesses, and households to become active participants
+          in the global transition toward a sustainable, climate-resilient
+          future.
+        </p>
+
+        <p className="text-lg md:text-xl leading-relaxed text-justify">
           From composting pilots to clean cooking access and digital waste
           tracking, our journey is rooted in the belief that small systems can
           spark systemic change. We're here to prove that local innovation can
           lead global transitions.
         </p>
       </motion.div>
+
+      {/* Seam fix — ensures no gap with next section */}
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-black" />
     </section>
   );
 }
