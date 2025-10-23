@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -12,6 +12,24 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [navbarHeight, setNavbarHeight] = useState(0);
+
+  // ✅ Dynamically detect navbar height
+  useEffect(() => {
+    const navbar = document.querySelector("nav, header"); // detects your nav or header
+    if (navbar) {
+      const height = navbar.getBoundingClientRect().height;
+      setNavbarHeight(height);
+    }
+
+    // Adjust on window resize (optional)
+    const handleResize = () => {
+      const nav = document.querySelector("nav, header");
+      if (nav) setNavbarHeight(nav.getBoundingClientRect().height);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +46,6 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        // Map backend error → friendly messages
         const friendlyErrors: Record<string, string> = {
           "Email already in use":
             "That email is already registered. Please log in instead.",
@@ -45,7 +62,6 @@ export default function RegisterPage() {
         );
       }
 
-      // ✅ After registering, redirect to login
       router.push("/auth/login");
     } catch (err: any) {
       setError(err.message);
@@ -55,7 +71,10 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div
+      className="relative flex flex-col items-center justify-center bg-gray-100"
+      style={{ minHeight: `calc(100vh - ${navbarHeight}px)`, marginTop: navbarHeight }}
+    >
       {/* Background hero image */}
       <div className="absolute inset-0">
         <Image

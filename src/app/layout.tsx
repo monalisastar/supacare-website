@@ -63,7 +63,7 @@ keywords: [
   "sustainable farming practices",
   "organic compost production",
   "community recycling programs",
-  "green jobs Kenya",
+  "regenerative farming",
 
   // Location & Brand
   "Supacare Solutions",

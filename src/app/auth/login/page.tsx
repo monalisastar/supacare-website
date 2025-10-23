@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -13,6 +13,23 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [navbarHeight, setNavbarHeight] = useState(0);
+
+  // ✅ Detect navbar height dynamically
+  useEffect(() => {
+    const navbar = document.querySelector("nav, header");
+    if (navbar) {
+      const height = navbar.getBoundingClientRect().height;
+      setNavbarHeight(height);
+    }
+
+    const handleResize = () => {
+      const nav = document.querySelector("nav, header");
+      if (nav) setNavbarHeight(nav.getBoundingClientRect().height);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // ---------- EMAIL/PASSWORD LOGIN ----------
   const handleLogin = async (e: React.FormEvent) => {
@@ -54,13 +71,14 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     setError(null);
     setLoading(true);
-
-    // ✅ Let NextAuth handle redirect via callbacks
     await signIn("google");
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div
+      className="relative flex flex-col items-center justify-center bg-gray-100"
+      style={{ minHeight: `calc(100vh - ${navbarHeight}px)`, marginTop: navbarHeight }}
+    >
       {/* Background */}
       <div className="absolute inset-0">
         <Image
