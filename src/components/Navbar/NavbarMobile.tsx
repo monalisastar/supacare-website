@@ -48,9 +48,9 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
   }
 
   return (
-    <div className="md:hidden">
-      {/* 📱 Top bar: hamburger color adapts to background */}
-      <div className="flex items-center justify-end px-6 py-4 z-[100] relative">
+    <div className="md:hidden fixed top-0 left-0 w-full z-[10000]">
+      {/* 📱 Top bar */}
+      <div className="flex items-center justify-end px-6 py-4 relative">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className={`transition-colors ${
@@ -65,28 +65,29 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Overlay */}
+            {/* Dark background overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.6 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black z-[10000]" // 🟩 highest layer
+              className="fixed inset-0 bg-black z-[9998]"
               onClick={() => setMenuOpen(false)}
             />
 
-            {/* Dropdown menu content */}
+            {/* Dropdown content */}
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="fixed top-0 left-0 w-full h-full overflow-y-auto bg-[#F4B940] text-green-800 z-[10001] px-6 py-6 space-y-4" // 🟩 slightly higher than overlay
+              className="fixed top-0 left-0 w-full h-screen overflow-y-auto bg-[#F4B940] text-green-800 z-[9999] px-6 pt-[100px] pb-10 space-y-4"
             >
+              {/* Home */}
               <Link href="/" className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg">
                 Home
               </Link>
 
-              {/* About Dropdown */}
+              {/* About dropdown */}
               <div>
                 <button
                   onClick={toggleAbout}
@@ -116,7 +117,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                 </AnimatePresence>
               </div>
 
-              {/* Services Dropdown */}
+              {/* Services dropdown */}
               <div>
                 <button
                   onClick={toggleServices}
@@ -155,7 +156,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                 </AnimatePresence>
               </div>
 
-              {/* Static nav links */}
+              {/* Static links */}
               {navItems.map(item => (
                 <Link
                   key={item.name}
@@ -169,13 +170,13 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
               {/* CTA */}
               <Link
                 href="/contact"
-                className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-4 text-center transition"
+                className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-4 text-center"
               >
                 Request Service
               </Link>
 
-              {/* Auth / Dashboard */}
-              {!isAuthenticated && (
+              {/* Auth links */}
+              {!isAuthenticated ? (
                 <>
                   <Link
                     href="/auth/register"
@@ -190,9 +191,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                     Login
                   </Link>
                 </>
-              )}
-
-              {isAuthenticated && (
+              ) : (
                 <div className="pt-2 border-t border-orange-300 mt-4 space-y-2">
                   <Link
                     href="/dashboard"
