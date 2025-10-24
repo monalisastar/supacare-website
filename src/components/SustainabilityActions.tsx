@@ -10,7 +10,7 @@ export default function SustainabilityActions() {
 
   const actions = [
     {
-      label: 'Start your green journey',
+      label: 'Start your Composting journey',
       icon: <FaRecycle className="text-green-700 w-8 h-8 mb-3" />,
       title: 'Measure your Waste Impact',
       description:

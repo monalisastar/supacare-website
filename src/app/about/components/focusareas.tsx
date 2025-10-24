@@ -27,7 +27,7 @@ export default function FocusAreas() {
       description:
         "Our in-house experts and independent consultants provide EIA, ESG, and sustainability advisory services to help organizations align with Kenya’s NEMA guidelines and global environmental frameworks.",
       button: "Request consultancy",
-      href: "/contacts",
+      href: "/contact",
     },
   ];
 
