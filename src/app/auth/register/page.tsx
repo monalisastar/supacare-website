@@ -14,15 +14,11 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [navbarHeight, setNavbarHeight] = useState(0);
 
-  // ✅ Dynamically detect navbar height
+  // ✅ Detect navbar height dynamically
   useEffect(() => {
-    const navbar = document.querySelector("nav, header"); // detects your nav or header
-    if (navbar) {
-      const height = navbar.getBoundingClientRect().height;
-      setNavbarHeight(height);
-    }
+    const navbar = document.querySelector("nav, header");
+    if (navbar) setNavbarHeight(navbar.getBoundingClientRect().height);
 
-    // Adjust on window resize (optional)
     const handleResize = () => {
       const nav = document.querySelector("nav, header");
       if (nav) setNavbarHeight(nav.getBoundingClientRect().height);
@@ -73,9 +69,12 @@ export default function RegisterPage() {
   return (
     <div
       className="relative flex flex-col items-center justify-center bg-gray-100"
-      style={{ minHeight: `calc(100vh - ${navbarHeight}px)`, marginTop: navbarHeight }}
+      style={{
+        minHeight: `calc(100vh - ${navbarHeight}px)`,
+        marginTop: navbarHeight,
+      }}
     >
-      {/* Background hero image */}
+      {/* ✅ Background hero image */}
       <div className="absolute inset-0">
         <Image
           src="/images/about-hero.webp"
@@ -86,34 +85,41 @@ export default function RegisterPage() {
         />
       </div>
 
-      {/* Overlay card */}
-      <div className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-center mb-6">
+      {/* ✅ Overlay card */}
+      <div className="relative z-20 w-full max-w-md bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
+        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
           Create an Account
         </h1>
 
         <form onSubmit={handleRegister} className="space-y-4">
           {error && (
-            <p className="text-red-500 text-sm text-center bg-red-50 border border-red-200 rounded p-2">
+            <p className="text-red-600 text-sm text-center bg-red-50 border border-red-200 rounded p-2">
               {error}
             </p>
           )}
+
           <input
             type="text"
             placeholder="Full Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+            className="w-full p-3 border border-gray-300 rounded-lg 
+                       bg-white text-gray-800 placeholder-gray-500
+                       focus:outline-none focus:ring-2 focus:ring-green-500"
           />
+
           <input
             type="email"
             placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+            className="w-full p-3 border border-gray-300 rounded-lg 
+                       bg-white text-gray-800 placeholder-gray-500
+                       focus:outline-none focus:ring-2 focus:ring-green-500"
           />
+
           <input
             type="password"
             placeholder="Create password"
@@ -121,12 +127,17 @@ export default function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={6}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-400"
+            className="w-full p-3 border border-gray-300 rounded-lg 
+                       bg-white text-gray-800 placeholder-gray-500
+                       focus:outline-none focus:ring-2 focus:ring-green-500"
           />
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50"
+            className="w-full flex items-center justify-center py-3 
+                       bg-green-600 text-white rounded-lg font-semibold 
+                       hover:bg-green-700 transition disabled:opacity-50"
           >
             {loading ? "Creating account..." : "Register"}
           </button>
@@ -139,17 +150,14 @@ export default function RegisterPage() {
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        {/* Google register button */}
+        {/* Google register */}
         <button
           onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          className="flex items-center justify-center gap-3 w-full py-3 border border-gray-300 rounded-lg font-medium text-gray-700 bg-white hover:bg-gray-50 transition shadow-sm"
+          className="flex items-center justify-center gap-3 w-full py-3 
+                     border border-gray-300 rounded-lg font-medium 
+                     text-gray-700 bg-white hover:bg-gray-50 transition shadow-sm"
         >
-          <Image
-            src="/icons/google.svg"
-            alt="Google logo"
-            width={20}
-            height={20}
-          />
+          <Image src="/icons/google.svg" alt="Google logo" width={20} height={20} />
           <span>Sign up with Google</span>
         </button>
 
