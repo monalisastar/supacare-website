@@ -8,17 +8,17 @@ export default function VisionForward() {
     <section
       className="relative min-h-screen flex flex-col items-center justify-center text-white overflow-hidden"
     >
-      {/* ✅ Full background image (always fully visible) */}
+      {/* ✅ Full background image — fills the screen completely */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/images/the-road-ahead.png" // your asphalt road image
+          src="/images/the-road-ahead.png"
           alt="Asphalt road symbolizing the road ahead"
           fill
           priority
-          className="object-contain object-center" // ✅ 'contain' keeps full image visible
+          className="object-cover object-center" // ✅ fills area fully
         />
-        {/* Optional: soft gradient at bottom for readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-green-950/60 via-green-800/20 to-transparent" />
+        {/* Optional: gradient for readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-green-950/70 via-green-800/30 to-transparent" />
       </div>
 
       {/* ✅ Text content */}
