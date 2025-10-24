@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 
 /**
  * OUR STORY SECTION
+ * - Smooth gradient transition from FocusAreas
  * - Full background image (always visible)
  * - Text sits on the left half
- * - Heading matches navbar yellow
+ * - Slight upward overlap for seamless join
  */
 export default function OurStory() {
   return (
@@ -15,7 +16,7 @@ export default function OurStory() {
       id="our-story"
       className="relative flex items-center justify-start
                  overflow-hidden min-h-screen w-full
-                 bg-black text-white scroll-smooth"
+                 bg-black text-white scroll-smooth -mt-32 z-10"
       style={{
         margin: 0,
         paddingTop: "0",
@@ -73,8 +74,8 @@ export default function OurStory() {
         </p>
       </motion.div>
 
-      {/* Seam fix — ensures no gap with next section */}
-      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-black" />
+      {/* ✅ Gradient bridge from green to black for seamless section merge */}
+      <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-green-50 via-green-900/50 to-black opacity-90" />
     </section>
   );
 }

@@ -34,9 +34,9 @@ export default function FocusAreas() {
   const navbarColor = "#F4C542";
 
   return (
-    <section className="relative z-20 -mt-32 md:-mt-40 px-6 md:px-20 pb-20 backdrop-blur-sm">
-      {/* Gradient fade under hero */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/70 to-green-50 pointer-events-none" />
+    <section className="relative z-20 -mt-32 md:-mt-40 px-6 md:px-20 pb-2 backdrop-blur-sm">
+      {/* ✅ Softer gradient fade under hero */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/60 to-green-100 pointer-events-none" />
 
       {/* Header */}
       <div className="relative mb-16 text-left ml-4 md:ml-10">
@@ -82,7 +82,7 @@ export default function FocusAreas() {
               </p>
             </div>
 
-            {/* Button (uniform alignment) */}
+            {/* Button */}
             <div className="mt-auto">
               <Link
                 href={area.href}
