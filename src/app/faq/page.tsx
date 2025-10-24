@@ -1,5 +1,6 @@
 'use client';
 
+import SEO from '@/components/SEO';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -70,7 +71,8 @@ export default function FAQ() {
     .map(cat => ({
       ...cat,
       questions: cat.questions.filter(({ q, a }) =>
-        q.toLowerCase().includes(search.toLowerCase()) || a.toLowerCase().includes(search.toLowerCase())
+        q.toLowerCase().includes(search.toLowerCase()) ||
+        a.toLowerCase().includes(search.toLowerCase())
       ),
     }))
     .filter(cat => cat.questions.length > 0);
@@ -82,103 +84,134 @@ export default function FAQ() {
     }));
   }
 
-  return (
-    <main
-      style={{
-        background: 'linear-gradient(135deg, #f9faf9 0%, #c3e0c8 100%)',
-        minHeight: '100vh',
-        paddingTop: '6rem', // Push content below navbar
-      }}
-      className="max-w-5xl mx-auto p-6 sm:p-10"
-    >
-      <h1 className="text-5xl font-extrabold mb-10 text-green-800 tracking-tight">Frequently Asked Questions</h1>
+  // Flatten all Q&A for schema injection
+  const allFaqs = faqs.flatMap(cat =>
+    cat.questions.map(item => ({ question: item.q, answer: item.a }))
+  );
 
-      <input
-        type="search"
-        aria-label="Search FAQs"
-        placeholder="Search questions..."
-        className="w-full p-4 mb-12 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-        value={search}
-        onChange={e => setSearch(e.target.value)}
+  return (
+    <>
+      {/* ✅ SEO Integration */}
+      <SEO
+        title="Frequently Asked Questions | Supacare Solutions"
+        description="Find answers to common questions about Supacare Solutions’ services in waste management, carbon consultancy, and sustainability projects."
+        url="https://www.supacaresolutions.com/faq"
+        keywords={[
+          "Supacare FAQ",
+          "waste management questions",
+          "carbon consultancy Kenya",
+          "clean cooking Kenya",
+          "sustainability help",
+        ]}
+        faqs={allFaqs}
       />
 
-      {filteredFaqs.length === 0 && (
-        <p className="text-center text-gray-500 my-16 text-lg">
-          No FAQs found matching your query.
-        </p>
-      )}
+      {/* ✅ Page Content */}
+      <main
+        style={{
+          background: 'linear-gradient(135deg, #f9faf9 0%, #c3e0c8 100%)',
+          minHeight: '100vh',
+          paddingTop: '6rem',
+        }}
+        className="max-w-5xl mx-auto p-6 sm:p-10"
+      >
+        <h1 className="text-5xl font-extrabold mb-10 text-green-800 tracking-tight">
+          Frequently Asked Questions
+        </h1>
 
-      {filteredFaqs.map(({ category, questions }) => (
-        <section key={category} className="mb-14">
-          <h2 className="text-3xl font-semibold mb-6 text-green-700 border-b border-green-200 pb-2">{category}</h2>
+        <input
+          type="search"
+          aria-label="Search FAQs"
+          placeholder="Search questions..."
+          className="w-full p-4 mb-12 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
 
-          <div className="space-y-3">
-            {questions.map(({ q, a }, idx) => {
-              const isActive = activeIndexes[category] === idx;
-              return (
-                <div
-                  key={idx}
-                  className="border border-green-200 rounded-lg overflow-hidden shadow-sm bg-green-50"
-                >
-                  <button
-                    onClick={() => toggleQuestion(category, idx)}
-                    aria-expanded={isActive}
-                    aria-controls={`${category}-faq-panel-${idx}`}
-                    id={`${category}-faq-header-${idx}`}
-                    className="flex justify-between items-center w-full p-4 text-left text-green-900 font-medium hover:bg-green-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+        {filteredFaqs.length === 0 && (
+          <p className="text-center text-gray-500 my-16 text-lg">
+            No FAQs found matching your query.
+          </p>
+        )}
+
+        {filteredFaqs.map(({ category, questions }) => (
+          <section key={category} className="mb-14">
+            <h2 className="text-3xl font-semibold mb-6 text-green-700 border-b border-green-200 pb-2">
+              {category}
+            </h2>
+
+            <div className="space-y-3">
+              {questions.map(({ q, a }, idx) => {
+                const isActive = activeIndexes[category] === idx;
+                return (
+                  <div
+                    key={idx}
+                    className="border border-green-200 rounded-lg overflow-hidden shadow-sm bg-green-50"
                   >
-                    <span>{q}</span>
-                    <svg
-                      className={`w-6 h-6 transition-transform duration-300 ${isActive ? 'rotate-180' : ''}`}
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <button
+                      onClick={() => toggleQuestion(category, idx)}
+                      aria-expanded={isActive}
+                      aria-controls={`${category}-faq-panel-${idx}`}
+                      id={`${category}-faq-header-${idx}`}
+                      className="flex justify-between items-center w-full p-4 text-left text-green-900 font-medium hover:bg-green-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isActive && (
-                      <motion.div
-                        key="content"
-                        id={`${category}-faq-panel-${idx}`}
-                        role="region"
-                        aria-labelledby={`${category}-faq-header-${idx}`}
-                        initial="collapsed"
-                        animate="open"
-                        exit="collapsed"
-                        variants={{
-                          open: { height: 'auto', opacity: 1 },
-                          collapsed: { height: 0, opacity: 0 },
-                        }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="px-4 pb-4 text-green-900"
-                        style={{ overflow: 'hidden' }}
+                      <span>{q}</span>
+                      <svg
+                        className={`w-6 h-6 transition-transform duration-300 ${
+                          isActive ? 'rotate-180' : ''
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <p>{a}</p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      ))}
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
 
-      <section className="mt-20 text-center p-8 bg-green-100 rounded-lg border border-green-300">
-        <h3 className="text-2xl font-semibold mb-4 text-green-800">Need more help?</h3>
-        <p className="mb-6 text-green-700">If you can’t find the answer you’re looking for, please get in touch with us.</p>
-        <a
-          href="/contact"
-          className="inline-block px-8 py-3 bg-green-700 text-white rounded-lg font-semibold hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-400"
-        >
-          Contact Support
-        </a>
-      </section>
-    </main>
+                    <AnimatePresence initial={false}>
+                      {isActive && (
+                        <motion.div
+                          key="content"
+                          id={`${category}-faq-panel-${idx}`}
+                          role="region"
+                          aria-labelledby={`${category}-faq-header-${idx}`}
+                          initial="collapsed"
+                          animate="open"
+                          exit="collapsed"
+                          variants={{
+                            open: { height: 'auto', opacity: 1 },
+                            collapsed: { height: 0, opacity: 0 },
+                          }}
+                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          className="px-4 pb-4 text-green-900"
+                          style={{ overflow: 'hidden' }}
+                        >
+                          <p>{a}</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        ))}
+
+        <section className="mt-20 text-center p-8 bg-green-100 rounded-lg border border-green-300">
+          <h3 className="text-2xl font-semibold mb-4 text-green-800">Need more help?</h3>
+          <p className="mb-6 text-green-700">
+            If you can’t find the answer you’re looking for, please get in touch with us.
+          </p>
+          <a
+            href="/contact"
+            className="inline-block px-8 py-3 bg-green-700 text-white rounded-lg font-semibold hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-400"
+          >
+            Contact Support
+          </a>
+        </section>
+      </main>
+    </>
   );
 }
