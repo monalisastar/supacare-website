@@ -163,7 +163,7 @@ export default function Footer() {
 
         {/* ✅ Footer Bottom */}
         <div className="mt-12 pt-6 border-t border-[#2f5c48] flex flex-col sm:flex-row items-center justify-between text-sm text-gray-400">
-          <p>© 2025 Supacare. All rights reserved.</p>
+          <p>© 2022 Supacare. All rights reserved.</p>
           <div className="text-sm flex items-center gap-2">
             🌍 Language:
             <select
