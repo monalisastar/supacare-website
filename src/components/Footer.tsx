@@ -1,53 +1,126 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import Link from 'next/link'
+import { useState } from "react"
+import Link from "next/link"
+import Image from "next/image"
 import {
-  Mail, Phone, MapPin, Facebook, Linkedin, Instagram,
-  Home, Wrench, PhoneCall, MessageCircle
-} from 'lucide-react'
-import { usePathname } from 'next/navigation'
+  Mail, Phone, MapPin,
+  Facebook, Linkedin, Instagram, Twitter, MessageCircle, Youtube
+} from "lucide-react"
+import { usePathname } from "next/navigation"
 
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [language, setLanguage] = useState('English')
-
+  const [email, setEmail] = useState("")
+  const [language, setLanguage] = useState("English")
   const pathname = usePathname()
 
-  // ✅ Don't render footer on /dashboard/*
-  if (pathname?.startsWith('/dashboard')) return null
+  // ✅ Hide footer on dashboard pages
+  if (pathname?.startsWith("/dashboard")) return null
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Email subscribed:', email)
-    setEmail('')
+    console.log("Email subscribed:", email)
+    setEmail("")
   }
 
   return (
     <>
-      {/* Main Footer */}
       <footer className="bg-[#1b4332] text-[#f5f5f0] px-6 sm:px-12 pt-16 pb-24 sm:pb-16 relative">
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Logo & Tagline */}
+          {/* ✅ Logo + Tagline + Socials */}
           <div>
-            <h2 className="text-2xl font-bold mb-2">Supacare Solutions</h2>
-            <p className="text-sm text-gray-300">
+            <Image
+              src="/images/supalogo.png"
+              alt="Supacare Solutions Logo"
+              width={180}
+              height={80}
+              className="mb-4"
+            />
+            <p className="text-sm text-gray-300 mb-6">
               Sustainable solutions for a cleaner, greener tomorrow.
             </p>
+
+            {/* Social icons */}
+            <div className="flex items-center gap-4">
+              <a
+                href="https://www.linkedin.com/company/supacaresolutions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#fcbf49]"
+              >
+                <Linkedin size={18} />
+              </a>
+              <a
+                href="https://twitter.com/supacareltd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#fcbf49]"
+              >
+                <Twitter size={18} />
+              </a>
+              <a
+                href="https://www.facebook.com/supacaresolutions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#fcbf49]"
+              >
+                <Facebook size={18} />
+              </a>
+              <a
+                href="https://www.instagram.com/supacaresolutions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#fcbf49]"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
+                href="https://wa.me/254720096680"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#fcbf49]"
+              >
+                <MessageCircle size={18} />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#fcbf49]"
+              >
+                <Youtube size={18} />
+              </a>
+            </div>
           </div>
 
-          {/* Services */}
+          {/* ✅ Services */}
           <div>
             <h3 className="text-lg font-semibold mb-3">Services</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/services/recycling-composting" className="hover:text-[#fcbf49]">Recycling & Composting</Link></li>
-              <li><Link href="/services/environmental-consultancy" className="hover:text-[#fcbf49]">Environmental Consultancy </Link></li>
-              <li><Link href="/services/waste-collection" className="hover:text-[#fcbf49]">Waste Collection & Disposal </Link></li>
-              <li><Link href="/services/smart-waste" className="hover:text-[#fcbf49]">Smart Waste Tracking</Link></li>
+              <li>
+                <Link href="/services/recycling-composting" className="hover:text-[#fcbf49]">
+                  Recycling & Composting
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/environmental-consultancy" className="hover:text-[#fcbf49]">
+                  Environmental Consultancy
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/waste-collection" className="hover:text-[#fcbf49]">
+                  Waste Collection & Disposal
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/smart-waste" className="hover:text-[#fcbf49]">
+                  Smart Waste Tracking
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Company */}
+          {/* ✅ Company */}
           <div>
             <h3 className="text-lg font-semibold mb-3">Company</h3>
             <ul className="space-y-2 text-sm">
@@ -58,7 +131,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact + Newsletter */}
+          {/* ✅ Contact + Newsletter */}
           <div>
             <h3 className="text-lg font-semibold mb-3">Get in Touch</h3>
             <ul className="space-y-2 text-sm text-gray-300">
@@ -88,55 +161,23 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Footer Bottom */}
+        {/* ✅ Footer Bottom */}
         <div className="mt-12 pt-6 border-t border-[#2f5c48] flex flex-col sm:flex-row items-center justify-between text-sm text-gray-400">
           <p>© 2025 Supacare. All rights reserved.</p>
-          <div className="flex gap-4 mt-4 sm:mt-0">
-            <a href="#" className="hover:text-[#fcbf49]"><Linkedin size={18} /></a>
-            <a href="#" className="hover:text-[#fcbf49]"><Instagram size={18} /></a>
-            <a href="#" className="hover:text-[#fcbf49]"><Facebook size={18} /></a>
+          <div className="text-sm flex items-center gap-2">
+            🌍 Language:
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="bg-transparent text-white border border-gray-500 rounded px-2 py-1"
+            >
+              <option value="English">English</option>
+              <option value="Swahili">Swahili</option>
+              <option value="French">French</option>
+            </select>
           </div>
         </div>
-
-        {/* Language Selector */}
-        <div className="absolute bottom-4 right-6 text-sm text-gray-400">
-          🌍 Language:{' '}
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            className="bg-transparent text-white border border-gray-500 rounded px-2 py-1"
-          >
-            <option value="English">English</option>
-            <option value="Swahili">Swahili</option>
-            <option value="French">French</option>
-          </select>
-        </div>
       </footer>
-
-      {/* Sticky Footer Bar (Mobile Only) */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#1b4332] text-white sm:hidden flex justify-around items-center h-14 border-t border-[#2f5c48]">
-        <Link href="/" className="flex flex-col items-center text-xs hover:text-[#fcbf49]">
-          <Home size={18} />
-          Home
-        </Link>
-        <Link href="/services" className="flex flex-col items-center text-xs hover:text-[#fcbf49]">
-          <Wrench size={18} />
-          Services
-        </Link>
-        <Link href="/contact" className="flex flex-col items-center text-xs hover:text-[#fcbf49]">
-          <PhoneCall size={18} />
-          Contact
-        </Link>
-        <a
-          href="https://wa.me/254720096680"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col items-center text-xs hover:text-[#fcbf49]"
-        >
-          <MessageCircle size={18} />
-          Chat
-        </a>
-      </div>
     </>
   )
 }
