@@ -4,7 +4,7 @@ import FocusAreas from "./components/focusareas"; // ✅ Added import
 import CoreValues from "./components/CoreValues";
 import WhereWeWork from "./components/WhereWeWork";
 import WhyWasteMatters from "./components/WhyWasteMatters";
-import ImpactSnapshot from "./components/ImpactSnapshot";
+
 import VisionForward from "./components/VisionForward";
 import AboutCTA from "./components/AboutCTA";
 import OurStory from "./components/OurStory";
@@ -18,7 +18,6 @@ export default function AboutPage() {
       <CoreValues />
       <WhereWeWork />
       <WhyWasteMatters />
-      <ImpactSnapshot />
       <VisionForward />
       <AboutCTA />
     </main>
