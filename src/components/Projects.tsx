@@ -10,6 +10,7 @@ type Project = {
   location: string
   description: string
   image: string
+  focus?: string // custom focal point for each image
 }
 
 const projects: Project[] = [
@@ -19,6 +20,7 @@ const projects: Project[] = [
     description:
       'Piloting IoT-based waste bins to monitor collection and improve routing efficiency in urban communities.',
     image: '/images/waste-tracking.png',
+    focus: 'object-center', // good as is
   },
   {
     title: 'Carbon Advisory & Environmental Consultancy',
@@ -26,6 +28,7 @@ const projects: Project[] = [
     description:
       'Community engagement on LPG, E-Jikos, and household carbon savings with token-based incentives.',
     image: '/images/clean-cooking.png',
+    focus: 'object-[50%_40%]', // shift slightly upward (show pot + face)
   },
   {
     title: 'Circular Composting Pilot',
@@ -33,6 +36,7 @@ const projects: Project[] = [
     description:
       'Turning market and household waste into compost to support regenerative farming.',
     image: '/images/composting-pilot.png',
+    focus: 'object-[50%_45%]', // reveal more bucket and hands
   },
 ]
 
@@ -47,7 +51,7 @@ export default function Projects() {
           We deliver programs that combine community action and eco-friendly innovation.
         </p>
 
-        {/* 🌿 Responsive Project Grid */}
+        {/* 🌿 Project Grid */}
         <div className="mt-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {projects.map((project, index) => (
@@ -59,13 +63,13 @@ export default function Projects() {
                 viewport={{ once: true }}
                 className="w-full bg-white/80 backdrop-blur-lg border border-green-100 rounded-lg shadow-md hover:shadow-lg transition"
               >
-                {/* Project Image */}
-                <div className="h-52 sm:h-56 relative rounded-t-lg overflow-hidden">
+                {/* ✅ Fine-tuned Image */}
+                <div className="relative h-72 sm:h-80 rounded-t-lg overflow-hidden">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover"
+                    className={`object-cover ${project.focus}`}
                   />
                 </div>
 
@@ -100,7 +104,7 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* 🌿 Decorative gradient behind section */}
+      {/* 🌿 Decorative gradient */}
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-[#bfeec6]/60 to-green-950/70 z-0" />
     </section>
   )

@@ -17,19 +17,29 @@ export default function Navbar() {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  // Hide navbar when scrolling down, show when scrolling up
+  // Hide navbar when scrolling down, show when scrolling up (desktop behavior)
   useEffect(() => {
     if (typeof window === 'undefined') return
 
     const handleScroll = () => {
       const currentY = window.scrollY
 
-      if (currentY < 50) {
-        setIsVisible(true) // Always show near top (hero area)
-      } else if (currentY > lastScrollY) {
-        setIsVisible(false) // scrolling down → hide
+      // ✅ On mobile: hide navbar after leaving Hero area (e.g. after 550px)
+      if (window.innerWidth < 768) {
+        if (currentY < 550) {
+          setIsVisible(true) // still in Hero → visible
+        } else {
+          setIsVisible(false) // past Hero → hide completely
+        }
       } else {
-        setIsVisible(true) // scrolling up → show
+        // ✅ On desktop: normal scroll behavior
+        if (currentY < 50) {
+          setIsVisible(true)
+        } else if (currentY > lastScrollY) {
+          setIsVisible(false)
+        } else {
+          setIsVisible(true)
+        }
       }
 
       setLastScrollY(currentY)
@@ -83,7 +93,7 @@ export default function Navbar() {
                     alt="Supacare Solutions Logo"
                     width={400}
                     height={180}
-                    className="object-contain w-auto h-[110px] sm:h-[120px] md:h-[130px] lg:h-[150px]"
+                    className="object-contain w-auto h-[90px] sm:h-[100px] md:h-[130px] lg:h-[150px]"
                     style={{
                       filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.3))',
                       marginTop: '4px',

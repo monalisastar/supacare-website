@@ -19,11 +19,10 @@ const geistMono = Geist_Mono({
 
 // ✅ Metadata
 export const metadata: Metadata = {
-  title: "Supacare Solutions - Sustainable Waste Management in Kenya",
+  title: "Supacare Solutions",
   description:
     "Supacare Solutions provides innovative and eco-friendly waste management and sustainability consulting services across Kenya.",
   keywords: [
-    // Core Focus
     "waste management",
     "sustainable waste management",
     "smart waste tracking",
@@ -33,8 +32,6 @@ export const metadata: Metadata = {
     "eco-friendly waste solutions",
     "waste collection and disposal",
     "biodegradable waste treatment",
-
-    // Sustainability & Carbon
     "carbon advisory",
     "carbon footprint reduction",
     "carbon credits Kenya",
@@ -45,8 +42,6 @@ export const metadata: Metadata = {
     "climate change mitigation",
     "environmental sustainability",
     "sustainability consulting",
-
-    // Corporate & Industrial
     "environmental consultancy Kenya",
     "ESG consulting",
     "environmental impact assessment",
@@ -56,16 +51,12 @@ export const metadata: Metadata = {
     "renewable energy transition",
     "eco innovation services",
     "sustainable urban development",
-
-    // Community & Agriculture
     "waste to fertilizer",
     "circular economy Kenya",
     "sustainable farming practices",
     "organic compost production",
     "community recycling programs",
     "regenerative farming",
-
-    // Location & Brand
     "Supacare Solutions",
     "environmental company Kenya",
     "green technology Kenya",
@@ -170,6 +161,32 @@ export default function RootLayout({
                 addressLocality: "Nairobi",
                 streetAddress: "2224 Kimathi Street",
               },
+            }),
+          }}
+        />
+
+        {/* ✅ Dedicated Logo Schema (for Google brand display + social linking) */}
+        <Script
+          id="logo-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Supacare Solutions",
+              url: "https://www.supacaresolutions.com",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://www.supacaresolutions.com/images/supalogo.png",
+                width: 400,
+                height: 180,
+              },
+              sameAs: [
+                "https://www.facebook.com/supacaresolutions",
+                "https://www.instagram.com/supacaresolutions",
+                "https://www.linkedin.com/company/supacaresolutions",
+                "https://twitter.com/supacaresol",
+              ],
             }),
           }}
         />
