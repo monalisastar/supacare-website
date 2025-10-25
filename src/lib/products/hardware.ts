@@ -3,6 +3,7 @@
 import type { Product } from './index';
 
 export const hardwareProducts: Product[] = [
+  // ✅ Existing hardware items
   {
     id: '2',
     name: 'Compost Curing Chamber',
@@ -254,6 +255,181 @@ export const hardwareProducts: Product[] = [
       Capacity: '10kg/hr',
       Temperature: 'Up to 1100°C',
       Fuel: 'Diesel / Gas',
+    },
+  },
+
+  // ✅ Supacare Waste & Sanitary Bins
+  {
+    id: '30',
+    name: '100L Pedal Bin',
+    images: ['/images/shop/100lpedalbin.png'],
+    alt: 'Green 100L pedal waste bin branded Supacare Solutions',
+    category: 'Hardware',
+    price: 13000,
+    description:
+      '100-liter green pedal bin with hands-free design ideal for hygienic waste handling in public and institutional settings.',
+    specs: {
+      Capacity: '100L',
+      Type: 'Pedal operated',
+      Material: 'HDPE',
+      Color: 'Green',
+    },
+  },
+  {
+    id: '31',
+    name: '120L Bin',
+    images: ['/images/shop/120Lpeadlbin.png'],
+    alt: '120L black-lidded waste bin branded Supacare Solutions',
+    category: 'Hardware',
+    price: 12850,
+    description:
+      '120-liter heavy-duty bin with wheels and black lid for versatile waste collection and mobility.',
+    specs: {
+      Capacity: '120L',
+      Type: 'Standard wheeled bin',
+      Material: 'HDPE',
+      Color: 'Green/Black lid',
+    },
+  },
+  {
+    id: '32',
+    name: '240L Bin',
+    images: ['/images/shop/240Lpedalbin.png'],
+    alt: '240L green waste bin with Supacare Solutions branding',
+    category: 'Hardware',
+    price: 19950,
+    description:
+      '240-liter outdoor waste bin suitable for residential and commercial waste management.',
+    specs: {
+      Capacity: '240L',
+      Wheels: 'Yes',
+      Material: 'HDPE',
+    },
+  },
+  {
+    id: '33',
+    name: '360L Bin',
+    images: ['/images/shop/360Lpedalbin.png'],
+    alt: '360L red waste bin branded Supacare Solutions',
+    category: 'Hardware',
+    price: 25900,
+    description:
+      '360-liter high-capacity bin for institutions and estates, ideal for large-scale waste handling.',
+    specs: {
+      Capacity: '360L',
+      Wheels: 'Yes',
+      Material: 'HDPE',
+      Color: 'Red',
+    },
+  },
+  {
+    id: '34',
+    name: '750L Bin',
+    images: ['/images/shop/750mlpedalbin.png'],
+    alt: '750L blue wheeled waste container branded Supacare Solutions',
+    category: 'Hardware',
+    price: 47850,
+    description:
+      'Industrial-grade 750-liter bin with 4 swivel wheels, built for heavy-duty waste collection and mobility.',
+    specs: {
+      Capacity: '750L',
+      Wheels: '4 swivel',
+      Material: 'HDPE',
+      Color: 'Blue',
+    },
+  },
+  {
+    id: '35',
+    name: '1100L Bin',
+    images: ['/images/shop/1000lpedalbin.png'],
+    alt: '1100L grey waste bin branded Supacare Solutions',
+    category: 'Hardware',
+    price: 55750,
+    description:
+      'Massive 1100-liter container designed for industrial and estate-level waste management with easy mobility.',
+    specs: {
+      Capacity: '1100L',
+      Wheels: '4 swivel',
+      Material: 'HDPE',
+      Color: 'Grey',
+    },
+  },
+  {
+    id: '36',
+    name: '18L Sanitary Bin (Manual)',
+    images: ['/images/shop/18lsanitarybin.png'],
+    alt: '18L sanitary pedal bin branded Supacare Solutions',
+    category: 'Hardware',
+    price: 3650,
+    description:
+      '18-liter manual sanitary bin designed for hygienic waste disposal in female washrooms and offices.',
+    specs: {
+      Capacity: '18L',
+      Type: 'Manual pedal',
+      Material: 'Plastic',
+      Color: 'White/Grey lid',
+    },
+  },
+  {
+    id: '37',
+    name: '22L Sanitary Bin (Manual)',
+    images: ['/images/shop/22LSanitaryBin(Manual).png'],
+    alt: '22L manual sanitary bin branded Supacare Solutions',
+    category: 'Hardware',
+    price: 4550,
+    description:
+      '22-liter manual sanitary bin for safe and odor-free feminine hygiene waste disposal.',
+    specs: {
+      Capacity: '22L',
+      Operation: 'Manual lid',
+      Material: 'ABS plastic',
+    },
+  },
+  {
+    id: '38',
+    name: '22L Sanitary Bin (Automatic)',
+    images: ['/images/shop/22LSanitaryBin(Autol).png'],
+    alt: '22L automatic sensor sanitary bin branded Supacare Solutions',
+    category: 'Hardware',
+    price: 6000,
+    description:
+      '22-liter automatic sensor sanitary bin for touch-free hygienic waste management.',
+    specs: {
+      Capacity: '22L',
+      Operation: 'Motion sensor lid',
+      Power: 'Battery/Rechargeable',
+    },
+  },
+
+  // ✅ Eco-innovation hardware additions
+  {
+    id: '39',
+    name: 'Solar Waste Compactor',
+    images: ['/images/shop/solar-waste-compactor.png'],
+    alt: 'Supacare solar-powered smart waste compactor',
+    category: 'Hardware',
+    price: 4200,
+    description:
+      'Smart solar-powered compactor that compresses waste automatically, reducing collection frequency and emissions.',
+    specs: {
+      Power: 'Solar-powered',
+      CompactionRatio: 'Up to 5:1',
+      Connectivity: 'IoT-enabled for monitoring',
+    },
+  },
+  {
+    id: '40',
+    name: 'Rainwater Harvesting Barrel',
+    images: ['/images/shop/rainwater-harvesting-barrel.png'],
+    alt: 'Supacare rainwater harvesting barrel',
+    category: 'Hardware',
+    price: 250,
+    description:
+      'Rainwater collection barrel designed for sustainable water conservation and landscape irrigation.',
+    specs: {
+      Capacity: '200L',
+      Material: 'Recycled HDPE',
+      Includes: 'Tap, lid, and overflow valve',
     },
   },
 ];
