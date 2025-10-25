@@ -12,22 +12,31 @@ export default function Hero() {
     const updateOffset = () => {
       const navbar = document.querySelector<HTMLElement>('[data-navbar]')
       if (navbar) {
-        setOffsetTop(navbar.offsetHeight)
+        // Use getBoundingClientRect for more accurate dynamic height
+        setOffsetTop(navbar.getBoundingClientRect().height)
       }
     }
 
-    // Run immediately on mount
+    // Run immediately
     updateOffset()
 
-    // Recalculate on resize
+    // Recalculate on resize & scroll (if sticky navbar shrinks or changes)
     window.addEventListener('resize', updateOffset)
-    return () => window.removeEventListener('resize', updateOffset)
+    window.addEventListener('scroll', updateOffset)
+
+    return () => {
+      window.removeEventListener('resize', updateOffset)
+      window.removeEventListener('scroll', updateOffset)
+    }
   }, [])
 
   return (
     <section
       className="w-full py-16 px-6 md:px-12 lg:px-20 flex flex-col-reverse md:flex-row items-center justify-between gap-10 transition-all"
-      style={{ backgroundColor: '#e7f3e4', marginTop: offsetTop }}
+      style={{
+        backgroundColor: '#e7f3e4',
+        marginTop: `${offsetTop}px`, // ✅ reactive margin based on navbar
+      }}
     >
       {/* Left Text Content */}
       <motion.div
@@ -37,7 +46,7 @@ export default function Hero() {
         className="max-w-xl text-center md:text-left"
       >
         <h1 className="text-4xl md:text-5xl font-bold text-[#2f4d2c] leading-tight">
-          Smart Waste Management
+        
         </h1>
         <p className="mt-4 text-lg text-[#3b5c35]">
           Real-time tracking. Lower emissions. Cleaner neighborhoods.
