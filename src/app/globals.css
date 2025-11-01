@@ -47,3 +47,44 @@ html, body {
   background: transparent !important;
   overflow-x: hidden;
 }
+
+/* ☀️ Moving diagonal sunlight gradient */
+@keyframes sunlight {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.97;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.97;
+  }
+}
+
+.animate-sunlight {
+  animation: sunlight 25s ease-in-out infinite;
+  background-size: 300% 300%;
+}
+
+/* 🌞 Subtle drifting sunbeam overlay */
+@keyframes sunbeam {
+  0% {
+    transform: translate(-10%, -10%) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(10%, 10%) rotate(3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-10%, -10%) rotate(0deg);
+    opacity: 0.8;
+  }
+}
+
+.animate-sunbeam {
+  animation: sunbeam 40s ease-in-out infinite;
+}

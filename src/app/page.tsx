@@ -6,10 +6,10 @@ import Hero from '../components/Hero'
 import SustainabilityActions from '../components/SustainabilityActions'
 import OurFocusAreas from '../components/OurFocusAreas'
 import About from '../components/About'
-
 import WhySupaCare from '../components/WhySupaCare'
 import Projects from '../components/Projects'
 import GetInTouch from '../components/GetInTouch'
+import Partners from '@/components/Partners'
 import ImpactSection from '../components/ImpactSection'
 import { motion } from 'framer-motion'
 
@@ -23,7 +23,6 @@ export default function HomePage() {
         <Hero />
       </section>
 
-
       {/* ✅ Shared Gradient Wrapper for Sustainability + Focus Areas */}
       <div className="relative bg-gradient-to-b from-white via-green-50 to-white">
         {/* Floating Sustainable Actions Section (unchanged overlap) */}
@@ -31,18 +30,17 @@ export default function HomePage() {
           <SustainabilityActions />
         </section>
 
-        
-      {/* About Section */}
-      <motion.section
-        id="about"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="py-12"
-      >
-        <About />
-      </motion.section>
+        {/* About Section */}
+        <motion.section
+          id="about"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="py-12"
+        >
+          <About />
+        </motion.section>
 
         {/* ✅ Our Focus Areas Section (no white gap, smooth merge) */}
         <motion.section
@@ -56,8 +54,6 @@ export default function HomePage() {
           <OurFocusAreas />
         </motion.section>
       </div>
-
-
 
       {/* Projects Section */}
       <motion.section
@@ -82,6 +78,7 @@ export default function HomePage() {
       >
         <WhySupaCare />
       </motion.section>
+      <Partners />
 
       {/* Impact Section */}
       <motion.section

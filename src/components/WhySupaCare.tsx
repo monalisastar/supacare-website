@@ -29,7 +29,7 @@ const impactStats = [
 const WhySupaCare = () => {
   return (
     <section className="relative z-10 -mt-[120px] py-14 text-white overflow-hidden">
-      {/* Background image */}
+      {/* 🌿 Background image */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/for-communities.png"
@@ -41,7 +41,7 @@ const WhySupaCare = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      {/* Content */}
+      {/* 📊 Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4">
         <motion.h2
           className="text-xl sm:text-2xl font-bold mb-8 text-center drop-shadow-md"
@@ -52,7 +52,6 @@ const WhySupaCare = () => {
           Why Supacare Works
         </motion.h2>
 
-        {/* Impact Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-6">
           {impactStats.map((stat, index) => (
             <motion.div
@@ -64,7 +63,12 @@ const WhySupaCare = () => {
             >
               <div className="mb-2 flex justify-center">{stat.icon}</div>
               <p className="text-lg sm:text-xl font-semibold">
-                <CountUp end={stat.value} duration={2} suffix={stat.suffix} enableScrollSpy />
+                <CountUp
+                  end={stat.value}
+                  duration={2}
+                  suffix={stat.suffix}
+                  enableScrollSpy
+                />
               </p>
               <p className="text-sm text-white/80">{stat.label}</p>
             </motion.div>
@@ -72,8 +76,8 @@ const WhySupaCare = () => {
         </div>
       </div>
 
-      {/* Keep bottom fade to blend into next section */}
-      <div className="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-b from-transparent via-[#e6f5ea]/90 to-[#e6f5ea] z-[5]" />
+      {/* 🌿 Bottom Fade (seamless with partners section) */}
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-[#E9FCE9]/95 to-[#E9FCE9] z-[5]" />
     </section>
   )
 }

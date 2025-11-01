@@ -1,26 +1,10 @@
-"use client";
+'use client'
 
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function AboutGrowth() {
   return (
-    <section className="relative flex flex-col md:flex-row items-center justify-between overflow-hidden bg-[#E9FCE9]">
-      {/* 🟩 LEFT SIDE — Angled Image */}
-      <div className="relative w-full md:w-1/2 h-[70vh] md:h-[90vh] overflow-hidden">
-        <div className="absolute inset-0 -skew-x-[12deg] origin-left overflow-hidden">
-          <Image
-            src="/images/services/domestic-waste.webp"
-            alt="Supacare waste management operations"
-            fill
-            priority
-            className="object-cover object-center scale-110"
-          />
-        </div>
-
-        {/* 🟨 Supacare Yellow Accent Strip */}
-        <div className="absolute top-0 left-0 h-full w-[80px] bg-[#F4B940] -skew-x-[12deg] shadow-xl hidden md:block" />
-      </div>
-
+    <section className="relative flex flex-col md:flex-row-reverse items-center justify-between overflow-hidden bg-[#E9FCE9]">
       {/* 🟢 RIGHT SIDE — Text Content */}
       <div className="w-full md:w-1/2 px-8 md:px-20 py-20 md:py-28 text-left">
         <h2 className="text-3xl md:text-5xl font-bold text-green-900 mb-4 leading-tight">
@@ -59,6 +43,22 @@ export default function AboutGrowth() {
           </a>
         </div>
       </div>
+
+      {/* 🟩 LEFT SIDE — Angled Image */}
+      <div className="relative w-full md:w-1/2 h-[70vh] md:h-[90vh] overflow-hidden">
+        <div className="absolute inset-0 -skew-x-[12deg] origin-left overflow-hidden">
+          <Image
+            src="/images/services/domestic-waste.webp"
+            alt="Supacare waste management operations"
+            fill
+            priority
+            className="object-cover object-center scale-110"
+          />
+        </div>
+
+        {/* 🟨 Supacare Yellow Accent Strip */}
+        <div className="absolute top-0 left-0 h-full w-[80px] bg-[#F4B940] -skew-x-[12deg] shadow-xl hidden md:block" />
+      </div>
     </section>
-  );
+  )
 }

@@ -36,8 +36,14 @@ export default function ImpactSection() {
   }, [])
 
   return (
-    <section className="relative z-20 -mt-[30px] py-4 px-3 bg-gradient-to-b from-[#edf9ef] via-[#f8fcf9] to-white overflow-hidden">
-      <div className="max-w-2xl mx-auto text-center">
+    <section
+      id="impact"
+      className="relative z-20 -mt-[30px] py-8 px-3 bg-gradient-to-b from-[#FFFDE7] via-[#F7FAF5] to-white bg-[length:250%_250%] animate-sunlight overflow-hidden"
+    >
+      {/* ☀️ Subtle golden light overlay for final sunlight reflection */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_center,_rgba(255,255,200,0.25),_transparent_70%)] animate-sunbeam pointer-events-none"></div>
+
+      <div className="max-w-2xl mx-auto text-center relative z-10">
         <h2 className="text-base font-semibold text-green-800 mb-0.5 tracking-tight">
           Community Voices
         </h2>
@@ -45,15 +51,15 @@ export default function ImpactSection() {
           Real stories from those empowered by Supacare.
         </p>
 
-        {/* Testimonial Card */}
+        {/* 🌿 Testimonial Card */}
         <div className="relative h-[90px] sm:h-[85px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.35 }}
+              initial={{ opacity: 0, y: 8, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.97 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
               className="absolute inset-0 mx-auto max-w-xs bg-white/90 backdrop-blur-sm border border-green-100 rounded-md shadow-sm p-2.5 text-left hover:shadow-md hover:border-green-300 transition-all"
             >
               {/* ⭐ Stars */}
@@ -80,8 +86,8 @@ export default function ImpactSection() {
         </div>
       </div>
 
-      {/* soft fade transition */}
-      <div className="absolute bottom-0 left-0 w-full h-10 bg-gradient-to-b from-transparent to-white" />
+      {/* 🌄 Soft fade into pure white (transition to footer or next) */}
+      <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-b from-transparent via-white/80 to-white" />
     </section>
   )
 }

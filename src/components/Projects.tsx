@@ -30,7 +30,16 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section className="relative z-20 -mt-[100px] bg-gradient-to-b from-[#c8efc9] via-[#bfeec6] to-[#e6f5ea] py-20 px-6 sm:px-12 overflow-hidden">
+    <section
+      id="projects"
+      className="relative z-20 -mt-[100px] bg-gradient-to-b from-[#FFFDE7] via-[#E6F7D3] to-[#C8E6C9] bg-[length:250%_250%] animate-sunlight py-20 px-6 sm:px-12 overflow-hidden"
+    >
+      {/* 🟨 Thin Yellow Divider on Top */}
+      <div className="absolute top-0 left-0 w-full h-[4px] bg-[#F4B940] z-[5]" />
+
+      {/* ☀️ Subtle overlay to mimic gentle sun diffusion */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_center,_rgba(255,255,200,0.3),_transparent_70%)] animate-sunbeam pointer-events-none" />
+
       <div className="max-w-7xl mx-auto relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -38,11 +47,12 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="text-left mb-6"
         >
-          <h2 className="text-4xl font-bold text-[#1b4332] mb-2 tracking-tight">
+          <h2 className="text-4xl font-bold text-[#F4B940] mb-2 tracking-tight">
             What We’re Doing
           </h2>
           <p className="text-gray-800 text-base sm:text-lg max-w-2xl">
-            We deliver programs that combine community action and eco-friendly innovation.
+            We deliver programs that combine community action and eco-friendly
+            innovation.
           </p>
         </motion.div>
 
@@ -91,8 +101,8 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* ✅ Smooth gradient fade into Why Supacare Works */}
-      <div className="absolute bottom-0 left-0 w-full h-36 bg-gradient-to-b from-transparent via-[#e6f5ea]/80 to-[#e6f5ea]" />
+      {/* 🌄 Soft fade into next section (Why Supacare Works) */}
+      <div className="absolute bottom-0 left-0 w-full h-36 bg-gradient-to-b from-transparent via-[#E8F5E9]/70 to-[#E6F5EA]" />
     </section>
   )
 }

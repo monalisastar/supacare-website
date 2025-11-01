@@ -30,9 +30,11 @@ export default function About() {
     const handleResize = () => {
       const mobile = window.innerWidth < 768
       setIsMobile(mobile)
-      setMissionOpen(!mobile)
-      setVisionOpen(!mobile)
+      // Always show mission & vision on mobile
+      setMissionOpen(true)
+      setVisionOpen(true)
     }
+
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
@@ -41,9 +43,13 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative -mt-[100px] md:-mt-[110px] bg-[#eaf7ec] pt-2 pb-0 md:pb-2 overflow-hidden"
+      // 🌅 Golden–green sunset blend that ties into previous sunlight tone
+      className="relative -mt-[100px] md:-mt-[110px] bg-gradient-to-b from-[#FFFDE7] via-[#E6F7D3] to-[#D0E6B3] bg-[length:250%_250%] animate-sunlight pt-10 pb-0 md:pb-2 overflow-hidden"
     >
-      {/* Decorative gradient behind image */}
+      {/* ☀️ Moving sunlight overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,200,0.35),_transparent_70%)] animate-sunbeam pointer-events-none" />
+
+      {/* Soft ambient glow behind content */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-300/20 blur-3xl rounded-full -z-10"></div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 items-center gap-10 relative z-10">
@@ -53,12 +59,12 @@ export default function About() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="z-20 -mt-8"  // ⬅️ shifted slightly upward
+          className="z-20 -mt-8"
         >
           {/* Mission */}
           <div className="space-y-2 mb-4">
             <button
-              onClick={() => setMissionOpen(!isMissionOpen)}
+              onClick={() => !isMobile && setMissionOpen(!isMissionOpen)}
               className="flex items-center gap-2 text-[#f6a100] font-semibold text-lg"
             >
               <motion.div
@@ -84,7 +90,7 @@ export default function About() {
           {/* Vision */}
           <div className="space-y-2">
             <button
-              onClick={() => setVisionOpen(!isVisionOpen)}
+              onClick={() => !isMobile && setVisionOpen(!isVisionOpen)}
               className="flex items-center gap-2 text-[#f6a100] font-semibold text-lg"
             >
               <motion.div
@@ -110,7 +116,7 @@ export default function About() {
           {/* CTA */}
           <Link
             href="/about-us"
-            className="inline-block mt-8 bg-green-700 text-white font-medium px-6 py-3 rounded-full hover:bg-green-800 transition-all duration-300"
+            className="inline-block mt-8 bg-green-700 text-white font-medium px-6 py-3 rounded-full hover:bg-green-800 transition-all duration-300 shadow-lg shadow-green-700/20"
           >
             Read More About Us
           </Link>
@@ -139,8 +145,8 @@ export default function About() {
         </div>
       </div>
 
-      {/* Subtle fade transition at bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent via-[#eaf7ec]/90 to-[#1a331d] z-0"></div>
+      {/* 🌄 Subtle fade transition into footer or next deep section */}
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent via-[#DCEFE0]/90 to-[#1a331d] z-0"></div>
     </section>
   )
 }

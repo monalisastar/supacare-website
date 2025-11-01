@@ -53,7 +53,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative w-full min-h-[110vh] flex flex-col justify-end pb-32 overflow-hidden text-white bg-transparent pt-24"
+      className="relative w-full min-h-[100vh] flex flex-col justify-end pb-20 sm:pb-28 overflow-hidden text-white bg-transparent pt-16 sm:pt-24"
     >
       {/* Background Video */}
       {data.backgroundVideo && (
@@ -72,7 +72,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 z-10" />
 
       {/* Content */}
-      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-32">
+      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-20 sm:py-32">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,20 +90,21 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 1 }}
-              className="mt-4 text-base sm:text-lg md:text-xl max-w-2xl text-green-100"
+              className="mt-4 text-base sm:text-lg md:text-xl max-w-2xl text-green-100 text-justify"
             >
               {data.taglines[current]}
             </motion.div>
           </AnimatePresence>
         )}
 
-        {/* CTA + Logout */}
+        {/* CTA Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 mt-6"
+          className="flex flex-col sm:flex-row gap-4 mt-6 flex-wrap justify-center"
         >
+          {/* Main CTA visible on all screens */}
           {data.ctaText && data.ctaLink && (
             <Link
               href={data.ctaLink}
@@ -113,6 +114,24 @@ export default function Hero() {
             </Link>
           )}
 
+          {/* Mobile-only buttons (now also yellow) */}
+          <div className="flex flex-col gap-4 sm:hidden">
+            <Link
+              href="/shop"
+              className="bg-[#f5b942] hover:bg-[#e8a933] text-white px-6 py-3 rounded-lg shadow-lg transition"
+            >
+              Shop With Us
+            </Link>
+
+            <Link
+              href="/services"
+              className="bg-[#f5b942] hover:bg-[#e8a933] text-white px-6 py-3 rounded-lg shadow-lg transition"
+            >
+              Book Consultancy
+            </Link>
+          </div>
+
+          {/* Logout (if logged in) */}
           {session && (
             <button
               onClick={() => signOut()}
