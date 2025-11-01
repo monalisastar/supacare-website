@@ -23,7 +23,7 @@ const LeafPin = ({ active }: { active?: boolean }) => (
   >
     <path
       d="M10 0C14 4 14 10 10 14C6 10 6 4 10 0Z"
-      fill={active ? "#00ff88" : "#ffffff"}
+      fill={active ? "#F4B940" : "#ffffff"} // 🟨 Supacare yellow when active
       stroke="#0a0a0a"
       strokeWidth="0.5"
     />
@@ -34,10 +34,10 @@ export default function WhereWeWork() {
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
-    <section className="relative overflow-hidden py-24 bg-gradient-to-r from-green-600 via-green-500 to-green-400 text-white">
+    <section className="relative overflow-hidden py-24 bg-gradient-to-r from-[#4CAF50] via-[#43A047] to-[#2E7D32] text-white">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 px-6 md:px-12">
         
-        {/* ✅ Left Text */}
+        {/* 🟢 Left Text */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -48,20 +48,19 @@ export default function WhereWeWork() {
             Local Roots, Expanding Reach
           </h2>
           <p className="text-lg mb-8 max-w-lg leading-relaxed opacity-90">
-            Supacare operates in key Kenyan counties tailoring sustainable waste
-            management solutions that improve local communities’ wellbeing and
-            the environment.
+            Supacare operates in key Kenyan counties, tailoring sustainable waste
+            management solutions that uplift communities and protect the planet.
           </p>
           <ul className="space-y-3 text-base">
             {pins.map(({ name, description }) => (
               <li key={name}>
-                <strong>{name}:</strong> {description}
+                <strong className="text-[#F4B940]">{name}:</strong> {description}
               </li>
             ))}
           </ul>
         </motion.div>
 
-        {/* ✅ Right Map */}
+        {/* 🗺️ Right Map */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -77,7 +76,7 @@ export default function WhereWeWork() {
               priority
             />
 
-            {/* ✅ Animated Pins */}
+            {/* 📍 Animated Pins */}
             {pins.map(({ name, top, left, description }) => (
               <button
                 key={name}

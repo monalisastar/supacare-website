@@ -16,7 +16,6 @@ interface ContactFormData {
   message: string;
 }
 
-// Updated schema using ObjectSchema
 const schema: yup.ObjectSchema<ContactFormData> = yup.object({
   firstName: yup.string().required('First name is required').min(2, 'Too short'),
   lastName: yup.string().required('Last name is required').min(2, 'Too short'),
@@ -39,7 +38,7 @@ const GetInTouch = () => {
   const [recaptchaToken, setRecaptchaToken] = useState('');
 
   const generateRecaptchaToken = () => {
-    setRecaptchaToken('mocked-recaptcha-token'); // replace with real reCAPTCHA later
+    setRecaptchaToken('mocked-recaptcha-token');
   };
 
   const onSubmit = async (data: ContactFormData) => {
@@ -55,20 +54,15 @@ const GetInTouch = () => {
     formData.append('recaptchaToken', recaptchaToken);
 
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        body: formData,
-      });
+      const res = await fetch('/api/contact', { method: 'POST', body: formData });
 
       if (res.ok) {
         toast.success('Message sent successfully!');
         reset();
         setRecaptchaToken('');
         generateRecaptchaToken();
-      } else {
-        toast.error('Failed to send message');
-      }
-    } catch (error) {
+      } else toast.error('Failed to send message');
+    } catch {
       toast.error('An error occurred');
     }
   };
@@ -79,98 +73,115 @@ const GetInTouch = () => {
 
   return (
     <section
-      className="w-full min-h-[85vh] bg-cover bg-center flex items-center justify-center px-4 md:px-20 py-10"
+      className="w-full min-h-[60vh] bg-cover bg-center flex items-center justify-center px-4 md:px-16 py-10"
       style={{ backgroundImage: `url('/images/forest-bg.png')` }}
     >
-      <div className="w-full max-w-7xl flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
-        {/* Left side - Text */}
+      <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-8">
+        {/* 🟢 Left - Text */}
         <motion.div
-          className="md:w-1/2 w-full text-white"
-          initial={{ opacity: 0, x: -50 }}
+          className="md:w-1/2 text-white text-center md:text-left"
+          initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-lg">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3 drop-shadow-lg">
             Get in touch
           </h2>
-          <p className="text-base md:text-lg drop-shadow-md">
-            Have a project in mind or want to collaborate? Fill in the form and our team will respond shortly.
-            Let’s create a more sustainable future together.
+          <p className="text-sm md:text-base opacity-90 leading-relaxed">
+            Have a project or idea in mind? Reach out to us — our team will respond shortly.
+            Together, we can build a cleaner and more sustainable future.
           </p>
         </motion.div>
 
-        {/* Right side - Form */}
+        {/* 🧾 Right - Form */}
         <motion.form
           onSubmit={handleSubmit(onSubmit)}
-          className="md:w-1/2 w-full bg-white/20 backdrop-blur-lg rounded-xl shadow-lg p-6 md:p-8 space-y-4 text-white"
-          initial={{ opacity: 0, x: 50 }}
+          className="md:w-1/2 w-full bg-white/15 backdrop-blur-lg rounded-lg shadow-md p-5 md:p-6 space-y-3 text-white"
+          initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <input
-            {...register('firstName')}
-            type="text"
-            placeholder="First name"
-            className={`w-full px-4 py-3 rounded-md bg-white/10 placeholder-white/80 focus:outline-none ${
-              errors.firstName ? 'border-red-500 border-2' : ''
-            }`}
-          />
-          {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName.message}</p>}
-
-          <input
-            {...register('lastName')}
-            type="text"
-            placeholder="Last name"
-            className={`w-full px-4 py-3 rounded-md bg-white/10 placeholder-white/80 focus:outline-none ${
-              errors.lastName ? 'border-red-500 border-2' : ''
-            }`}
-          />
-          {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName.message}</p>}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <input
+                {...register('firstName')}
+                type="text"
+                placeholder="First name"
+                className={`w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none ${
+                  errors.firstName ? 'border-red-500 border' : 'border-transparent'
+                }`}
+              />
+              {errors.firstName && (
+                <p className="text-red-400 text-xs">{errors.firstName.message}</p>
+              )}
+            </div>
+            <div>
+              <input
+                {...register('lastName')}
+                type="text"
+                placeholder="Last name"
+                className={`w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none ${
+                  errors.lastName ? 'border-red-500 border' : 'border-transparent'
+                }`}
+              />
+              {errors.lastName && (
+                <p className="text-red-400 text-xs">{errors.lastName.message}</p>
+              )}
+            </div>
+          </div>
 
           <input
             {...register('email')}
             type="email"
             placeholder="Email"
-            className={`w-full px-4 py-3 rounded-md bg-white/10 placeholder-white/80 focus:outline-none ${
-              errors.email ? 'border-red-500 border-2' : ''
+            className={`w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none ${
+              errors.email ? 'border-red-500 border' : 'border-transparent'
             }`}
           />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-red-400 text-xs">{errors.email.message}</p>
+          )}
 
           <input
             {...register('phone')}
             type="tel"
-            placeholder="Phone number"
-            className="w-full px-4 py-3 rounded-md bg-white/10 placeholder-white/80 focus:outline-none"
+            placeholder="Phone (optional)"
+            className="w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none"
           />
 
           <select
             {...register('topic')}
             defaultValue=""
-            className={`w-full px-4 py-3 rounded-md bg-[#1a1a1a]/60 text-white focus:outline-none ${
-              errors.topic ? 'border-red-500 border-2' : ''
+            className={`w-full px-3 py-2 text-sm rounded-md bg-[#1a1a1a]/50 text-white focus:outline-none ${
+              errors.topic ? 'border-red-500 border' : 'border-transparent'
             }`}
           >
-            <option value="" disabled>Select a topic</option>
+            <option value="" disabled>
+              Select a topic
+            </option>
             <option value="carbon">Carbon Advisory</option>
             <option value="waste">Waste Management</option>
             <option value="consulting">Sustainability Consulting</option>
           </select>
-          {errors.topic && <p className="text-red-500 text-sm">{errors.topic.message}</p>}
+          {errors.topic && (
+            <p className="text-red-400 text-xs">{errors.topic.message}</p>
+          )}
 
           <textarea
             {...register('message')}
             placeholder="Message"
-            className={`w-full h-24 px-4 py-3 rounded-md bg-white/10 placeholder-white/80 focus:outline-none resize-none ${
-              errors.message ? 'border-red-500 border-2' : ''
+            className={`w-full h-20 px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none resize-none ${
+              errors.message ? 'border-red-500 border' : 'border-transparent'
             }`}
           ></textarea>
-          {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
+          {errors.message && (
+            <p className="text-red-400 text-xs">{errors.message.message}</p>
+          )}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-md transition disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold text-sm py-2.5 rounded-md transition disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>

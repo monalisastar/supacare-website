@@ -28,10 +28,8 @@ const impactStats = [
 
 const WhySupaCare = () => {
   return (
-    <section className="relative -mt-[100px] py-14 text-white overflow-hidden">
-      {/* ✅ Removed top gradient — only one fade is needed */}
-      
-      {/* Background image (brighter for visibility) */}
+    <section className="relative z-10 -mt-[120px] py-14 text-white overflow-hidden">
+      {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/for-communities.png"
@@ -40,7 +38,6 @@ const WhySupaCare = () => {
           priority
           className="object-cover brightness-[0.8] contrast-[1.05] saturate-[1.08]"
         />
-        {/* Subtle overlay for clarity */}
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
@@ -75,8 +72,8 @@ const WhySupaCare = () => {
         </div>
       </div>
 
-      {/* ✅ Single bottom fade — perfectly matches ImpactSection background */}
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-b from-transparent via-[#e6f5ea]/70 to-[#e6f5ea] z-[5]" />
+      {/* Keep bottom fade to blend into next section */}
+      <div className="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-b from-transparent via-[#e6f5ea]/90 to-[#e6f5ea] z-[5]" />
     </section>
   )
 }

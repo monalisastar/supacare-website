@@ -6,7 +6,7 @@ import Hero from '../components/Hero'
 import SustainabilityActions from '../components/SustainabilityActions'
 import OurFocusAreas from '../components/OurFocusAreas'
 import About from '../components/About'
-import ApproachSection from '../components/ApproachSection'
+
 import WhySupaCare from '../components/WhySupaCare'
 import Projects from '../components/Projects'
 import GetInTouch from '../components/GetInTouch'
@@ -23,12 +23,26 @@ export default function HomePage() {
         <Hero />
       </section>
 
+
       {/* ✅ Shared Gradient Wrapper for Sustainability + Focus Areas */}
       <div className="relative bg-gradient-to-b from-white via-green-50 to-white">
         {/* Floating Sustainable Actions Section (unchanged overlap) */}
         <section id="actions" className="relative z-10">
           <SustainabilityActions />
         </section>
+
+        
+      {/* About Section */}
+      <motion.section
+        id="about"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-12"
+      >
+        <About />
+      </motion.section>
 
         {/* ✅ Our Focus Areas Section (no white gap, smooth merge) */}
         <motion.section
@@ -43,29 +57,7 @@ export default function HomePage() {
         </motion.section>
       </div>
 
-      {/* About Section */}
-      <motion.section
-        id="about"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="py-12"
-      >
-        <About />
-      </motion.section>
 
-      {/* ✅ New Approach Section (bridge before Projects) */}
-      <motion.section
-        id="approach"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
-        className="relative"
-      >
-        <ApproachSection />
-      </motion.section>
 
       {/* Projects Section */}
       <motion.section

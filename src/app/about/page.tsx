@@ -1,17 +1,17 @@
 import SEO from "@/components/SEO";
 import AboutHero from "./components/AboutHero";
-import FocusAreas from "./components/focusareas";
-import CoreValues from "./components/CoreValues";
+import AboutChange from "./components/AboutChange";
+import AboutGrowth from "./components/AboutGrowth";
 import WhereWeWork from "./components/WhereWeWork";
-import WhyWasteMatters from "./components/WhyWasteMatters";
+import MeetSupacare from "./components/MeetSupacare"; // ✅ corrected name
+
 import VisionForward from "./components/VisionForward";
 import AboutCTA from "./components/AboutCTA";
-import OurStory from "./components/OurStory";
 
 export default function AboutPage() {
   return (
     <>
-      {/* ✅ Reusable SEO for About Page */}
+      {/* ✅ SEO Configuration */}
       <SEO
         title="About Supacare Solutions | Sustainable Waste Management in Kenya"
         description="Learn about Supacare Solutions — Kenya’s leading provider of sustainable waste management, recycling, and carbon consultancy services."
@@ -42,15 +42,30 @@ export default function AboutPage() {
         ]}
       />
 
-      {/* ✅ Page Content */}
-      <main className="flex flex-col gap-20">
+      {/* ✅ Page Layout */}
+      <main className="flex flex-col gap-0">
+        {/* 🟩 Hero Section */}
         <AboutHero />
-        <FocusAreas />
-        <OurStory />
-        <CoreValues />
+
+        {/* 🌿 AboutChange Section — smooth top transition */}
+        <div className="-mt-8">
+          <AboutChange />
+        </div>
+
+        {/* 🏗️ Growth Section — continues brand story */}
+        <div className="-mt-2">
+          <AboutGrowth />
+        </div>
+
+        {/* 🌱 Location & Team Sections */}
         <WhereWeWork />
-        <WhyWasteMatters />
+        <MeetSupacare />
+
+        {/* 💚 Impact & Vision */}
+      
         <VisionForward />
+
+        {/* 🟨 Call to Action */}
         <AboutCTA />
       </main>
     </>

@@ -8,17 +8,12 @@ import Link from 'next/link'
 
 type AboutData = {
   image: string
-  whoTitle: string
-  whoDescription: string
   mission: string
   vision: string
 }
 
 const fallbackData: AboutData = {
   image: '/images/about-bg.webp',
-  whoTitle: 'Who We Are',
-  whoDescription:
-    'Supacare is a sustainability-driven waste management and environmental consultancy company committed to creating a cleaner, greener future. We empower homes, estates, schools, and institutions to reduce their environmental footprint, promote circular waste solutions, and take climate-positive action.',
   mission:
     'To provide sustainable and affordable waste management solutions that promote a clean, healthy, and eco-friendly environment for all.',
   vision:
@@ -46,28 +41,20 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative -mt-[110px] md:-mt-[120px] bg-[#eaf7ec] pt-6 pb-0 md:pb-2 overflow-hidden"
+      className="relative -mt-[100px] md:-mt-[110px] bg-[#eaf7ec] pt-2 pb-0 md:pb-2 overflow-hidden"
     >
       {/* Decorative gradient behind image */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-300/20 blur-3xl rounded-full -z-10"></div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 items-center gap-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 items-center gap-10 relative z-10">
         {/* LEFT TEXT SIDE */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="z-20"
+          className="z-20 -mt-8"  // ⬅️ shifted slightly upward
         >
-          <h5 className="text-[#f6a100] font-semibold uppercase mb-2 tracking-wide">
-            {data.whoTitle}
-          </h5>
-
-          <p className="text-green-800 text-lg leading-relaxed mb-8">
-            {data.whoDescription}
-          </p>
-
           {/* Mission */}
           <div className="space-y-2 mb-4">
             <button
@@ -140,7 +127,7 @@ export default function About() {
             viewport={{ once: true }}
             className="relative isolate"
           >
-            <div className="relative w-[320px] h-[320px] md:w-[520px] md:h-[520px] translate-y-10 md:translate-y-16 translate-x-6 md:translate-x-10">
+            <div className="relative w-[320px] h-[320px] md:w-[520px] md:h-[520px] translate-y-6 md:translate-y-12 translate-x-6 md:translate-x-10">
               <Image
                 src={data.image}
                 alt="Supacare sustainability globe"
