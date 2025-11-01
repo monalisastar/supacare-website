@@ -1,23 +1,34 @@
-// src/lib/auth.ts
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { getServerSession } from "next-auth";
 
-// List of admin emails
+/**
+ * 🔐 Supacare Auth Configuration
+ * ------------------------------
+ * - Supports Google & Credentials login
+ * - Attaches `role` and `isAdmin` to JWT + Session
+ * - Handles automatic linking for Google users
+ * - Centralized helper `getSession()` for server components
+ */
+
+// ✅ Define admin emails (for quick elevation)
 const adminEmails = ["njatabriang48@gmail.com", "virginia.njata@gmail.com"];
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
 
   providers: [
+    // 🌍 Google OAuth
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
 
+    // 🔐 Credentials Provider
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -25,16 +36,21 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) return null;
+        if (!credentials?.email || !credentials.password)
+          throw new Error("Missing email or password");
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
 
         if (!user) throw new Error("No account found with this email");
-        if (!user.passwordHash) throw new Error("This account uses Google login");
+        if (!user.passwordHash)
+          throw new Error("This account uses Google login");
 
-        const isValid = await bcrypt.compare(credentials.password, user.passwordHash);
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.passwordHash
+        );
         if (!isValid) throw new Error("Invalid email or password");
 
         return user;
@@ -42,8 +58,10 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
+  // 🧠 Use JWT for stateless sessions
   session: { strategy: "jwt" },
 
+  // 🧭 Custom auth pages
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",
@@ -51,7 +69,24 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    // Add isAdmin and role to session
+    /**
+     * 💾 Attach fields to JWT (called on login and every session update)
+     */
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = (user as any).role ?? "CLIENT";
+
+        // ✅ Mark admin users
+        if ("email" in user && user.email) {
+          token.isAdmin = adminEmails.includes(user.email);
+        }
+      }
+      return token;
+    },
+
+    /**
+     * 🧠 Propagate fields from JWT into session object
+     */
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.sub ?? "";
@@ -61,18 +96,9 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
 
-    // Add role and isAdmin to JWT token
-    async jwt({ token, user }) {
-      if (user) {
-        token.role = (user as any).role ?? "CLIENT";
-        if ("email" in user && user.email) {
-          token.isAdmin = adminEmails.includes(user.email);
-        }
-      }
-      return token;
-    },
-
-    // Handle Google sign-in linking and new users
+    /**
+     * 🌐 Handle Google sign-ins (link existing users or create new)
+     */
     async signIn({ user, account }) {
       if (account?.provider === "google" && user.email) {
         const existingUser = await prisma.user.findUnique({
@@ -80,7 +106,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (existingUser) {
-          // Link googleId if missing
+          // Link Google ID if not already linked
           if (!existingUser.googleId) {
             await prisma.user.update({
               where: { id: existingUser.id },
@@ -114,13 +140,13 @@ export const authOptions: NextAuthOptions = {
             });
           }
         } else {
-          // New user + Account
+          // Create new Google user
           await prisma.user.create({
             data: {
               email: user.email,
               name: user.name || "",
               googleId: account.providerAccountId,
-              role: "CLIENT",
+              role: "CLIENT", // default for new users
               accounts: {
                 create: {
                   provider: "google",
@@ -137,24 +163,34 @@ export const authOptions: NextAuthOptions = {
           });
         }
       }
+
       return true;
     },
 
-    // Redirect after login
+    /**
+     * 🧭 Redirect users based on role or admin flag
+     */
     async redirect({ url, baseUrl }) {
-      // fetch session to determine admin
       try {
         const session = await fetch(`${baseUrl}/api/auth/session`).then((res) =>
           res.json().catch(() => null)
         );
 
+        const role = session?.user?.role;
         const isAdmin = session?.user?.isAdmin;
+
         if (isAdmin) return `${baseUrl}/dashboard/admin`;
-      } catch {
-        // fallback
+        if (role === "CONSULTANT")
+          return `${baseUrl}/dashboard/consultant`;
+        if (role === "PARTNER") return `${baseUrl}/dashboard/partner`;
+      } catch (err) {
+        console.error("Redirect error:", err);
       }
 
       return `${baseUrl}/dashboard`;
     },
   },
 };
+
+// ✅ Export centralized getSession helper
+export const getSession = () => getServerSession(authOptions);

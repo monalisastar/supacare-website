@@ -13,30 +13,33 @@ export async function POST(req: Request) {
 
     const user = await prisma.user.findUnique({ where: { email } });
 
+    // Always respond the same to prevent user enumeration
+    const genericResponse = {
+      message: "If that email exists, a reset link has been sent.",
+    };
+
     if (!user) {
-      // Security: don't reveal existence of email
-      return NextResponse.json({
-        message: "If that email exists, a reset link has been sent.",
-      });
+      return NextResponse.json(genericResponse);
     }
 
-    // Generate token
+    // 🪄 Generate secure token
     const token = crypto.randomBytes(32).toString("hex");
-    const expires = new Date(Date.now() + 1000 * 60 * 60); // 1 hour
+    const expires = new Date(Date.now() + 1000 * 60 * 60); // 1 hour expiry
 
-    // Store in DB
+    // ✅ Store token in DB (email required by schema)
     await prisma.passwordResetToken.create({
       data: {
         token,
+        email: user.email,
         userId: user.id,
         expiresAt: expires,
       },
     });
 
-    // Build reset URL
+    // 🔗 Build reset URL
     const resetUrl = `${process.env.NEXTAUTH_URL}/auth/reset-password?token=${token}`;
 
-    // Setup nodemailer
+    // ✉️ Setup mail transporter
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_SERVER_HOST!,
       port: Number(process.env.EMAIL_SERVER_PORT!),
@@ -47,27 +50,22 @@ export async function POST(req: Request) {
       },
     });
 
-    // Send mail
+    // 📨 Send email
     await transporter.sendMail({
       from: process.env.EMAIL_FROM!,
       to: email,
       subject: "Reset your password",
       html: `
         <p>Hello ${user.name || "there"},</p>
-        <p>You requested to reset your password. Click the link below to set a new one:</p>
-        <p><a href="${resetUrl}">${resetUrl}</a></p>
-        <p>If you didn’t request this, you can safely ignore this email.</p>
+        <p>You requested to reset your password. Click below to set a new one:</p>
+        <p><a href="${resetUrl}" target="_blank">${resetUrl}</a></p>
+        <p>If you didn’t request this, please ignore this email.</p>
       `,
     });
 
-    return NextResponse.json({
-      message: "If that email exists, a reset link has been sent.",
-    });
+    return NextResponse.json(genericResponse);
   } catch (err) {
     console.error("Forgot password error:", err);
-    return NextResponse.json(
-      { message: "Something went wrong." },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Something went wrong." }, { status: 500 });
   }
 }

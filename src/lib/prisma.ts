@@ -1,16 +1,18 @@
 // src/lib/prisma.ts
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client'
 
 declare global {
-  // allow global `var` declarations
-  // eslint-disable-next-line no-var
-  var prisma: PrismaClient | undefined;
+  // Allow global `var` declarations
+  // Prevent multiple Prisma instances in dev
+  var prisma: PrismaClient | undefined
 }
 
+// ✅ Consistent instance (no duplication)
 export const prisma =
-  global.prisma ||
+  globalThis.prisma ||
   new PrismaClient({
-    log: ["query", "info", "warn", "error"],
-  });
+    log: ['error', 'warn'], // optional: add 'query' for debugging
+  })
 
-if (process.env.NODE_ENV !== "production") global.prisma = prisma;
+// ✅ Cache in global scope (for hot reloads)
+if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma

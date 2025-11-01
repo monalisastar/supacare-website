@@ -1,48 +1,22 @@
-"use client";
+// src/app/dashboard/page.tsx
+'use server'
+import { redirect } from 'next/navigation'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { UserRole } from '@prisma/client'
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import DashboardLayout from "./DashboardLayout";
-import AdminDashboard from "./AdminDashboard/AdminDashboard";
-import ClientDashboard from "./ClientDashboard/ClientDashboard";
-import { useEffect, useState, Suspense } from "react";
+export default async function DashboardPage() {
+  const session = await getServerSession(authOptions)
+  const role = (session?.user?.role as UserRole) || UserRole.CLIENT
 
-const ADMIN_EMAILS = ["njatabrian648@gmail.com"]; // whitelist admin emails
-
-export default function DashboardPage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const [loadingView, setLoadingView] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    if (status === "loading") return;
-
-    if (status === "unauthenticated") {
-      router.push("/auth/login");
-      return;
-    }
-
-    const userEmail = session?.user?.email || "";
-    setIsAdmin(ADMIN_EMAILS.includes(userEmail));
-    setLoadingView(false);
-  }, [status, session, router]);
-
-  if (status === "loading" || loadingView) {
-    return (
-      <DashboardLayout>
-        <div className="flex justify-center items-center h-64 text-white text-lg">
-          Loading dashboard...
-        </div>
-      </DashboardLayout>
-    );
+  switch (role) {
+    case UserRole.CONSULTANT:
+      redirect('/dashboard/consultant')
+    case UserRole.PARTNER:
+      redirect('/dashboard/partner')
+    case UserRole.ADMIN:
+      redirect('/dashboard/admin')
+    default:
+      redirect('/dashboard/client')
   }
-
-  return (
-    <DashboardLayout>
-      <Suspense fallback={<div className="text-center text-white p-6">Loading dashboard...</div>}>
-        {isAdmin ? <AdminDashboard /> : <ClientDashboard />}
-      </Suspense>
-    </DashboardLayout>
-  );
 }

@@ -2,14 +2,13 @@
 
 import React from 'react'
 import Navbar from '@/components/Navbar'
-
 import Hero from '../components/Hero'
 import SustainabilityActions from '../components/SustainabilityActions'
+import OurFocusAreas from '../components/OurFocusAreas'
 import About from '../components/About'
 import ApproachSection from '../components/ApproachSection'
 import WhySupaCare from '../components/WhySupaCare'
 import Projects from '../components/Projects'
-import DemandSolutionCarousel from '../components/DemandSolutionCarousel'
 import GetInTouch from '../components/GetInTouch'
 import ImpactSection from '../components/ImpactSection'
 import { motion } from 'framer-motion'
@@ -24,10 +23,25 @@ export default function HomePage() {
         <Hero />
       </section>
 
-      {/* ✅ Floating Sustainable Actions Section */}
-      <section id="actions">
-        <SustainabilityActions />
-      </section>
+      {/* ✅ Shared Gradient Wrapper for Sustainability + Focus Areas */}
+      <div className="relative bg-gradient-to-b from-white via-green-50 to-white">
+        {/* Floating Sustainable Actions Section (unchanged overlap) */}
+        <section id="actions" className="relative z-10">
+          <SustainabilityActions />
+        </section>
+
+        {/* ✅ Our Focus Areas Section (no white gap, smooth merge) */}
+        <motion.section
+          id="focus-areas"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="py-16 -mt-2"
+        >
+          <OurFocusAreas />
+        </motion.section>
+      </div>
 
       {/* About Section */}
       <motion.section
@@ -67,7 +81,7 @@ export default function HomePage() {
 
       {/* Why Supacare */}
       <motion.section
-        id="why-Supacare"
+        id="why-supacare"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}

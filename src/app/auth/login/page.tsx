@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const ADMIN_EMAILS = ["njatabrian648@gmail.com"]; // whitelist admin emails
-
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -15,7 +13,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [navbarHeight, setNavbarHeight] = useState(0);
 
-  // ✅ Detect navbar height dynamically
+  // ✅ Detect navbar height dynamically (adjusts based on layout)
   useEffect(() => {
     const navbar = document.querySelector("nav, header");
     if (navbar) setNavbarHeight(navbar.getBoundingClientRect().height);
@@ -56,12 +54,8 @@ export default function LoginPage() {
       return;
     }
 
-    // Auto-redirect based on email
-    if (ADMIN_EMAILS.includes(email)) {
-      router.push("/dashboard");
-    } else {
-      router.push("/dashboard");
-    }
+    // ✅ Universal redirect (role handled in /dashboard/page.tsx)
+    router.push("/dashboard");
   };
 
   // ---------- GOOGLE LOGIN ----------

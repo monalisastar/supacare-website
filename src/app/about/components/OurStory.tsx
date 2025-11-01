@@ -5,18 +5,14 @@ import { motion } from "framer-motion";
 
 /**
  * OUR STORY SECTION
- * - Smooth gradient transition from FocusAreas
- * - Full background image (always visible)
- * - Text sits on the left half
- * - Slight upward overlap for seamless join
+ * - Seamless overlap with FocusAreas
+ * - Clean, cinematic fade bridge
  */
 export default function OurStory() {
   return (
     <section
       id="our-story"
-      className="relative flex items-center justify-start
-                 overflow-hidden min-h-screen w-full
-                 bg-black text-white scroll-smooth -mt-32 z-10"
+      className="relative flex items-center justify-start overflow-hidden min-h-screen w-full bg-black text-white scroll-smooth -mt-32 md:-mt-36 z-10"
       style={{
         margin: 0,
         paddingTop: "0",
@@ -46,7 +42,7 @@ export default function OurStory() {
       >
         <h2
           className="text-3xl md:text-4xl font-semibold mb-4"
-          style={{ color: "#f4b400" }} // ✅ navbar yellow tone
+          style={{ color: "#f4b400" }}
         >
           Who We Are
         </h2>
@@ -74,8 +70,8 @@ export default function OurStory() {
         </p>
       </motion.div>
 
-      {/* ✅ Gradient bridge from green to black for seamless section merge */}
-      <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-green-50 via-green-900/50 to-black opacity-90" />
+      {/* ✅ Subtle blend from FocusAreas → OurStory */}
+      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-transparent via-black/50 to-black pointer-events-none" />
     </section>
   );
 }

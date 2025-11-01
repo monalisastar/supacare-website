@@ -46,7 +46,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative -mt-8 bg-[#eaf7ec] pt-0 pb-0 md:pb-2 overflow-hidden"
+      className="relative -mt-[110px] md:-mt-[120px] bg-[#eaf7ec] pt-6 pb-0 md:pb-2 overflow-hidden"
     >
       {/* Decorative gradient behind image */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-300/20 blur-3xl rounded-full -z-10"></div>
@@ -129,12 +129,10 @@ export default function About() {
           </Link>
         </motion.div>
 
-        {/* RIGHT IMAGE SIDE (isolated projection) */}
+        {/* RIGHT IMAGE SIDE */}
         <div className="relative z-0 flex justify-center items-center pointer-events-none">
-          {/* Subtle glow behind globe */}
           <div className="absolute bottom-[-80px] right-[-60px] w-[600px] h-[600px] bg-green-900/20 blur-[120px] rounded-full -z-10"></div>
 
-          {/* Floating globe image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 0 }}
             whileInView={{ opacity: 1, scale: 1, y: -10 }}
@@ -154,8 +152,8 @@ export default function About() {
         </div>
       </div>
 
-      {/* Fade transition (only affects image overlap) */}
-      <div className="absolute bottom-0 left-0 w-full h-56 bg-gradient-to-b from-transparent via-[#eaf7ec]/80 to-[#1a331d] z-0"></div>
+      {/* Subtle fade transition at bottom */}
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent via-[#eaf7ec]/90 to-[#1a331d] z-0"></div>
     </section>
   )
 }

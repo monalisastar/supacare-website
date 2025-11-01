@@ -34,9 +34,9 @@ export default function FocusAreas() {
   const navbarColor = "#F4C542";
 
   return (
-    <section className="relative z-20 -mt-32 md:-mt-40 px-6 md:px-20 pb-2 backdrop-blur-sm">
-      {/* ✅ Softer gradient fade under hero */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/60 to-green-100 pointer-events-none" />
+    <section className="relative z-20 -mt-32 md:-mt-40 px-6 md:px-20 pb-0 backdrop-blur-sm">
+      {/* ✅ Soft background gradient that blends into OurStory */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/60 to-[#eaf7ec] pointer-events-none" />
 
       {/* Header */}
       <div className="relative mb-16 text-left ml-4 md:ml-10">
@@ -49,7 +49,7 @@ export default function FocusAreas() {
       </div>
 
       {/* Focus Area Cards */}
-      <div className="relative grid md:grid-cols-3 gap-10">
+      <div className="relative grid md:grid-cols-3 gap-10 pb-16">
         {areas.map((area) => (
           <motion.div
             key={area.id}
@@ -108,6 +108,9 @@ export default function FocusAreas() {
           </motion.div>
         ))}
       </div>
+
+      {/* ✅ Smooth matte fade into OurStory (no glow) */}
+      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-b from-[#eaf7ec]/60 via-green-900/20 to-black/90 opacity-80 pointer-events-none" />
     </section>
   );
 }

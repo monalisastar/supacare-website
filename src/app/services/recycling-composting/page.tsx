@@ -13,6 +13,9 @@ import WhoWeServe from './components/WhoWeServe';
 import Testimonials from './components/Testimonials';
 import FinalCTA from './components/FinalCTA';
 
+// ✅ Import your new ProcessFlowWaste component
+import ProcessFlowWaste from './components/ProcessFlowWaste';
+
 export default function CompostingPage() {
   return (
     <>
@@ -77,7 +80,12 @@ export default function CompostingPage() {
         <Hero />
         <CompostingExplained />
         <OurServices />
+
+        {/* 🟢 Add the process flow right here */}
+        <ProcessFlowWaste />
+
         <BulkCompost />
+
         <CompostingProcess />
         <BiomassSupply />
         <MuckHeapRemoval />
