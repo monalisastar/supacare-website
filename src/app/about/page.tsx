@@ -1,10 +1,11 @@
 import SEO from "@/components/SEO";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
+
 import AboutHero from "./components/AboutHero";
 import AboutChange from "./components/AboutChange";
 import AboutGrowth from "./components/AboutGrowth";
 import WhereWeWork from "./components/WhereWeWork";
-import MeetSupacare from "./components/MeetSupacare"; // ✅ corrected name
-
+import MeetSupacare from "./components/MeetSupacare";
 import VisionForward from "./components/VisionForward";
 import AboutCTA from "./components/AboutCTA";
 
@@ -42,6 +43,14 @@ export default function AboutPage() {
         ]}
       />
 
+      {/* ✅ Breadcrumb Schema */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.supacaresolutions.com/" },
+          { name: "About Us", url: "https://www.supacaresolutions.com/about" },
+        ]}
+      />
+
       {/* ✅ Page Layout */}
       <main className="flex flex-col gap-0">
         {/* 🟩 Hero Section */}
@@ -62,7 +71,6 @@ export default function AboutPage() {
         <MeetSupacare />
 
         {/* 💚 Impact & Vision */}
-      
         <VisionForward />
 
         {/* 🟨 Call to Action */}

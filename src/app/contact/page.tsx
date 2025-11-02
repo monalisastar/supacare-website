@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema"; // 🧩 Import helper
 import ContactForm from "./components/ContactForm";
 import ContactInfo from "./components/ContactInfo";
 
@@ -58,6 +59,14 @@ export default function ContactPage() {
             addressCountry: "KE",
           },
         }}
+      />
+
+      {/* ✅ Breadcrumb Schema for Google */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.supacaresolutions.com/" },
+          { name: "Contact Us", url: "https://www.supacaresolutions.com/contact" },
+        ]}
       />
 
       {/* ✅ Page Layout */}

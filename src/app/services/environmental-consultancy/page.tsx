@@ -2,27 +2,40 @@ import React from "react";
 import HeroSection from "./components/Hero";
 import ServicesOffered from "./components/ServicesOffered";
 import WhyChooseSupaCare from "./components/WhyChooseSupaCare";
-
-import ProcessFlowConsultancy from "./components/ProcessFlowConsultancy"; // ✅ import added
+import ProcessFlowConsultancy from "./components/ProcessFlowConsultancy";
 import ProjectGallery from "./components/ProjectGallery";
 import FAQSection from "./components/FAQSection";
 import CTASection from "./components/CTASection";
 
+// 🧩 Import the shared breadcrumb schema component
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
+
 const EnvironmentalConsultancyPage = () => {
   return (
-    <main className="bg-white text-gray-900">
-      <HeroSection />
-      <ServicesOffered />
+    <>
+      {/* ✅ Breadcrumb Schema for Google */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.supacaresolutions.com/" },
+          { name: "Services", url: "https://www.supacaresolutions.com/services" },
+          {
+            name: "Environmental Consultancy",
+            url: "https://www.supacaresolutions.com/services/environmental-consultancy",
+          },
+        ]}
+      />
 
-      {/* ✅ Add Supacare’s Consultancy Process Flow here */}
-      <ProcessFlowConsultancy />
-
-      <WhyChooseSupaCare />
- 
-      <ProjectGallery />
-      <FAQSection />
-      <CTASection />
-    </main>
+      {/* ✅ Page Content */}
+      <main className="bg-white text-gray-900">
+        <HeroSection />
+        <ServicesOffered />
+        <ProcessFlowConsultancy />
+        <WhyChooseSupaCare />
+        <ProjectGallery />
+        <FAQSection />
+        <CTASection />
+      </main>
+    </>
   );
 };
 

@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Navbar from '@/components/Navbar'
-
+import Navbar from "@/components/Navbar";
 import Footer from "../components/Footer";
 import { Toaster } from "react-hot-toast";
 import SessionProviderWrapper from "./providers/SessionProviderWrapper";
@@ -43,6 +42,14 @@ export default function NavbarFooterLayout({ children }: { children: React.React
       </main>
 
       {!isDashboard && <Footer />}
+
+      {/* 🔍 Hidden SEO Links for Google Sitelinks */}
+      <div style={{ display: "none" }}>
+        <a href="/about">About Us</a>
+        <a href="/services/environmental-consultancy">Environmental Consultancy</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact Us</a>
+      </div>
 
       <Toaster position="top-right" />
     </SessionProviderWrapper>

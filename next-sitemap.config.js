@@ -5,7 +5,13 @@ module.exports = {
   sitemapSize: 5000,
   changefreq: 'weekly',
   priority: 0.7,
-  exclude: ['/dashboard/*', '/admin/*'], // exclude any private routes if needed
+  exclude: ['/dashboard/*', '/admin/*'], // exclude private routes if needed
+
+  // ✅ Force homepage inclusion (missing by default)
+  additionalPaths: async (config) => [
+    await config.transform(config, '/'), // This adds https://www.supacaresolutions.com/
+  ],
+
   robotsTxtOptions: {
     policies: [
       { userAgent: '*', allow: '/' },

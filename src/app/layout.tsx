@@ -152,14 +152,16 @@ export default function RootLayout({
               sameAs: [
                 "https://www.facebook.com/supacaresolutions",
                 "https://www.instagram.com/supacaresolutions",
-                "https://www.linkedin.com/company/supacaresolutions",
+                "https://www.linkedin.com/company/supacare-solutions",
                 "https://twitter.com/supacaresol",
               ],
               address: {
                 "@type": "PostalAddress",
                 addressCountry: "KE",
-                addressLocality: "Nairobi",
-                streetAddress: "2224 Kimathi Street",
+                addressRegion: "Kiambu County",
+                addressLocality: "Ruiru",
+                streetAddress: "Laki Gardens, Ruiru, Kenya",
+                postalCode: "00900",
               },
             }),
           }}
@@ -184,8 +186,39 @@ export default function RootLayout({
               sameAs: [
                 "https://www.facebook.com/supacaresolutions",
                 "https://www.instagram.com/supacaresolutions",
-                "https://www.linkedin.com/company/supacaresolutions",
+                "https://www.linkedin.com/company/supacare-solutions",
                 "https://twitter.com/supacaresol",
+              ],
+            }),
+          }}
+        />
+
+        {/* ✅ Structured Data for Local Business */}
+        <Script
+          id="localbusiness-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: "Supacare Solutions",
+              image: "https://www.supacaresolutions.com/images/supalogo.png",
+              telephone: "+254-720-096680",
+              email: "info@supacaresolutions.com",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Laki Gardens, Ruiru",
+                addressLocality: "Ruiru",
+                addressRegion: "Kiambu County",
+                postalCode: "00900",
+                addressCountry: "KE",
+              },
+              openingHours: "Mo-Fr 08:00-17:00",
+              url: "https://www.supacaresolutions.com",
+              sameAs: [
+                "https://www.facebook.com/supacaresolutions",
+                "https://www.instagram.com/supacaresolutions",
+                "https://www.linkedin.com/company/supacare-solutions",
               ],
             }),
           }}
@@ -219,7 +252,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebPage",
-              name: "Supacare Solutions - Sustainable Waste Management in Kenya",
+              name: "Supacare Solutions ",
               url: "https://www.supacaresolutions.com",
               description:
                 "Supacare Solutions provides innovative and eco-friendly waste management, recycling, and carbon consultancy services across Kenya.",
@@ -228,6 +261,32 @@ export default function RootLayout({
                 "@type": "WebSite",
                 url: "https://www.supacaresolutions.com",
               },
+            }),
+          }}
+        />
+
+        {/* ✅ Structured Data for Breadcrumbs */}
+        <Script
+          id="breadcrumb-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: "https://www.supacaresolutions.com",
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "About Us",
+                  item: "https://www.supacaresolutions.com/about",
+                },
+              ],
             }),
           }}
         />
