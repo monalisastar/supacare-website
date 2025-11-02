@@ -43,8 +43,8 @@ export default function About() {
   return (
     <section
       id="about"
-      // 🌅 Golden–green sunset blend that ties into previous sunlight tone
-      className="relative -mt-[100px] md:-mt-[110px] bg-gradient-to-b from-[#FFFDE7] via-[#E6F7D3] to-[#D0E6B3] bg-[length:250%_250%] animate-sunlight pt-10 pb-0 md:pb-2 overflow-hidden"
+      // ✅ Fixed: Removed deep negative margin & added top padding for mobile
+      className="relative mt-0 md:-mt-[110px] bg-gradient-to-b from-[#FFFDE7] via-[#E6F7D3] to-[#D0E6B3] pt-20 md:pt-10 pb-0 md:pb-2 overflow-visible"
     >
       {/* ☀️ Moving sunlight overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,200,0.35),_transparent_70%)] animate-sunbeam pointer-events-none" />
@@ -59,10 +59,10 @@ export default function About() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="z-20 -mt-8"
+          className="z-20"
         >
           {/* Mission */}
-          <div className="space-y-2 mb-4">
+          <div className="space-y-2 mb-6">
             <button
               onClick={() => !isMobile && setMissionOpen(!isMissionOpen)}
               className="flex items-center gap-2 text-[#f6a100] font-semibold text-lg"
@@ -81,7 +81,7 @@ export default function About() {
                 height: isMissionOpen ? 'auto' : 0,
                 opacity: isMissionOpen ? 1 : 0,
               }}
-              className="overflow-hidden text-gray-700 leading-relaxed"
+              className="overflow-hidden text-gray-700 leading-relaxed text-justify"
             >
               <p>{data.mission}</p>
             </motion.div>
@@ -107,7 +107,7 @@ export default function About() {
                 height: isVisionOpen ? 'auto' : 0,
                 opacity: isVisionOpen ? 1 : 0,
               }}
-              className="overflow-hidden text-gray-700 leading-relaxed"
+              className="overflow-hidden text-gray-700 leading-relaxed text-justify"
             >
               <p>{data.vision}</p>
             </motion.div>
