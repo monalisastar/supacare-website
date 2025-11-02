@@ -21,25 +21,23 @@ const schema: yup.ObjectSchema<ContactFormData> = yup.object({
   lastName: yup.string().required('Last name is required').min(2, 'Too short'),
   email: yup.string().email('Invalid email').required('Email is required'),
   phone: yup.string().notRequired(),
-  topic: yup.string().required('Topic is required'),
+  topic: yup.string().required('Please select a topic'),
   message: yup.string().required('Message is required').min(10, 'Too short'),
 }) as yup.ObjectSchema<ContactFormData>;
 
-const GetInTouch = () => {
+export default function GetInTouch() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<ContactFormData>({
-    resolver: yupResolver(schema),
-  });
+  } = useForm<ContactFormData>({ resolver: yupResolver(schema) });
 
   const [recaptchaToken, setRecaptchaToken] = useState('');
 
-  const generateRecaptchaToken = () => {
+  useEffect(() => {
     setRecaptchaToken('mocked-recaptcha-token');
-  };
+  }, []);
 
   const onSubmit = async (data: ContactFormData) => {
     if (!recaptchaToken) {
@@ -55,53 +53,65 @@ const GetInTouch = () => {
 
     try {
       const res = await fetch('/api/contact', { method: 'POST', body: formData });
-
       if (res.ok) {
         toast.success('Message sent successfully!');
         reset();
         setRecaptchaToken('');
-        generateRecaptchaToken();
+        setTimeout(() => setRecaptchaToken('mocked-recaptcha-token'), 500);
       } else toast.error('Failed to send message');
     } catch {
-      toast.error('An error occurred');
+      toast.error('Network error — please try again later.');
     }
   };
 
-  useEffect(() => {
-    generateRecaptchaToken();
-  }, []);
-
   return (
     <section
-      className="w-full min-h-[60vh] bg-cover bg-center flex items-center justify-center px-4 md:px-16 py-10"
-      style={{ backgroundImage: `url('/images/forest-bg.webp')` }}
+      id="get-in-touch"
+      aria-label="Contact Supacare Solutions"
+      className="relative w-full min-h-[65vh] flex items-center justify-center px-4 md:px-16 py-16 overflow-hidden"
     >
-      <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-8">
-        {/* 🟢 Left - Text */}
+      {/* 🌿 Background Layer */}
+      <div className="absolute inset-0">
+        <img
+          src="/images/forest-bg.webp"
+          alt="Forest background representing sustainability"
+          className="w-full h-full object-cover brightness-[0.6]"
+          loading="lazy"
+          decoding="async"
+        />
+        <div className="absolute inset-0 bg-green-900/40 backdrop-blur-[2px]" />
+      </div>
+
+      {/* 🌍 Foreground Content */}
+      <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-10 relative z-10">
+        {/* Left Section */}
         <motion.div
           className="md:w-1/2 text-white text-center md:text-left"
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-3 drop-shadow-lg">
-            Get in touch
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-lg text-[#fcbf49]">
+            Get in Touch
           </h2>
-          <p className="text-sm md:text-base opacity-90 leading-relaxed">
-            Have a project or idea in mind? Reach out to us — our team will respond shortly.
-            Together, we can build a cleaner and more sustainable future.
+          <p className="text-base opacity-95 leading-relaxed max-w-md mx-auto md:mx-0">
+            Have a project or idea in mind? Reach out to our team of environmental
+            consultants. Together, we’ll create sustainable solutions that make a real impact.
           </p>
         </motion.div>
 
-        {/* 🧾 Right - Form */}
+        {/* Right Section - Form */}
         <motion.form
           onSubmit={handleSubmit(onSubmit)}
-          className="md:w-1/2 w-full bg-white/15 backdrop-blur-lg rounded-lg shadow-md p-5 md:p-6 space-y-3 text-white"
+          className="md:w-1/2 w-full bg-white/15 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8 space-y-4 text-white border border-white/20"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
         >
-          <div className="grid grid-cols-2 gap-3">
+          {/* Name Fields */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <input
                 {...register('firstName')}
@@ -112,7 +122,7 @@ const GetInTouch = () => {
                 }`}
               />
               {errors.firstName && (
-                <p className="text-red-400 text-xs">{errors.firstName.message}</p>
+                <p className="text-red-400 text-xs mt-1">{errors.firstName.message}</p>
               )}
             </div>
             <div>
@@ -125,23 +135,27 @@ const GetInTouch = () => {
                 }`}
               />
               {errors.lastName && (
-                <p className="text-red-400 text-xs">{errors.lastName.message}</p>
+                <p className="text-red-400 text-xs mt-1">{errors.lastName.message}</p>
               )}
             </div>
           </div>
 
-          <input
-            {...register('email')}
-            type="email"
-            placeholder="Email"
-            className={`w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none ${
-              errors.email ? 'border-red-500 border' : 'border-transparent'
-            }`}
-          />
-          {errors.email && (
-            <p className="text-red-400 text-xs">{errors.email.message}</p>
-          )}
+          {/* Email */}
+          <div>
+            <input
+              {...register('email')}
+              type="email"
+              placeholder="Email"
+              className={`w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none ${
+                errors.email ? 'border-red-500 border' : 'border-transparent'
+              }`}
+            />
+            {errors.email && (
+              <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>
+            )}
+          </div>
 
+          {/* Phone */}
           <input
             {...register('phone')}
             type="tel"
@@ -149,46 +163,55 @@ const GetInTouch = () => {
             className="w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none"
           />
 
-          <select
-            {...register('topic')}
-            defaultValue=""
-            className={`w-full px-3 py-2 text-sm rounded-md bg-[#1a1a1a]/50 text-white focus:outline-none ${
-              errors.topic ? 'border-red-500 border' : 'border-transparent'
-            }`}
-          >
-            <option value="" disabled>
-              Select a topic
-            </option>
-            <option value="carbon">Carbon Advisory</option>
-            <option value="waste">Waste Management</option>
-            <option value="consulting">Sustainability Consulting</option>
-          </select>
-          {errors.topic && (
-            <p className="text-red-400 text-xs">{errors.topic.message}</p>
-          )}
+          {/* Topic */}
+          <div>
+            <select
+              {...register('topic')}
+              defaultValue=""
+              className={`w-full px-3 py-2 text-sm rounded-md bg-[#1a1a1a]/40 text-white focus:outline-none ${
+                errors.topic ? 'border-red-500 border' : 'border-transparent'
+              }`}
+            >
+              <option value="" disabled>
+                Select a topic
+              </option>
+              <option value="carbon">Carbon Advisory</option>
+              <option value="waste">Waste Management</option>
+              <option value="consulting">Sustainability Consulting</option>
+              <option value="partnerships">Partnership Opportunities</option>
+            </select>
+            {errors.topic && (
+              <p className="text-red-400 text-xs mt-1">{errors.topic.message}</p>
+            )}
+          </div>
 
-          <textarea
-            {...register('message')}
-            placeholder="Message"
-            className={`w-full h-20 px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none resize-none ${
-              errors.message ? 'border-red-500 border' : 'border-transparent'
-            }`}
-          ></textarea>
-          {errors.message && (
-            <p className="text-red-400 text-xs">{errors.message.message}</p>
-          )}
+          {/* Message */}
+          <div>
+            <textarea
+              {...register('message')}
+              placeholder="Your message"
+              className={`w-full h-24 px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none resize-none ${
+                errors.message ? 'border-red-500 border' : 'border-transparent'
+              }`}
+            />
+            {errors.message && (
+              <p className="text-red-400 text-xs mt-1">{errors.message.message}</p>
+            )}
+          </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold text-sm py-2.5 rounded-md transition disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full bg-[#1b4332] hover:bg-green-800 text-white font-semibold text-sm py-2.5 rounded-md transition disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>
         </motion.form>
       </div>
+
+      {/* Gradient Overlay to Footer */}
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-[#E9FCE9]/90 to-[#E9FCE9]" />
     </section>
   );
-};
-
-export default GetInTouch;
+}
