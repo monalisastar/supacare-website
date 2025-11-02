@@ -30,7 +30,7 @@ export default function Footer() {
           {/* ✅ Logo + Tagline + Socials */}
           <div>
             <Image
-              src="/images/supalogo.png"
+              src="/images/supalogo.webp"
               alt="Supacare Solutions Logo"
               width={180}
               height={80}

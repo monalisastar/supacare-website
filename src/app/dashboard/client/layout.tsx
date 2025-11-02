@@ -58,7 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex items-center justify-between px-4 py-4 border-b border-green-100">
           <Link href="/" className="flex items-center space-x-2">
             <Image
-              src="/images/supalogo.png"
+              src="/images/supalogo.webp"
               alt="Supacare"
               width={34}
               height={34}

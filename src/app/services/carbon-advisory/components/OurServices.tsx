@@ -16,7 +16,7 @@ const fallbackServices = [
   },
   {
     title: "Carbon Project Development",
-    image: "/images/tree-planting-kiambu.png",
+    image: "/images/tree-planting-kiambu.webp",
     description: "Design and register community carbon projects like tree planting and clean cookstoves.",
   },
   {

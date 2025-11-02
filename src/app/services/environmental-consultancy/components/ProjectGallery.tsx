@@ -6,22 +6,22 @@ import React from "react";
 const fallbackProjects = [
   {
     title: "Urban Cleanup & Audit, Nairobi",
-    image: "/images/solution-cleanup-audit.png",
+    image: "/images/solution-cleanup-audit.webp",
     tag: "🧼 Sanitation",
   },
   {
     title: "Composting for Circular Economy",
-    image: "/images/solution-recycling-composting.png",
+    image: "/images/solution-recycling-composting.webp",
     tag: "♻️ Waste Management",
   },
   {
     title: "School Waste Sorting",
-    image: "/images/school-waste-sorting.png",
+    image: "/images/school-waste-sorting.webp",
     tag: "🏫 Education",
   },
   {
     title: "Tree Planting in Kiambu County",
-    image: "/images/tree-planting-kiambu.png",
+    image: "/images/tree-planting-kiambu.webp",
     tag: "🌳 Biodiversity",
   },
 ];

@@ -5,19 +5,19 @@ import { motion } from 'framer-motion';
 const groups = [
   {
     title: 'Apartments & Estates',
-    image: '/images/recycling and composting/apartments.png',
+    image: '/images/recycling and composting/apartments.webp',
   },
   {
     title: 'Schools & Institutions',
-    image: '/images/recycling and composting/Schools.png',
+    image: '/images/recycling and composting/Schools.webp',
   },
   {
     title: 'Markets & Vendors',
-    image: '/images/recycling and composting/market.png',
+    image: '/images/recycling and composting/market.webp',
   },
   {
     title: 'Farms & Gardeners',
-    image: '/images/recycling and composting/farmer.jpg',
+    image: '/images/recycling and composting/farmer.webp',
   },
 ];
 

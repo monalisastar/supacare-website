@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
   '/images/waste-collection/wastecollectionforoverviewcaurrosel.webp',
-  '/images/waste-collection/supatruck.png',
+  '/images/waste-collection/supatruck.webp',
 ];
 
 export default function Overview() {

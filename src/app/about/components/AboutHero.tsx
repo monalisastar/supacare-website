@@ -34,7 +34,7 @@ export default function AboutHero() {
       {/* 🟩 Full Background Image */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/images/about-hero.png"
+          src="/images/about-hero.webp"
           alt="Supacare community fieldwork"
           fill
           priority

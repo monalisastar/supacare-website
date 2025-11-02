@@ -8,7 +8,7 @@ const focusAreas = [
   {
     title: 'Sustainable Waste Management',
     desc: 'We transform organic waste into nutrient-rich compost and clean biomass energy — reducing landfill emissions and supporting regenerative agriculture.',
-    image: '/images/recycling and composting/Supacarecompactmachine.png',
+    image: '/images/recycling and composting/Supacarecompactmachine.webp',
     link: '/services/recycling-composting',
   },
   {

@@ -7,11 +7,11 @@ export default function Partners() {
   const partners = [
     {
       name: 'Eco-Mentor LMS',
-      logo: '/images/eco-mentor-logo.png',
+      logo: '/images/eco-mentor-logo.webp',
     },
     {
       name: 'Supacare Foundation',
-      logo: '/images/logo2.png',
+      logo: '/images/logo2.webp',
     },
   ]
 

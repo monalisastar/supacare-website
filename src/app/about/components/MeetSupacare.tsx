@@ -17,7 +17,7 @@ export default function MeetSupacare() {
         {/* Inner team image */}
         <div className="relative w-[230px] h-[230px] md:w-[300px] md:h-[300px] rounded-full overflow-hidden shadow-lg">
           <Image
-            src="/images/team-supacare.png"
+            src="/images/team-supacare.webp"
             alt="Supacare team"
             fill
             className="object-cover"

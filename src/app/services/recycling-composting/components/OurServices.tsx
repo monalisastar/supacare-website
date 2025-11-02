@@ -16,28 +16,28 @@ const services: ServiceType[] = [
     title: 'Waste Collection',
     description:
       'We collect food and garden waste from estates, schools, markets, and institutions—sorted and processed for composting.',
-    image: '/images/recycling and composting/Supacaretruck.png',
+    image: '/images/recycling and composting/Supacaretruck.webp',
     link: '/services/collection',
   },
   {
     title: 'Onsite Composting Machines',
     description:
       'Install compact, odor-free composting units at your property for efficient and sustainable waste management.',
-    image: '/images/recycling and composting/Supacarehomewastecompostingmachine.png',
+    image: '/images/recycling and composting/Supacarehomewastecompostingmachine.webp',
     link: '/services/machines',
   },
   {
     title: 'Compost Sales',
     description:
       'Get Supacare’s organic compost—ideal for gardens, landscaping, and farm enrichment. Available in bulk or bags.',
-    image: '/images/recycling and composting/compost-use.png',
+    image: '/images/recycling and composting/compost-use.webp',
     link: '/services/compost',
   },
   {
     title: 'Training & Setup Support',
     description:
       'We provide hands-on training and site setup to ensure your team, school, or community composts correctly.',
-    image: '/images/recycling and composting/training.png',
+    image: '/images/recycling and composting/training.webp',
     link: '/services/training',
   },
 ];

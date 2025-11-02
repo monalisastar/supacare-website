@@ -76,7 +76,7 @@ export default function LoginPage() {
       {/* ✅ Background */}
       <div className="absolute inset-0">
         <Image
-          src="/images/recycling-composting.png"
+          src="/images/recycling-composting.webp"
           alt="Login background"
           fill
           className="object-cover brightness-75"

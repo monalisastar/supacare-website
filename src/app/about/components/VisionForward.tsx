@@ -11,7 +11,7 @@ export default function VisionForward() {
       {/* ✅ Full background image — fills the screen completely */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/images/the-road-ahead.png"
+          src="/images/the-road-ahead.webp"
           alt="Asphalt road symbolizing the road ahead"
           fill
           priority

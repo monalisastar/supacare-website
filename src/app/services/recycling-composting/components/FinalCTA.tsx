@@ -7,7 +7,7 @@ export default function FinalCTA() {
     <section className="relative w-full h-[30vh] md:h-[35vh] overflow-hidden">
       {/* Background Image */}
       <Image
-        src="/images/recycling and composting/Supacaretruck.png"
+        src="/images/recycling and composting/Supacaretruck.webp"
         alt="Supacare Truck"
         layout="fill"
         objectFit="cover"
@@ -20,7 +20,7 @@ export default function FinalCTA() {
         {/* Supacare Logo Badge */}
         <div className="absolute top-3 left-3 w-16 h-16 md:w-20 md:h-20">
           <Image
-            src="/images/supalogo.png"
+            src="/images/supalogo.webp"
             alt="Supacare Logo"
             layout="fill"
             objectFit="contain"

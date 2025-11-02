@@ -11,7 +11,7 @@ export default function ResetPasswordPage() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/recycling-composting.png"
+          src="/images/recycling-composting.webp"
           alt="Reset password background"
           fill
           className="object-cover brightness-75"

@@ -32,7 +32,7 @@ const WhySupaCare = () => {
       {/* 🌿 Background image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/for-communities.png"
+          src="/images/for-communities.webp"
           alt="Supacare community initiative"
           fill
           priority

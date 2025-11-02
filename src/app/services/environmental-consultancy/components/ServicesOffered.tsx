@@ -12,7 +12,7 @@ const services = [
   },
   {
     title: "Waste & Sanitation Management",
-    image: "/images/solution-cleanup-audit.png",
+    image: "/images/solution-cleanup-audit.webp",
     alt: "Waste audit in urban setting",
   },
   {
@@ -22,17 +22,17 @@ const services = [
   },
   {
     title: "Sustainable Resource Planning",
-    image: "/images/solution-recycling-composting.png",
+    image: "/images/solution-recycling-composting.webp",
     alt: "Composting or recycling center",
   },
   {
     title: "School & Community Waste Audits",
-    image: "/images/school-waste-sorting.png",
+    image: "/images/school-waste-sorting.webp",
     alt: "School waste sorting activity",
   },
   {
     title: "Carbon Footprint Assessment",
-    image: "/images/carbon-advisory/footprint.png",
+    image: "/images/carbon-advisory/footprint.webp",
     alt: "Carbon assessment process",
   },
   {

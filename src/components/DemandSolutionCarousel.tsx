@@ -10,36 +10,36 @@ const slides = [
     demand: {
       label: 'The Demand',
       text: 'Overflowing garbage in urban areas creates health and environmental hazards.',
-      image: '/images/demand-overflowing-waste.png',
+      image: '/images/demand-overflowing-waste.webp',
     },
     solution: {
       label: 'The Solution',
       text: 'Supacare conducts waste audits and cleanup drives to restore communities.',
-      image: '/images/solution-cleanup-audit.png',
+      image: '/images/solution-cleanup-audit.webp',
     },
   },
   {
     demand: {
       label: 'The Demand',
       text: 'Unsorted waste often ends up burned, releasing toxic emissions.',
-      image: '/images/demand-burning-waste.png',
+      image: '/images/demand-burning-waste.webp',
     },
     solution: {
       label: 'The Solution',
       text: 'Our recycling and composting programs turn waste into valuable resources.',
-      image: '/images/solution-recycling-composting.png',
+      image: '/images/solution-recycling-composting.webp',
     },
   },
   {
     demand: {
       label: 'The Demand',
       text: 'Corporates often lack guidance on ESG, climate compliance, and sustainability.',
-      image: '/images/demand-esg-confusion.png',
+      image: '/images/demand-esg-confusion.webp',
     },
     solution: {
       label: 'The Solution',
       text: 'Our consultants help businesses align with SDGs and climate goals.',
-      image: '/images/solution-sustainability-consulting.png',
+      image: '/images/solution-sustainability-consulting.webp',
     },
   },
 ]

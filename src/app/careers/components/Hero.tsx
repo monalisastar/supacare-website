@@ -36,7 +36,7 @@ export default function Hero() {
     <section
       className="relative flex flex-col items-center justify-center text-center text-white overflow-hidden pt-[7rem]" // fallback padding
       style={{
-        backgroundImage: "url('/images/joinourteam.png')",
+        backgroundImage: "url('/images/joinourteam.webp')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '60vh',

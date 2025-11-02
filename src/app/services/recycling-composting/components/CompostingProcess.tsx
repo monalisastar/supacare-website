@@ -22,7 +22,7 @@ export default function CompostingProcess() {
 
       <div className="relative w-full h-80 md:h-[500px] rounded-xl overflow-hidden max-w-6xl mx-auto mb-12">
         <Image
-          src="/images/recycling and composting/composting process.jpg"
+          src="/images/recycling and composting/composting process.webp"
           alt="Composting in action"
           layout="fill"
           objectFit="cover"

@@ -74,7 +74,7 @@ const GetInTouch = () => {
   return (
     <section
       className="w-full min-h-[60vh] bg-cover bg-center flex items-center justify-center px-4 md:px-16 py-10"
-      style={{ backgroundImage: `url('/images/forest-bg.png')` }}
+      style={{ backgroundImage: `url('/images/forest-bg.webp')` }}
     >
       <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-8">
         {/* 🟢 Left - Text */}

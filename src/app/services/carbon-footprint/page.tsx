@@ -9,7 +9,7 @@ export default function CarbonFootprintPage() {
       <section className="relative w-full h-[600px] md:h-[700px] flex items-center justify-center text-center text-white">
         <div className="absolute inset-0 -z-10 min-h-[600px] md:min-h-[700px]">
           <Image
-            src="/images/hero-carbon-footprint.png"
+            src="/images/hero-carbon-footprint.webp"
             alt="Earth with Carbon Footprint"
             fill
             className="object-cover object-center"
@@ -45,7 +45,7 @@ export default function CarbonFootprintPage() {
         </div>
         <div className="md:w-1/2 relative h-64 md:h-80">
           <Image
-            src="/images/overview-infographic.png"
+            src="/images/overview-infographic.webp"
             alt="Carbon Footprint Overview Infographic"
             fill
             className="object-contain"
@@ -63,7 +63,7 @@ export default function CarbonFootprintPage() {
             <div className="max-w-xs bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
               <div className="relative w-20 h-20 mb-4">
                 <Image
-                  src="/images/benefit-cost-savings.png"
+                  src="/images/benefit-cost-savings.webp"
                   alt="Cost Savings Icon"
                   fill
                   className="object-contain"
@@ -79,7 +79,7 @@ export default function CarbonFootprintPage() {
             <div className="max-w-xs bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
               <div className="relative w-20 h-20 mb-4">
                 <Image
-                  src="/images/benefit-compliance.png"
+                  src="/images/benefit-compliance.webp"
                   alt="Compliance Icon"
                   fill
                   className="object-contain"
@@ -95,7 +95,7 @@ export default function CarbonFootprintPage() {
             <div className="max-w-xs bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
               <div className="relative w-20 h-20 mb-4">
                 <Image
-                  src="/images/benefit-environmental.png"
+                  src="/images/benefit-environmental.webp"
                   alt="Environmental Impact Icon"
                   fill
                   className="object-contain"
@@ -119,7 +119,7 @@ export default function CarbonFootprintPage() {
           <div className="flex flex-col items-center text-center max-w-xs">
             <div className="relative w-20 h-20 mb-4">
               <Image
-                src="/images/process-step-1.png"
+                src="/images/process-step-1.webp"
                 alt="Data Collection Icon"
                 fill
                 className="object-contain"
@@ -135,7 +135,7 @@ export default function CarbonFootprintPage() {
           <div className="flex flex-col items-center text-center max-w-xs">
             <div className="relative w-20 h-20 mb-4">
               <Image
-                src="/images/process-step-2.png"
+                src="/images/process-step-2.webp"
                 alt="Calculation Icon"
                 fill
                 className="object-contain"
@@ -151,7 +151,7 @@ export default function CarbonFootprintPage() {
           <div className="flex flex-col items-center text-center max-w-xs">
             <div className="relative w-20 h-20 mb-4">
               <Image
-                src="/images/process-step-3.png"
+                src="/images/process-step-3.webp"
                 alt="Strategy Icon"
                 fill
                 className="object-contain"
@@ -173,7 +173,7 @@ export default function CarbonFootprintPage() {
           <div className="flex justify-center gap-16 items-center flex-wrap">
             <div className="relative w-32 h-20">
               <Image
-                src="/images/tool-ipcc.png"
+                src="/images/tool-ipcc.webp"
                 alt="IPCC Logo"
                 fill
                 className="object-contain"
@@ -182,7 +182,7 @@ export default function CarbonFootprintPage() {
             </div>
             <div className="relative w-32 h-20">
               <Image
-                src="/images/tool-calculator.png"
+                src="/images/tool-calculator.webp"
                 alt="Carbon Calculator Icon"
                 fill
                 className="object-contain"
@@ -201,7 +201,7 @@ export default function CarbonFootprintPage() {
           <div className="rounded-lg overflow-hidden shadow-md">
             <div className="relative w-full h-64">
               <Image
-                src="/images/case-study-1.png"
+                src="/images/case-study-1.webp"
                 alt="Case Study 1"
                 fill
                 className="object-cover"
@@ -219,7 +219,7 @@ export default function CarbonFootprintPage() {
           <div className="rounded-lg overflow-hidden shadow-md">
             <div className="relative w-full h-64">
               <Image
-                src="/images/case-study-2.png"
+                src="/images/case-study-2.webp"
                 alt="Case Study 2"
                 fill
                 className="object-cover"
@@ -240,7 +240,7 @@ export default function CarbonFootprintPage() {
       <section
         className="relative py-20 px-6 flex items-center justify-center text-center text-white"
         style={{
-          backgroundImage: `url('/images/cta-background.png')`,
+          backgroundImage: `url('/images/cta-background.webp')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

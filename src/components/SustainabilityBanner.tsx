@@ -61,7 +61,7 @@ export default function SustainabilityBanner() {
           className="rounded-xl overflow-hidden shadow-md order-1 md:order-2"
         >
           <Image
-            src="/images/recycling and composting/Supacarecompactmachine.png"
+            src="/images/recycling and composting/Supacarecompactmachine.webp"
             alt="Supacare Compact Composting Machine"
             width={600}
             height={400}

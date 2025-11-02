@@ -8,7 +8,7 @@ export default function ApproachSection() {
     <section className="relative w-full h-[65vh] flex items-center overflow-hidden bg-green-950 -mt-20 md:-mt-28 z-0">
       {/* Background image */}
       <Image
-        src="/images/composting-pilot.png"
+        src="/images/composting-pilot.webp"
         alt="Supacare composting initiative"
         fill
         className="object-cover brightness-[0.8] contrast-[1.05] saturate-[1.1] scale-105"

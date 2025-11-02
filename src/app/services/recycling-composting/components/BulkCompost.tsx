@@ -34,7 +34,7 @@ export default function BulkCompost() {
         <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src={encodeURI("/images/recycling and composting/supacare-compost.png")}
+              src={encodeURI("/images/recycling and composting/supacare-compost.webp")}
               alt="Supacare Compost"
               fill
               className="object-cover"
@@ -64,7 +64,7 @@ export default function BulkCompost() {
         <div className="flex flex-col md:flex-row-reverse items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src={encodeURI("/images/recycling and composting/why compost.png")}
+              src={encodeURI("/images/recycling and composting/why compost.webp")}
               alt="Why Compost"
               fill
               className="object-cover"
@@ -88,7 +88,7 @@ export default function BulkCompost() {
         <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src={encodeURI("/images/recycling and composting/why choose supacare.png")}
+              src={encodeURI("/images/recycling and composting/why choose supacare.webp")}
               alt="Why Choose Supacare"
               fill
               className="object-cover"

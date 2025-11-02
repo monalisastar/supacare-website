@@ -89,7 +89,7 @@ export default function Navbar() {
               >
                 <Link href="/" className="flex items-center">
                   <Image
-                    src="/images/supalogo.png"
+                    src="/images/supalogo.webp"
                     alt="Supacare Solutions Logo"
                     width={400}
                     height={180}

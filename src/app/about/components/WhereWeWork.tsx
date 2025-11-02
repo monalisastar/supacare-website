@@ -69,7 +69,7 @@ export default function WhereWeWork() {
         >
           <div className="relative w-[480px] h-[640px] mx-auto">
             <Image
-              src="/images/kenya-map.png"
+              src="/images/kenya-map.webp"
               alt="Map of Kenya"
               fill
               className="object-contain rounded-lg shadow-2xl"

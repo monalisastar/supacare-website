@@ -12,7 +12,7 @@ export default function CompostingExplained() {
         <div className="md:flex md:items-center md:gap-8">
           <div className="md:w-1/2 h-64 relative rounded-lg overflow-hidden shadow-lg mb-6 md:mb-0">
             <Image
-              src="/images/shop/bagged compost.png"
+              src="/images/shop/bagged compost.webp"
               alt="Composting Process"
               fill
               className="object-cover"
@@ -33,7 +33,7 @@ export default function CompostingExplained() {
         <div className="md:flex md:flex-row-reverse md:items-center md:gap-8">
           <div className="md:w-1/2 h-64 relative rounded-lg overflow-hidden shadow-lg mb-6 md:mb-0">
             <Image
-              src="/images/recycling and composting/composting-site.png"
+              src="/images/recycling and composting/composting-site.webp"
               alt="Composting Site"
               fill
               className="object-cover"
@@ -54,7 +54,7 @@ export default function CompostingExplained() {
         <div className="md:flex md:items-center md:gap-8">
           <div className="md:w-1/2 h-64 relative rounded-lg overflow-hidden shadow-lg mb-6 md:mb-0">
             <Image
-              src="/images/recycling and composting/compost-use.png"
+              src="/images/recycling and composting/compost-use.webp"
               alt="Using Compost"
               fill
               className="object-cover"

@@ -9,7 +9,7 @@ const ProjectsHero = () => {
     <section className="relative h-[80vh] md:h-[85vh] w-full overflow-hidden">
       {/* Background Image */}
       <Image
-        src="/images/projects-hero.png"
+        src="/images/projects-hero.webp"
         alt="Supacare Projects Hero"
         fill
         className="object-cover object-center z-0"

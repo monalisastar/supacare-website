@@ -18,7 +18,7 @@ const wasteTypes = [
   },
   {
     name: 'Sanitary Waste',
-    image: '/images/waste-collection/Sanitary.png',
+    image: '/images/waste-collection/Sanitary.webp',
   },
   {
     name: 'E-Waste',

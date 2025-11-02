@@ -25,7 +25,7 @@ export default function BiomassSupply() {
         <div className="flex flex-col md:flex-row items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/biomass production.png"  // ✅ updated image
+              src="/images/recycling and composting/biomass production.webp"  // ✅ updated image
               alt="Biomass Production"
               fill
               className="object-cover"
@@ -45,7 +45,7 @@ export default function BiomassSupply() {
         <div className="flex flex-col md:flex-row-reverse items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/supacare-woodchip.png"  // ✅ updated image
+              src="/images/recycling and composting/supacare-woodchip.webp"  // ✅ updated image
               alt="Supacare Woodchip"
               fill
               className="object-cover"

@@ -24,7 +24,7 @@ export default function ADGritRecycling() {
         <div className="flex flex-col md:flex-row items-center mb-16 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/ad grit.png"
+              src="/images/recycling and composting/ad grit.webp"
               alt="AD Grit Processing"
               fill
               className="object-cover"
@@ -54,7 +54,7 @@ export default function ADGritRecycling() {
         <div className="flex flex-col md:flex-row-reverse items-center mb-12 gap-8">
           <div className="md:w-1/2 relative h-64 rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/recycling and composting/Supacare In-Vessel ad grit.png"
+              src="/images/recycling and composting/Supacare In-Vessel ad grit.webp"
               alt="Supacare In-Vessel AD Grit System"
               fill
               className="object-cover"

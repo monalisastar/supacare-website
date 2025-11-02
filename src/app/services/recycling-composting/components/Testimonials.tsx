@@ -8,14 +8,14 @@ const testimonials = [
     role: 'Estate Manager, Nairobi',
     quote:
       'Since we started composting with Supacare, our estate has reduced food waste by 70%. The compost is perfect for our gardens, and the process is clean and odor-free.',
-    image: '/images/recycling and composting/estatemanager.png',
+    image: '/images/recycling and composting/estatemanager.webp',
   },
   {
     name: 'Mama Achieng',
     role: 'Smallholder Farmer, Siaya',
     quote:
       'Supacare’s compost is the best I’ve used. My kale and tomatoes are thriving, and I spend less on fertilizers now. I’m proud to be part of the composting movement.',
-    image: '/images/recycling and composting/farmer.jpg',
+    image: '/images/recycling and composting/farmer.webp',
   },
 ];
 

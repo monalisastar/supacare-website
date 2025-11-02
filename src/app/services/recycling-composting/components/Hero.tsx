@@ -48,7 +48,7 @@ export default function Hero() {
     >
       {/* Background Image */}
       <Image
-        src="/images/recycling and composting/Supacarecompactmachine.png"
+        src="/images/recycling and composting/Supacarecompactmachine.webp"
         alt="Supacare Composting Machine"
         fill
         style={{ objectFit: 'cover' }}

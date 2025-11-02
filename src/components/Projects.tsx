@@ -10,21 +10,21 @@ const projects = [
     location: 'Nairobi, Kenya',
     description:
       'Piloting IoT-based waste bins to monitor collection and improve routing efficiency in urban communities.',
-    image: '/images/waste-tracking.png',
+    image: '/images/waste-tracking.webp',
   },
   {
     title: 'Carbon Advisory & Environmental Consultancy',
     location: 'Kisumu, Kenya',
     description:
       'Community engagement on LPG, E-Jikos, and household carbon savings with token-based incentives.',
-    image: '/images/clean-cooking.png',
+    image: '/images/clean-cooking.webp',
   },
   {
     title: 'Circular Composting Pilot',
     location: 'Kiambu County',
     description:
       'Turning market and household waste into compost to support regenerative farming.',
-    image: '/images/composting-pilot.png',
+    image: '/images/composting-pilot.webp',
   },
 ]
 

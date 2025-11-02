@@ -24,7 +24,7 @@ const projects: ProjectType[] = [
     location: 'Kirinyaga, Kenya',
     description:
       'Restoring degraded landscapes with native tree species along rivers and hills.',
-    image: '/images/tree-planting-kiambu.png',
+    image: '/images/tree-planting-kiambu.webp',
     slug: 'tree-planting-kiambu',
     tag: { name: 'Climate', emoji: '♻️' },
   },
@@ -33,7 +33,7 @@ const projects: ProjectType[] = [
     location: 'Nairobi, Kenya',
     description:
       'Street-level cleanup and sanitation campaign involving local youth and vendors.',
-    image: '/images/urban-sanitation-nairob.png',
+    image: '/images/urban-sanitation-nairob.webp',
     slug: 'urban-sanitation-nairobi',
     tag: { name: 'Sanitation', emoji: '🧼' },
   },

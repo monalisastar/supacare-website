@@ -5,13 +5,13 @@ import Image from 'next/image';
 const caseStudies = [
   {
     title: 'Tree Planting Audit – Kiambu County',
-    image: '/images/tree-planting-kiambu.png',
+    image: '/images/tree-planting-kiambu.webp',
     description: 'We conducted a carbon baseline and project assessment for a community tree planting initiative in Kiambu.',
     result: 'Registered 3,000+ trees and estimated 250 tCO₂ in future offsets.',
   },
   {
     title: 'School Waste Sorting – Nairobi',
-    image: '/images/school-waste-sorting.png',
+    image: '/images/school-waste-sorting.webp',
     description: 'Helped a local school assess its waste emissions and implement a sorting + composting system.',
     result: 'Reduced landfill-bound waste by 18% in one term.',
   },

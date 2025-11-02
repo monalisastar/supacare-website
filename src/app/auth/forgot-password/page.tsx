@@ -42,7 +42,7 @@ export default function ForgotPasswordPage() {
       {/* Background hero image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/recycling-composting.png"
+          src="/images/recycling-composting.webp"
           alt="Forgot password background"
           fill
           className="object-cover brightness-75"
