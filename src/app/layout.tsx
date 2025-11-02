@@ -5,6 +5,7 @@ import NavbarFooterLayout from "./NavbarFooterLayout"
 import { CartProvider } from "@/context/CartContext"
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"
 import Script from "next/script"
+import { useEffect } from "react"
 
 // ✅ Fonts
 const geistSans = Geist({
@@ -65,7 +66,6 @@ export const metadata: Metadata = {
     "smart city waste management",
     "green earth initiatives Kenya",
   ],
-
   openGraph: {
     title: "Supacare Solutions",
     description:
@@ -83,7 +83,6 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
-
   twitter: {
     card: "summary_large_image",
     title: "Supacare Solutions",
@@ -93,7 +92,6 @@ export const metadata: Metadata = {
     site: "@Supacare",
     creator: "@Supacare",
   },
-
   robots: {
     index: true,
     follow: true,
@@ -105,6 +103,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#1b4332",
 }
 
 // ✅ Root Layout
@@ -113,10 +113,26 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // ✅ Lazy load all non-critical images & videos after hydration
+  useEffect(() => {
+    const images = document.querySelectorAll("img:not([loading])")
+    images.forEach((img) => {
+      img.setAttribute("loading", "lazy")
+      img.setAttribute("decoding", "async")
+    })
+    const videos = document.querySelectorAll("video:not([preload])")
+    videos.forEach((v) => v.setAttribute("preload", "metadata"))
+  }, [])
+
   return (
     <html lang="en">
       <head>
-        {/* ✅ Preloads for performance */}
+        {/* ✅ Preconnects for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://www.supacaresolutions.com" />
+
+        {/* ✅ Preloads */}
         <link
           rel="preload"
           as="video"
@@ -131,225 +147,68 @@ export default function RootLayout({
           content="kMRdgtlcdkEqVOSaEjTSTKmtn6jnbkthgFEAP93YJ7E"
         />
 
-        {/* ✅ Organization Schema */}
+        {/* ✅ Schema Markup */}
         <Script
-          id="organization-schema"
+          id="schemas"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Supacare Solutions",
-              url: "https://www.supacaresolutions.com",
-              logo: "https://www.supacaresolutions.com/images/supalogo.png",
-              description:
-                "Supacare Solutions is an environmental and sustainability company in Kenya focused on smart waste management, composting, and carbon consultancy.",
-              foundingDate: "2022",
-              founders: [{ "@type": "Person", name: "Virginia Njeri" }],
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "+254-720-096680",
-                contactType: "Customer Support",
-                areaServed: "KE",
-                availableLanguage: ["English", "Swahili"],
-              },
-              sameAs: [
-                "https://www.facebook.com/supacaresolutions",
-                "https://www.instagram.com/supacaresolutions",
-                "https://www.linkedin.com/company/supacare-solutions",
-                "https://twitter.com/supacaresol",
-              ],
-              address: {
-                "@type": "PostalAddress",
-                addressCountry: "KE",
-                addressRegion: "Kiambu County",
-                addressLocality: "Ruiru",
-                streetAddress: "Laki Gardens, Ruiru, Kenya",
-                postalCode: "00900",
-              },
-            }),
-          }}
-        />
-
-        {/* ✅ Local Business Schema */}
-        <Script
-          id="localbusiness-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              name: "Supacare Solutions",
-              image: "https://www.supacaresolutions.com/images/supalogo.png",
-              telephone: "+254-720-096680",
-              email: "info@supacaresolutions.com",
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "Laki Gardens, Ruiru",
-                addressLocality: "Ruiru",
-                addressRegion: "Kiambu County",
-                postalCode: "00900",
-                addressCountry: "KE",
-              },
-              openingHours: "Mo-Fr 08:00-17:00",
-              url: "https://www.supacaresolutions.com",
-              sameAs: [
-                "https://www.facebook.com/supacaresolutions",
-                "https://www.instagram.com/supacaresolutions",
-                "https://www.linkedin.com/company/supacare-solutions",
-              ],
-            }),
-          }}
-        />
-
-        {/* ✅ Website Schema */}
-        <Script
-          id="website-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "Supacare Solutions",
-              url: "https://www.supacaresolutions.com",
-              potentialAction: {
-                "@type": "SearchAction",
-                target:
-                  "https://www.supacaresolutions.com/search?q={search_term_string}",
-                "query-input": "required name=search_term_string",
-              },
-            }),
-          }}
-        />
-
-        {/* ✅ WebPage Schema */}
-        <Script
-          id="webpage-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              name: "Supacare Solutions",
-              url: "https://www.supacaresolutions.com",
-              description:
-                "Supacare Solutions provides innovative and eco-friendly waste management, recycling, and carbon consultancy services across Kenya.",
-              inLanguage: "en",
-              isPartOf: {
-                "@type": "WebSite",
-                url: "https://www.supacaresolutions.com",
-              },
-            }),
-          }}
-        />
-
-        {/* ✅ Breadcrumb Schema */}
-        <Script
-          id="breadcrumb-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              itemListElement: [
-                {
-                  "@type": "ListItem",
-                  position: 1,
-                  name: "Home",
-                  item: "https://www.supacaresolutions.com",
-                },
-                {
-                  "@type": "ListItem",
-                  position: 2,
-                  name: "About Us",
-                  item: "https://www.supacaresolutions.com/about",
-                },
-              ],
-            }),
-          }}
-        />
-
-        {/* ✅ Services Schema */}
-        <Script
-          id="services-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Service",
-              serviceType: "Environmental & Sustainability Services",
-              provider: {
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
                 "@type": "Organization",
                 name: "Supacare Solutions",
                 url: "https://www.supacaresolutions.com",
-              },
-            }),
-          }}
-        />
-
-        {/* ✅ Legal Pages Schema */}
-        <Script
-          id="legal-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ItemList",
-              name: "Supacare Legal Pages",
-              itemListElement: [
-                {
-                  "@type": "WebPage",
-                  name: "Privacy Policy",
-                  url: "https://www.supacaresolutions.com/privacy-policy",
+                logo: "https://www.supacaresolutions.com/images/supalogo.png",
+                description:
+                  "Supacare Solutions is an environmental and sustainability company in Kenya focused on smart waste management, composting, and carbon consultancy.",
+                foundingDate: "2022",
+                founders: [{ "@type": "Person", name: "Virginia Njeri" }],
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  telephone: "+254-720-096680",
+                  contactType: "Customer Support",
+                  areaServed: "KE",
+                  availableLanguage: ["English", "Swahili"],
                 },
-                {
-                  "@type": "WebPage",
-                  name: "Cookie Policy",
-                  url: "https://www.supacaresolutions.com/cookie-policy",
-                },
-                {
-                  "@type": "WebPage",
-                  name: "Terms of Service",
-                  url: "https://www.supacaresolutions.com/terms-of-service",
-                },
-              ],
-            }),
-          }}
-        />
-
-        {/* ✅ Environmental Consulting Schema */}
-        <Script
-          id="environmental-consulting-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              name: "Supacare Environmental Consulting",
-              url: "https://www.supacaresolutions.com",
-              description:
-                "Professional environmental consulting firm offering carbon advisory, sustainability reporting, EIA studies, and waste management strategies across Kenya.",
-              areaServed: {
-                "@type": "Country",
-                name: "Kenya",
-              },
-              serviceType: [
-                "Environmental Consultancy",
-                "Carbon Advisory",
-                "Waste Management Consulting",
-                "Climate Change Mitigation Strategy",
-                "Sustainability Reporting",
-              ],
-              provider: {
-                "@type": "Organization",
-                name: "Supacare Solutions",
                 sameAs: [
                   "https://www.facebook.com/supacaresolutions",
                   "https://www.instagram.com/supacaresolutions",
                   "https://www.linkedin.com/company/supacare-solutions",
+                  "https://twitter.com/supacaresol",
                 ],
               },
-            }),
+              {
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                name: "Supacare Solutions",
+                image: "https://www.supacaresolutions.com/images/supalogo.png",
+                telephone: "+254-720-096680",
+                email: "info@supacaresolutions.com",
+                address: {
+                  "@type": "PostalAddress",
+                  streetAddress: "Laki Gardens, Ruiru",
+                  addressLocality: "Ruiru",
+                  addressRegion: "Kiambu County",
+                  postalCode: "00900",
+                  addressCountry: "KE",
+                },
+                openingHours: "Mo-Fr 08:00-17:00",
+                url: "https://www.supacaresolutions.com",
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                name: "Supacare Solutions",
+                url: "https://www.supacaresolutions.com",
+                description:
+                  "Supacare Solutions provides innovative and eco-friendly waste management, recycling, and carbon consultancy services across Kenya.",
+                inLanguage: "en",
+                isPartOf: {
+                  "@type": "WebSite",
+                  url: "https://www.supacaresolutions.com",
+                },
+              },
+            ]),
           }}
         />
       </head>
@@ -361,6 +220,35 @@ export default function RootLayout({
           <NavbarFooterLayout>{children}</NavbarFooterLayout>
           <FloatingWhatsAppButton />
         </CartProvider>
+
+        {/* ✅ Lazy load safeguard for below-the-fold media */}
+        <Script id="lazy-init" strategy="afterInteractive">
+          {`
+            document.addEventListener("DOMContentLoaded", () => {
+              document.querySelectorAll("img:not([loading='eager'])").forEach(img => {
+                img.loading = "lazy";
+                img.decoding = "async";
+              });
+              document.querySelectorAll("video:not([preload])").forEach(v => {
+                v.preload = "metadata";
+              });
+            });
+          `}
+        </Script>
+
+        {/* ✅ Defer analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"
+          strategy="afterInteractive"
+        />
+        <Script id="ga-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XXXXXXX', { anonymize_ip: true });
+          `}
+        </Script>
       </body>
     </html>
   )

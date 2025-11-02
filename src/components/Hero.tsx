@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import { useSession, signOut } from 'next-auth/react';
 
@@ -31,7 +32,7 @@ export default function Hero() {
   const [current, setCurrent] = useState(0);
   const { data: session } = useSession();
 
-  // 🌿 Cycle through taglines
+  // 🌿 Cycle through taglines every 4s
   useEffect(() => {
     if (!data?.taglines) return;
     const interval = setInterval(() => {
@@ -40,6 +41,7 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [data]);
 
+  // 🌿 Smooth scroll to next section
   const scrollToNextSection = () => {
     const section = document.getElementById('next-section');
     if (section) {
@@ -55,7 +57,7 @@ export default function Hero() {
     <section
       className="relative w-full min-h-[100vh] flex flex-col justify-center text-white overflow-hidden pt-20 sm:pt-24"
     >
-      {/* 🎥 Background Video */}
+      {/* 🎥 Optimized Background Video */}
       {data.backgroundVideo && (
         <video
           className="absolute inset-0 w-full h-full object-cover object-center sm:object-[center_40%] z-0"
@@ -64,7 +66,7 @@ export default function Hero() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="metadata" // ✅ Loads video metadata only
           poster="/images/for-communities.webp"
         />
       )}
@@ -83,6 +85,7 @@ export default function Hero() {
           {data.title}
         </motion.h1>
 
+        {/* ✨ Animated Taglines */}
         {data.taglines && (
           <AnimatePresence mode="wait">
             <motion.div
@@ -110,6 +113,7 @@ export default function Hero() {
             <Link
               href={data.ctaLink}
               className="bg-[#f5b942] hover:bg-[#e8a933] text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:-translate-y-1 transition-transform duration-300"
+              prefetch={true}
             >
               {data.ctaText}
             </Link>
@@ -120,6 +124,7 @@ export default function Hero() {
             <Link
               href="/shop"
               className="bg-[#f5b942] hover:bg-[#e8a933] text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:-translate-y-1 transition-transform duration-300"
+              prefetch={false}
             >
               Shop With Us
             </Link>
@@ -127,12 +132,13 @@ export default function Hero() {
             <Link
               href="/services"
               className="bg-[#f5b942] hover:bg-[#e8a933] text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:-translate-y-1 transition-transform duration-300"
+              prefetch={false}
             >
               Book Consultancy
             </Link>
           </div>
 
-          {/* Logout button */}
+          {/* 🔒 Logout (only if signed in) */}
           {session && (
             <button
               onClick={() => signOut()}
@@ -156,6 +162,19 @@ export default function Hero() {
         >
           <ChevronDown size={48} />
         </motion.div>
+      </div>
+
+      {/* 🖼️ Lazy-loaded fallback image for SEO (below video) */}
+      <div className="hidden">
+        <Image
+          src="/images/for-communities.webp"
+          alt="Supacare Solutions - Nature and Community"
+          width={1920}
+          height={1080}
+          priority
+          decoding="async"
+          fetchPriority="high"
+        />
       </div>
     </section>
   );
