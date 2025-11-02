@@ -1,22 +1,21 @@
-// src/app/layout.tsx
-import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import NavbarFooterLayout from "./NavbarFooterLayout";
-import { CartProvider } from "@/context/CartContext";
-import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
-import Script from "next/script";
+import type { Metadata, Viewport } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+import "./globals.css"
+import NavbarFooterLayout from "./NavbarFooterLayout"
+import { CartProvider } from "@/context/CartContext"
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"
+import Script from "next/script"
 
 // ✅ Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
+})
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
+})
 
 // ✅ Metadata
 export const metadata: Metadata = {
@@ -100,19 +99,19 @@ export const metadata: Metadata = {
     follow: true,
     nocache: true,
   },
-};
+}
 
 // ✅ Viewport
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-};
+}
 
 // ✅ Root Layout
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -132,7 +131,7 @@ export default function RootLayout({
           content="kMRdgtlcdkEqVOSaEjTSTKmtn6jnbkthgFEAP93YJ7E"
         />
 
-        {/* ✅ Structured Data for Organization */}
+        {/* ✅ Organization Schema */}
         <Script
           id="organization-schema"
           type="application/ld+json"
@@ -168,32 +167,6 @@ export default function RootLayout({
                 streetAddress: "Laki Gardens, Ruiru, Kenya",
                 postalCode: "00900",
               },
-            }),
-          }}
-        />
-
-        {/* ✅ Logo Schema */}
-        <Script
-          id="logo-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Supacare Solutions",
-              url: "https://www.supacaresolutions.com",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://www.supacaresolutions.com/images/supalogo.png",
-                width: 400,
-                height: 180,
-              },
-              sameAs: [
-                "https://www.facebook.com/supacaresolutions",
-                "https://www.instagram.com/supacaresolutions",
-                "https://www.linkedin.com/company/supacare-solutions",
-                "https://twitter.com/supacaresol",
-              ],
             }),
           }}
         />
@@ -296,7 +269,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* ✅ Services / Offerings Schema */}
+        {/* ✅ Services Schema */}
         <Script
           id="services-schema"
           type="application/ld+json"
@@ -310,64 +283,70 @@ export default function RootLayout({
                 name: "Supacare Solutions",
                 url: "https://www.supacaresolutions.com",
               },
-              hasOfferCatalog: {
-                "@type": "OfferCatalog",
-                name: "Supacare Core Services",
-                itemListElement: [
-                  {
-                    "@type": "OfferCatalog",
-                    name: "Waste Management & Recycling",
-                    itemListElement: [
-                      {
-                        "@type": "Service",
-                        name: "Smart Waste Tracking",
-                        description:
-                          "IoT-enabled waste bins and optimized collection routes for urban efficiency.",
-                      },
-                      {
-                        "@type": "Service",
-                        name: "Recycling & Material Recovery",
-                        description:
-                          "Sorting and recycling of plastic, glass, and organic materials to reduce landfill waste.",
-                      },
-                    ],
-                  },
-                  {
-                    "@type": "OfferCatalog",
-                    name: "Carbon Consultancy & Advisory",
-                    itemListElement: [
-                      {
-                        "@type": "Service",
-                        name: "Carbon Project Development",
-                        description:
-                          "Design and registration of carbon offset projects for businesses and communities.",
-                      },
-                      {
-                        "@type": "Service",
-                        name: "Carbon Footprint Analysis",
-                        description:
-                          "Assessment and reporting of greenhouse gas emissions for organizations and municipalities.",
-                      },
-                    ],
-                  },
-                  {
-                    "@type": "OfferCatalog",
-                    name: "Composting & Regenerative Farming Solutions",
-                    itemListElement: [
-                      {
-                        "@type": "Service",
-                        name: "Organic Compost Production",
-                        description:
-                          "Conversion of organic waste into high-quality compost for agricultural use.",
-                      },
-                      {
-                        "@type": "Service",
-                        name: "Community Composting Programs",
-                        description:
-                          "Training and infrastructure setup for community-based waste-to-fertilizer projects.",
-                      },
-                    ],
-                  },
+            }),
+          }}
+        />
+
+        {/* ✅ Legal Pages Schema */}
+        <Script
+          id="legal-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              name: "Supacare Legal Pages",
+              itemListElement: [
+                {
+                  "@type": "WebPage",
+                  name: "Privacy Policy",
+                  url: "https://www.supacaresolutions.com/privacy-policy",
+                },
+                {
+                  "@type": "WebPage",
+                  name: "Cookie Policy",
+                  url: "https://www.supacaresolutions.com/cookie-policy",
+                },
+                {
+                  "@type": "WebPage",
+                  name: "Terms of Service",
+                  url: "https://www.supacaresolutions.com/terms-of-service",
+                },
+              ],
+            }),
+          }}
+        />
+
+        {/* ✅ Environmental Consulting Schema */}
+        <Script
+          id="environmental-consulting-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              name: "Supacare Environmental Consulting",
+              url: "https://www.supacaresolutions.com",
+              description:
+                "Professional environmental consulting firm offering carbon advisory, sustainability reporting, EIA studies, and waste management strategies across Kenya.",
+              areaServed: {
+                "@type": "Country",
+                name: "Kenya",
+              },
+              serviceType: [
+                "Environmental Consultancy",
+                "Carbon Advisory",
+                "Waste Management Consulting",
+                "Climate Change Mitigation Strategy",
+                "Sustainability Reporting",
+              ],
+              provider: {
+                "@type": "Organization",
+                name: "Supacare Solutions",
+                sameAs: [
+                  "https://www.facebook.com/supacaresolutions",
+                  "https://www.instagram.com/supacaresolutions",
+                  "https://www.linkedin.com/company/supacare-solutions",
                 ],
               },
             }),
@@ -384,5 +363,5 @@ export default function RootLayout({
         </CartProvider>
       </body>
     </html>
-  );
+  )
 }
