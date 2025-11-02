@@ -45,7 +45,7 @@ export default function OurFocusAreas() {
           viewport={{ once: true }}
           className="text-3xl sm:text-4xl font-bold text-[#f5b942] mb-10 text-left tracking-tight"
         >
-          Our Core Focus Areas
+          Our  Focus Areas
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

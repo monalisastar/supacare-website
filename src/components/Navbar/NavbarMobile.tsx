@@ -48,28 +48,31 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
   }
 
   return (
-    <div className="md:hidden fixed top-0 left-0 w-full z-[10000]" role="navigation" aria-label="Mobile Navigation">
+    <div
+      className="md:hidden fixed top-0 left-0 w-full z-[10000]"
+      role="navigation"
+      aria-label="Mobile Navigation"
+    >
       {/* 📱 Top bar */}
       <div className="flex items-center justify-end px-6 py-4 relative">
-        {/* ✅ Accessibility: added aria-label + aria-expanded + aria-controls */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close main menu' : 'Open main menu'}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
-          className={`transition-colors ${
-            isBright ? 'text-yellow-400 hover:text-yellow-300' : 'text-green-800 hover:text-green-600'
+          className={`transition-colors focus:outline-none focus:ring-2 focus:ring-green-700 ${
+            isBright ? 'text-yellow-500 hover:text-yellow-400' : 'text-green-800 hover:text-green-600'
           }`}
         >
           {menuOpen ? <X size={28} aria-hidden="true" /> : <Menu size={28} aria-hidden="true" />}
         </button>
       </div>
 
-      {/* 📜 Full-screen overlay dropdown */}
+      {/* 📜 Overlay & Menu */}
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Dark background overlay */}
+            {/* background overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.6 }}
@@ -78,17 +81,20 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
               onClick={() => setMenuOpen(false)}
             />
 
-            {/* Dropdown content */}
+            {/* dropdown content */}
             <motion.div
-              id="mobile-menu" // ✅ linked to aria-controls
+              id="mobile-menu"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="fixed top-0 left-0 w-full h-screen overflow-y-auto bg-[#F4B940] text-green-800 z-[9999] px-6 pt-[100px] pb-10 space-y-4"
+              className="fixed top-0 left-0 w-full h-screen overflow-y-auto bg-[#e6a800] text-green-900 z-[9999] px-6 pt-[100px] pb-10 space-y-4"
             >
               {/* Home */}
-              <Link href="/" className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg">
+              <Link
+                href="/"
+                className="block text-base bg-white text-green-800 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
+              >
                 Home
               </Link>
 
@@ -99,7 +105,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                   aria-expanded={aboutOpen}
                   aria-haspopup="true"
                   aria-label="Toggle About Us section"
-                  className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-700 px-3 py-2 rounded-lg"
+                  className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-800 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
                 >
                   About Us
                   <ChevronDown
@@ -119,10 +125,10 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                       role="menu"
                       aria-label="About Us links"
                     >
-                      <Link href="/about" className="block text-sm">Who We Are</Link>
-                      <Link href="/team" className="block text-sm">Our Team</Link>
-                      <Link href="/careers" className="block text-sm">Careers</Link>
-                      <Link href="/contact" className="block text-sm">Contact</Link>
+                      <Link href="/about" className="block text-base">Who We Are</Link>
+                      <Link href="/team" className="block text-base">Our Team</Link>
+                      <Link href="/careers" className="block text-base">Careers</Link>
+                      <Link href="/contact" className="block text-base">Contact</Link>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -135,7 +141,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                   aria-expanded={servicesOpen}
                   aria-haspopup="true"
                   aria-label="Toggle Services and Products section"
-                  className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-700 px-3 py-2 rounded-lg"
+                  className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-800 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
                 >
                   Services & Products
                   <ChevronDown
@@ -155,14 +161,14 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                       role="menu"
                       aria-label="Services links"
                     >
-                      <Link href="/services" className="block text-sm font-medium text-green-800">
+                      <Link href="/services" className="block text-base font-medium text-green-900">
                         🌿 View All Services
                       </Link>
                       {services.map(({ name, href, icon }) => (
                         <Link
                           key={href}
                           href={href}
-                          className="flex items-center gap-2 text-sm py-1"
+                          className="flex items-center gap-2 text-base py-1 text-green-900 hover:text-green-700"
                         >
                           {icon}
                           {name}
@@ -178,7 +184,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block text-sm bg-white text-green-700 px-3 py-2 rounded-lg"
+                  className="block text-base bg-white text-green-800 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
                 >
                   {item.name}
                 </Link>
@@ -187,7 +193,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
               {/* CTA */}
               <Link
                 href="/contact"
-                className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-4 text-center"
+                className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-4 text-center focus:outline-none focus:ring-2 focus:ring-green-400"
               >
                 Request Service
               </Link>
@@ -197,13 +203,13 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                 <>
                   <Link
                     href="/auth/register"
-                    className="block bg-white text-green-700 px-4 py-2 rounded-lg mt-2 text-center"
+                    className="block bg-white text-green-800 px-4 py-2 rounded-lg mt-2 text-center focus:outline-none focus:ring-2 focus:ring-green-700"
                   >
                     Register
                   </Link>
                   <Link
                     href="/auth/login"
-                    className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-2 text-center"
+                    className="block bg-green-700 text-white px-4 py-2 rounded-lg mt-2 text-center focus:outline-none focus:ring-2 focus:ring-green-400"
                   >
                     Login
                   </Link>
@@ -212,14 +218,14 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                 <div className="pt-2 border-t border-orange-300 mt-4 space-y-2">
                   <Link
                     href="/dashboard"
-                    className="block text-center bg-white text-green-700 px-4 py-2 rounded-lg"
+                    className="block text-center bg-white text-green-800 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
                   >
                     Dashboard
                   </Link>
                   <button
                     onClick={() => signOut({ callbackUrl: '/' })}
                     aria-label="Sign out of your account"
-                    className="block w-full text-center bg-red-600 text-white px-4 py-2 rounded-lg"
+                    className="block w-full text-center bg-red-600 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
                   >
                     Logout
                   </button>

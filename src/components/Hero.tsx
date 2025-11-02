@@ -53,12 +53,12 @@ export default function Hero() {
 
   return (
     <section
-      className="relative w-full min-h-[100vh] flex flex-col justify-end pb-20 sm:pb-28 overflow-hidden text-white bg-transparent pt-16 sm:pt-24"
+      className="relative w-full min-h-[100vh] flex flex-col justify-center text-white overflow-hidden pt-20 sm:pt-24"
     >
-      {/* 🎥 Background Video with Poster and Lazy Loading */}
+      {/* 🎥 Background Video */}
       {data.backgroundVideo && (
         <video
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          className="absolute inset-0 w-full h-full object-cover object-center sm:object-[center_40%] z-0"
           src={data.backgroundVideo}
           autoPlay
           muted
@@ -69,16 +69,16 @@ export default function Hero() {
         />
       )}
 
-      {/* 🌫️ Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 z-10" />
+      {/* 🌫️ Stronger Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/80 z-10" />
 
       {/* 🌍 Hero Content */}
-      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-20 sm:py-32">
+      <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 py-24 sm:py-32">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
-          className="mt-10 sm:mt-16 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight max-w-4xl"
+          transition={{ duration: 1 }}
+          className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight max-w-4xl drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]"
         >
           {data.title}
         </motion.h1>
@@ -91,7 +91,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 1 }}
-              className="mt-4 text-base sm:text-lg md:text-xl max-w-2xl text-green-100 text-justify sm:text-center"
+              className="mt-5 text-base sm:text-lg md:text-xl max-w-2xl text-green-100 leading-relaxed"
             >
               {data.taglines[current]}
             </motion.div>
@@ -100,43 +100,43 @@ export default function Hero() {
 
         {/* 💡 CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 mt-6 flex-wrap justify-center"
+          transition={{ delay: 1, duration: 0.8 }}
+          className="flex flex-col sm:flex-row gap-4 mt-8 flex-wrap justify-center"
         >
-          {/* Main CTA visible on all screens */}
+          {/* Main CTA */}
           {data.ctaText && data.ctaLink && (
             <Link
               href={data.ctaLink}
-              className="bg-[#f5b942] hover:bg-[#e8a933] text-white px-6 py-3 rounded-lg shadow-lg transition"
+              className="bg-[#f5b942] hover:bg-[#e8a933] text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:-translate-y-1 transition-transform duration-300"
             >
               {data.ctaText}
             </Link>
           )}
 
-          {/* Mobile-only buttons */}
+          {/* Mobile-only CTAs */}
           <div className="flex flex-col gap-4 sm:hidden">
             <Link
               href="/shop"
-              className="bg-[#f5b942] hover:bg-[#e8a933] text-white px-6 py-3 rounded-lg shadow-lg transition"
+              className="bg-[#f5b942] hover:bg-[#e8a933] text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:-translate-y-1 transition-transform duration-300"
             >
               Shop With Us
             </Link>
 
             <Link
               href="/services"
-              className="bg-[#f5b942] hover:bg-[#e8a933] text-white px-6 py-3 rounded-lg shadow-lg transition"
+              className="bg-[#f5b942] hover:bg-[#e8a933] text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:-translate-y-1 transition-transform duration-300"
             >
               Book Consultancy
             </Link>
           </div>
 
-          {/* Logout button (only if logged in) */}
+          {/* Logout button */}
           {session && (
             <button
               onClick={() => signOut()}
-              className="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-lg shadow-lg transition"
+              className="bg-red-600 hover:bg-red-500 font-semibold px-8 py-3 rounded-lg shadow-lg transition"
             >
               Logout
             </button>
@@ -147,14 +147,14 @@ export default function Hero() {
       {/* ⬇️ Scroll Down Icon */}
       <div
         onClick={scrollToNextSection}
-        className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-30 cursor-pointer"
+        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30 cursor-pointer"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
-          className="text-white opacity-80"
+          className="text-white opacity-90 hover:text-[#f5b942] transition drop-shadow-lg"
         >
-          <ChevronDown size={36} />
+          <ChevronDown size={48} />
         </motion.div>
       </div>
     </section>

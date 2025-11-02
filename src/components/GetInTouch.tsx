@@ -104,20 +104,26 @@ export default function GetInTouch() {
         {/* Right Section - Form */}
         <motion.form
           onSubmit={handleSubmit(onSubmit)}
-          className="md:w-1/2 w-full bg-white/15 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8 space-y-4 text-white border border-white/20"
+          role="form"
+          aria-label="Contact form"
+          className="md:w-1/2 w-full bg-white/20 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8 space-y-5 text-white border border-white/30"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
           {/* Name Fields */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
+              <label htmlFor="firstName" className="block text-sm font-medium mb-1">
+                First Name <span className="text-red-400">*</span>
+              </label>
               <input
                 {...register('firstName')}
+                id="firstName"
                 type="text"
-                placeholder="First name"
-                className={`w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none ${
+                placeholder="e.g. Brian"
+                className={`w-full px-3 py-2 text-base rounded-md bg-white/15 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-green-400 ${
                   errors.firstName ? 'border-red-500 border' : 'border-transparent'
                 }`}
               />
@@ -126,11 +132,15 @@ export default function GetInTouch() {
               )}
             </div>
             <div>
+              <label htmlFor="lastName" className="block text-sm font-medium mb-1">
+                Last Name <span className="text-red-400">*</span>
+              </label>
               <input
                 {...register('lastName')}
+                id="lastName"
                 type="text"
-                placeholder="Last name"
-                className={`w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none ${
+                placeholder="e.g. Njata"
+                className={`w-full px-3 py-2 text-base rounded-md bg-white/15 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-green-400 ${
                   errors.lastName ? 'border-red-500 border' : 'border-transparent'
                 }`}
               />
@@ -142,11 +152,15 @@ export default function GetInTouch() {
 
           {/* Email */}
           <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-1">
+              Email <span className="text-red-400">*</span>
+            </label>
             <input
               {...register('email')}
+              id="email"
               type="email"
-              placeholder="Email"
-              className={`w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none ${
+              placeholder="you@example.com"
+              className={`w-full px-3 py-2 text-base rounded-md bg-white/15 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-green-400 ${
                 errors.email ? 'border-red-500 border' : 'border-transparent'
               }`}
             />
@@ -156,19 +170,29 @@ export default function GetInTouch() {
           </div>
 
           {/* Phone */}
-          <input
-            {...register('phone')}
-            type="tel"
-            placeholder="Phone (optional)"
-            className="w-full px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none"
-          />
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium mb-1">
+              Phone (optional)
+            </label>
+            <input
+              {...register('phone')}
+              id="phone"
+              type="tel"
+              placeholder="e.g. +254712345678"
+              className="w-full px-3 py-2 text-base rounded-md bg-white/15 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
 
           {/* Topic */}
           <div>
+            <label htmlFor="topic" className="block text-sm font-medium mb-1">
+              Topic <span className="text-red-400">*</span>
+            </label>
             <select
               {...register('topic')}
+              id="topic"
               defaultValue=""
-              className={`w-full px-3 py-2 text-sm rounded-md bg-[#1a1a1a]/40 text-white focus:outline-none ${
+              className={`w-full px-3 py-2 text-base rounded-md bg-[#1a1a1a]/40 text-white focus:outline-none focus:ring-2 focus:ring-green-400 ${
                 errors.topic ? 'border-red-500 border' : 'border-transparent'
               }`}
             >
@@ -187,10 +211,14 @@ export default function GetInTouch() {
 
           {/* Message */}
           <div>
+            <label htmlFor="message" className="block text-sm font-medium mb-1">
+              Message <span className="text-red-400">*</span>
+            </label>
             <textarea
               {...register('message')}
-              placeholder="Your message"
-              className={`w-full h-24 px-3 py-2 text-sm rounded-md bg-white/10 placeholder-white/70 focus:outline-none resize-none ${
+              id="message"
+              placeholder="Type your message..."
+              className={`w-full h-28 px-3 py-2 text-base rounded-md bg-white/15 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-green-400 resize-none ${
                 errors.message ? 'border-red-500 border' : 'border-transparent'
               }`}
             />
@@ -203,7 +231,7 @@ export default function GetInTouch() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-[#1b4332] hover:bg-green-800 text-white font-semibold text-sm py-2.5 rounded-md transition disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+            className="w-full bg-[#1b4332] hover:bg-green-800 text-white font-semibold text-base py-2.5 rounded-md transition disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>

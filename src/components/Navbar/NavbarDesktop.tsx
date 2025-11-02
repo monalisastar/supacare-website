@@ -1,7 +1,6 @@
 'use client'
 
-import React from 'react'
-import { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ChevronDown, User, ShoppingCart,
@@ -37,7 +36,7 @@ export default function NavbarDesktop() {
   const isAuthenticated = status === 'authenticated'
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // Scroll detection
+  // Detect scroll
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
@@ -69,8 +68,11 @@ export default function NavbarDesktop() {
 
   return (
     <div className="hidden md:block relative">
-      {/* 🟡 Main Navbar */}
-      <div className="relative bg-[#F4B940] border-t border-orange-200/40 z-[40] mt-[130px]">
+      {/* 🟡 Accessible Navbar */}
+      <div
+        className="relative bg-[#e6a800] border-t border-orange-200/40 z-[40] mt-[130px]"
+        role="banner"
+      >
         <div className="flex justify-center">
           <nav
             ref={dropdownRef}
@@ -78,9 +80,10 @@ export default function NavbarDesktop() {
             role="navigation"
             aria-label="Main Navigation"
           >
+            {/* Home */}
             <Link
               href="/"
-              className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg transition shadow"
+              className="focus:outline-none focus:ring-2 focus:ring-green-700 hover:bg-green-700 hover:text-white text-green-900 px-3 py-2 rounded-lg transition shadow"
             >
               Home
             </Link>
@@ -92,7 +95,7 @@ export default function NavbarDesktop() {
                 aria-expanded={aboutOpen}
                 aria-haspopup="true"
                 aria-label="Toggle About Us menu"
-                className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg flex items-center gap-1 transition shadow"
+                className="focus:outline-none focus:ring-2 focus:ring-green-700 hover:bg-green-700 hover:text-white text-green-900 px-3 py-2 rounded-lg flex items-center gap-1 transition shadow"
               >
                 About Us <ChevronDown size={14} aria-hidden="true" />
               </button>
@@ -104,14 +107,14 @@ export default function NavbarDesktop() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute bg-[#F4B940]/90 backdrop-blur-lg border border-white/50 rounded shadow-lg py-2 mt-2 w-40 z-50"
+                    className="absolute bg-[#f4b940]/95 backdrop-blur-md border border-white/50 rounded shadow-lg py-2 mt-2 w-40 z-50"
                     role="menu"
                     aria-label="About Us submenu"
                   >
-                    <Link href="/about" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">Who We Are</Link>
-                    <Link href="/team" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">Our Team</Link>
-                    <Link href="/careers" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">Careers</Link>
-                    <Link href="/contact" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">Contact</Link>
+                    <Link href="/about" className="block px-4 py-2 text-sm hover:bg-green-50 text-green-800">Who We Are</Link>
+                    <Link href="/team" className="block px-4 py-2 text-sm hover:bg-green-50 text-green-800">Our Team</Link>
+                    <Link href="/careers" className="block px-4 py-2 text-sm hover:bg-green-50 text-green-800">Careers</Link>
+                    <Link href="/contact" className="block px-4 py-2 text-sm hover:bg-green-50 text-green-800">Contact</Link>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -124,7 +127,7 @@ export default function NavbarDesktop() {
                 aria-expanded={servicesOpen}
                 aria-haspopup="true"
                 aria-label="Toggle Services and Products menu"
-                className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg flex items-center gap-1 transition shadow"
+                className="focus:outline-none focus:ring-2 focus:ring-green-700 hover:bg-green-700 hover:text-white text-green-900 px-3 py-2 rounded-lg flex items-center gap-1 transition shadow"
               >
                 Services & Products <ChevronDown size={14} aria-hidden="true" />
               </button>
@@ -136,13 +139,13 @@ export default function NavbarDesktop() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute bg-[#F4B940]/90 backdrop-blur-lg border border-white/50 rounded shadow-lg py-2 mt-2 w-80 z-50"
+                    className="absolute bg-[#f4b940]/95 backdrop-blur-md border border-white/50 rounded shadow-lg py-2 mt-2 w-80 z-50"
                     role="menu"
                     aria-label="Services submenu"
                   >
                     <Link
                       href="/services"
-                      className="block px-4 py-2 text-sm font-medium text-green-800 hover:bg-white/10 border-b border-white/30"
+                      className="block px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-50 border-b border-white/30"
                     >
                       🌿 View All Services
                     </Link>
@@ -150,7 +153,7 @@ export default function NavbarDesktop() {
                       <Link
                         key={href}
                         href={href}
-                        className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-white/10 text-green-700"
+                        className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-green-50 text-green-800"
                       >
                         {icon}
                         {name}
@@ -161,22 +164,46 @@ export default function NavbarDesktop() {
               </AnimatePresence>
             </div>
 
+            {/* Main Nav Items */}
             {navItems.map(item => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg transition shadow"
+                className="focus:outline-none focus:ring-2 focus:ring-green-700 hover:bg-green-700 hover:text-white text-green-900 px-3 py-2 rounded-lg transition shadow"
               >
                 {item.name}
               </Link>
             ))}
 
+            {/* Request Service Button */}
             <Link
               href="/contact"
-              className="ml-2 hover:bg-green-700 hover:text-white text-green-800 px-4 py-2 rounded-lg transition shadow"
+              className="ml-2 focus:outline-none focus:ring-2 focus:ring-green-700 hover:bg-green-700 hover:text-white text-green-900 px-4 py-2 rounded-lg transition shadow"
             >
               Request Service
             </Link>
+
+            {/* Shopping Cart Icon */}
+            <Link
+              href="/cart"
+              aria-label="View Shopping Cart"
+              className="ml-2 focus:outline-none focus:ring-2 focus:ring-green-700 p-2 rounded-full text-green-900 hover:bg-green-700 hover:text-white transition shadow"
+            >
+              <ShoppingCart size={20} aria-hidden="true" />
+            </Link>
+
+            {/* User Menu (Optional Future) */}
+            {isAuthenticated && (
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                aria-haspopup="true"
+                aria-expanded={userMenuOpen}
+                aria-label="Open user account menu"
+                className="ml-2 focus:outline-none focus:ring-2 focus:ring-green-700 p-2 rounded-full text-green-900 hover:bg-green-700 hover:text-white transition shadow"
+              >
+                <User size={20} aria-hidden="true" />
+              </button>
+            )}
           </nav>
         </div>
       </div>
