@@ -10,7 +10,7 @@ import { prisma } from '@/lib/prisma'
  * belonging to the logged-in client or consultant.
  */
 export async function GET(
-  req: Request,
+  request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -30,12 +30,8 @@ export async function GET(
     const project = await prisma.carbonProject.findUnique({
       where: { id },
       include: {
-        client: {
-          select: { name: true, email: true },
-        },
-        consultant: {
-          select: { name: true, email: true },
-        },
+        client: { select: { name: true, email: true } },
+        consultant: { select: { name: true, email: true } },
         uploads: {
           select: { id: true, fileUrl: true, description: true, uploadedAt: true },
           orderBy: { uploadedAt: 'desc' },
@@ -57,13 +53,10 @@ export async function GET(
 
     // ✅ Ensure only owner or consultant can view
     if (project.clientId !== userId && project.consultantId !== userId) {
-      return NextResponse.json(
-        { message: 'Access denied' },
-        { status: 403 }
-      )
+      return NextResponse.json({ message: 'Access denied' }, { status: 403 })
     }
 
-    // 🧩 Return JSON-serializable version
+    // 🧩 Return JSON-safe data
     const serialized = {
       ...project,
       createdAt: project.createdAt.toISOString(),

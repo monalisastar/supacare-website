@@ -10,18 +10,21 @@ const focusAreas = [
     desc: 'We transform organic waste into nutrient-rich compost and clean biomass energy — reducing landfill emissions and supporting regenerative agriculture.',
     image: '/images/recycling and composting/Supacarecompactmachine.webp',
     link: '/services/recycling-composting',
+    label: 'Learn More About Sustainable Waste Management',
   },
   {
     title: 'Carbon Project Development',
     desc: 'We design and manage verified carbon projects across waste, energy, forestry, and agriculture sectors — translating measurable emission reductions into certified carbon credits.',
     image: '/images/carbon-advisory/carbon-hero.webp',
     link: '/services/carbon-advisory',
+    label: 'Learn More About Carbon Project Development',
   },
   {
     title: 'Environmental & Climate Consultancy',
     desc: 'Our experts provide EIA, ESG, and sustainability advisory services to help organizations meet Kenya’s NEMA standards and align with global environmental frameworks.',
     image: '/images/environmental consultancy/eia-service.webp',
     link: '/services/environmental-consultancy',
+    label: 'Learn More About Environmental & Climate Consultancy',
   },
 ]
 
@@ -72,6 +75,7 @@ export default function OurFocusAreas() {
                   className="inline-block self-start px-5 py-2 bg-green-700 text-white text-sm font-medium rounded-lg hover:bg-green-800 transition"
                 >
                   Learn More
+                  <span className="sr-only"> — {area.label}</span>
                 </Link>
               </div>
             </motion.div>

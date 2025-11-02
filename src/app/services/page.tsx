@@ -13,24 +13,28 @@ const defaultServices = [
       'Audits, cleanup support, and guidance on carbon reduction and market participation.',
     image: '/images/services/solution-cleanup-audit.webp',
     link: '/services/environmental-consultancy',
+    label: 'Learn more about Environmental Consultancy and Carbon Advisory',
   },
   {
     title: 'Recycling & Composting',
     description: 'Practical recycling programs and compost site support.',
     image: '/images/services/composting-site.webp',
     link: '/services/recycling-composting',
+    label: 'Learn more about Recycling and Composting Services',
   },
   {
     title: 'Smart Waste and Tracking',
     description: 'IoT-powered bin monitoring and waste data dashboards.',
     image: '/images/services/dashboardui.webp',
     link: '/services/smart-waste',
+    label: 'Learn more about Smart Waste and Tracking Solutions',
   },
   {
     title: 'Waste Collection',
     description: 'Efficient domestic and industrial waste pickup solutions.',
     image: '/images/services/domestic-waste.webp',
     link: '/services/waste-collection',
+    label: 'Learn more about Waste Collection Services',
   },
 ];
 
@@ -153,6 +157,7 @@ export default function ServicesPage() {
                   <p className="text-sm text-gray-600 mt-2">{service.description}</p>
                   <span className="inline-block mt-4 text-green-700 hover:underline">
                     Learn more →
+                    <span className="sr-only"> — {service.label}</span>
                   </span>
                 </div>
               </Link>

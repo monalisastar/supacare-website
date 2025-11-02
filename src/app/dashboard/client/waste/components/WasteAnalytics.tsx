@@ -1,23 +1,58 @@
 'use client'
 
 import React, { useMemo } from 'react'
+import dynamic from 'next/dynamic'
 import { Card } from '@/components/ui/card'
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Legend,
-} from 'recharts'
 import { BarChart3, PieChart as PieIcon } from 'lucide-react'
 import { format } from 'date-fns'
 
+// ✅ Properly typed dynamic imports for all Recharts components
+const ResponsiveContainer = dynamic(
+  () => import('recharts').then((mod) => mod.ResponsiveContainer),
+  { ssr: false }
+) as React.ComponentType<any>
+
+const PieChart = dynamic(() => import('recharts').then((mod) => mod.PieChart), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+const Pie = dynamic(() => import('recharts').then((mod) => mod.Pie), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+const Cell = dynamic(() => import('recharts').then((mod) => mod.Cell), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+const Tooltip = dynamic(() => import('recharts').then((mod) => mod.Tooltip), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+const LineChart = dynamic(() => import('recharts').then((mod) => mod.LineChart), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+const Line = dynamic(() => import('recharts').then((mod) => mod.Line), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+const XAxis = dynamic(() => import('recharts').then((mod) => mod.XAxis), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+const YAxis = dynamic(() => import('recharts').then((mod) => mod.YAxis), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+const CartesianGrid = dynamic(() => import('recharts').then((mod) => mod.CartesianGrid), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+const Legend = dynamic(() => import('recharts').then((mod) => mod.Legend), {
+  ssr: false,
+}) as React.ComponentType<any>
+
+// 🧱 Type for pickup data
 type Pickup = {
   id: string
   type: string

@@ -48,16 +48,20 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
   }
 
   return (
-    <div className="md:hidden fixed top-0 left-0 w-full z-[10000]">
+    <div className="md:hidden fixed top-0 left-0 w-full z-[10000]" role="navigation" aria-label="Mobile Navigation">
       {/* 📱 Top bar */}
       <div className="flex items-center justify-end px-6 py-4 relative">
+        {/* ✅ Accessibility: added aria-label + aria-expanded + aria-controls */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? 'Close main menu' : 'Open main menu'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
           className={`transition-colors ${
             isBright ? 'text-yellow-400 hover:text-yellow-300' : 'text-green-800 hover:text-green-600'
           }`}
         >
-          {menuOpen ? <X size={28} /> : <Menu size={28} />}
+          {menuOpen ? <X size={28} aria-hidden="true" /> : <Menu size={28} aria-hidden="true" />}
         </button>
       </div>
 
@@ -76,6 +80,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
 
             {/* Dropdown content */}
             <motion.div
+              id="mobile-menu" // ✅ linked to aria-controls
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -91,12 +96,16 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
               <div>
                 <button
                   onClick={toggleAbout}
+                  aria-expanded={aboutOpen}
+                  aria-haspopup="true"
+                  aria-label="Toggle About Us section"
                   className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-700 px-3 py-2 rounded-lg"
                 >
                   About Us
                   <ChevronDown
                     size={16}
                     className={`${aboutOpen ? 'rotate-180' : ''} transition-transform`}
+                    aria-hidden="true"
                   />
                 </button>
                 <AnimatePresence>
@@ -107,6 +116,8 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
                       className="pl-4 mt-2 space-y-1"
+                      role="menu"
+                      aria-label="About Us links"
                     >
                       <Link href="/about" className="block text-sm">Who We Are</Link>
                       <Link href="/team" className="block text-sm">Our Team</Link>
@@ -121,12 +132,16 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
               <div>
                 <button
                   onClick={toggleServices}
+                  aria-expanded={servicesOpen}
+                  aria-haspopup="true"
+                  aria-label="Toggle Services and Products section"
                   className="w-full text-left font-semibold flex items-center justify-between bg-white text-green-700 px-3 py-2 rounded-lg"
                 >
                   Services & Products
                   <ChevronDown
                     size={16}
                     className={`${servicesOpen ? 'rotate-180' : ''} transition-transform`}
+                    aria-hidden="true"
                   />
                 </button>
                 <AnimatePresence>
@@ -137,6 +152,8 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
                       className="pl-4 mt-2 space-y-1"
+                      role="menu"
+                      aria-label="Services links"
                     >
                       <Link href="/services" className="block text-sm font-medium text-green-800">
                         🌿 View All Services
@@ -201,6 +218,7 @@ export default function NavbarMobile({ menuOpen, setMenuOpen }: NavbarMobileProp
                   </Link>
                   <button
                     onClick={() => signOut({ callbackUrl: '/' })}
+                    aria-label="Sign out of your account"
                     className="block w-full text-center bg-red-600 text-white px-4 py-2 rounded-lg"
                   >
                     Logout

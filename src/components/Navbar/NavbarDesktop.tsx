@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react' // ✅ add this to provide JSX namespace
+import React from 'react'
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -13,7 +13,7 @@ import { useSession, signOut } from 'next-auth/react'
 type Service = {
   name: string
   href: string
-  icon: React.ReactNode // ✅ safer and avoids “Cannot find namespace 'JSX'”
+  icon: React.ReactNode
 }
 
 const services: Service[] = [
@@ -72,7 +72,12 @@ export default function NavbarDesktop() {
       {/* 🟡 Main Navbar */}
       <div className="relative bg-[#F4B940] border-t border-orange-200/40 z-[40] mt-[130px]">
         <div className="flex justify-center">
-          <nav ref={dropdownRef} className="flex items-center gap-4 text-sm font-semibold py-2">
+          <nav
+            ref={dropdownRef}
+            className="flex items-center gap-4 text-sm font-semibold py-2"
+            role="navigation"
+            aria-label="Main Navigation"
+          >
             <Link
               href="/"
               className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg transition shadow"
@@ -84,10 +89,14 @@ export default function NavbarDesktop() {
             <div className="relative group dropdown">
               <button
                 onClick={toggleAbout}
+                aria-expanded={aboutOpen}
+                aria-haspopup="true"
+                aria-label="Toggle About Us menu"
                 className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg flex items-center gap-1 transition shadow"
               >
-                About Us <ChevronDown size={14} />
+                About Us <ChevronDown size={14} aria-hidden="true" />
               </button>
+
               <AnimatePresence>
                 {aboutOpen && (
                   <motion.div
@@ -96,19 +105,13 @@ export default function NavbarDesktop() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
                     className="absolute bg-[#F4B940]/90 backdrop-blur-lg border border-white/50 rounded shadow-lg py-2 mt-2 w-40 z-50"
+                    role="menu"
+                    aria-label="About Us submenu"
                   >
-                    <Link href="/about" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">
-                      Who We Are
-                    </Link>
-                    <Link href="/team" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">
-                      Our Team
-                    </Link>
-                    <Link href="/careers" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">
-                      Careers
-                    </Link>
-                    <Link href="/contact" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">
-                      Contact
-                    </Link>
+                    <Link href="/about" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">Who We Are</Link>
+                    <Link href="/team" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">Our Team</Link>
+                    <Link href="/careers" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">Careers</Link>
+                    <Link href="/contact" className="block px-4 py-2 text-sm hover:bg-white/10 text-green-700">Contact</Link>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -118,10 +121,14 @@ export default function NavbarDesktop() {
             <div className="relative group dropdown">
               <button
                 onClick={toggleServices}
+                aria-expanded={servicesOpen}
+                aria-haspopup="true"
+                aria-label="Toggle Services and Products menu"
                 className="hover:bg-green-700 hover:text-white text-green-800 px-3 py-2 rounded-lg flex items-center gap-1 transition shadow"
               >
-                Services & Products <ChevronDown size={14} />
+                Services & Products <ChevronDown size={14} aria-hidden="true" />
               </button>
+
               <AnimatePresence>
                 {servicesOpen && (
                   <motion.div
@@ -130,6 +137,8 @@ export default function NavbarDesktop() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
                     className="absolute bg-[#F4B940]/90 backdrop-blur-lg border border-white/50 rounded shadow-lg py-2 mt-2 w-80 z-50"
+                    role="menu"
+                    aria-label="Services submenu"
                   >
                     <Link
                       href="/services"

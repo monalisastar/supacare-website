@@ -25,7 +25,11 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-[#1b4332] text-[#f5f5f0] px-6 sm:px-12 pt-16 pb-24 sm:pb-16 relative">
+      <footer
+        className="bg-[#1b4332] text-[#f5f5f0] px-6 sm:px-12 pt-16 pb-24 sm:pb-16 relative"
+        role="contentinfo"
+        aria-label="Website Footer"
+      >
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* ✅ Logo + Tagline + Socials */}
           <div>
@@ -40,55 +44,61 @@ export default function Footer() {
               Sustainable solutions for a cleaner, greener tomorrow.
             </p>
 
-            {/* Social icons */}
-            <div className="flex items-center gap-4">
+            {/* ✅ Social icons (now accessible) */}
+            <div className="flex items-center gap-4" aria-label="Social Media Links">
               <a
                 href="https://www.linkedin.com/company/supacaresolutions"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Visit our LinkedIn page"
                 className="hover:text-[#fcbf49]"
               >
-                <Linkedin size={18} />
+                <Linkedin size={18} aria-hidden="true" />
               </a>
               <a
                 href="https://twitter.com/supacareltd"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Visit our Twitter page"
                 className="hover:text-[#fcbf49]"
               >
-                <Twitter size={18} />
+                <Twitter size={18} aria-hidden="true" />
               </a>
               <a
                 href="https://www.facebook.com/supacaresolutions"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Visit our Facebook page"
                 className="hover:text-[#fcbf49]"
               >
-                <Facebook size={18} />
+                <Facebook size={18} aria-hidden="true" />
               </a>
               <a
                 href="https://www.instagram.com/supacaresolutions"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Visit our Instagram page"
                 className="hover:text-[#fcbf49]"
               >
-                <Instagram size={18} />
+                <Instagram size={18} aria-hidden="true" />
               </a>
               <a
                 href="https://wa.me/254720096680"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Chat with us on WhatsApp"
                 className="hover:text-[#fcbf49]"
               >
-                <MessageCircle size={18} />
+                <MessageCircle size={18} aria-hidden="true" />
               </a>
               <a
-                href="#"
+                href="https://www.youtube.com/@supacaresolutions"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Visit our YouTube channel"
                 className="hover:text-[#fcbf49]"
               >
-                <Youtube size={18} />
+                <Youtube size={18} aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -135,15 +145,24 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-3">Get in Touch</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li className="flex items-center gap-2"><Mail size={16} /> contact@Supacare.com</li>
-              <li className="flex items-center gap-2"><Phone size={16} /> 0720096680</li>
-              <li className="flex items-center gap-2"><MapPin size={16} /> Nairobi, Kenya</li>
+              <li className="flex items-center gap-2">
+                <Mail size={16} aria-hidden="true" /> contact@Supacare.com
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone size={16} aria-hidden="true" /> 0720096680
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin size={16} aria-hidden="true" /> Nairobi, Kenya
+              </li>
             </ul>
 
-            <form onSubmit={handleSubmit} className="mt-6">
-              <label className="text-sm font-semibold">Subscribe to our newsletter</label>
+            <form onSubmit={handleSubmit} className="mt-6" aria-label="Newsletter Subscription Form">
+              <label htmlFor="email" className="text-sm font-semibold">
+                Subscribe to our newsletter
+              </label>
               <div className="mt-2 flex">
                 <input
+                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -152,6 +171,7 @@ export default function Footer() {
                 />
                 <button
                   type="submit"
+                  aria-label="Subscribe to newsletter"
                   className="bg-[#fcbf49] text-[#1b4332] font-semibold px-4 py-2 rounded-r-md hover:bg-[#e0ac00]"
                 >
                   Join
@@ -170,6 +190,7 @@ export default function Footer() {
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
               className="bg-transparent text-white border border-gray-500 rounded px-2 py-1"
+              aria-label="Select site language"
             >
               <option value="English">English</option>
               <option value="Swahili">Swahili</option>
