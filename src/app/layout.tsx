@@ -1,3 +1,4 @@
+// src/app/layout.tsx
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -116,6 +117,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* ✅ Preloads for performance */}
+        <link
+          rel="preload"
+          as="video"
+          href="/videos/hero-video.webm"
+          type="video/webm"
+        />
+        <link rel="preload" as="image" href="/images/for-communities.webp" />
+
         {/* ✅ Google Search Console verification */}
         <meta
           name="google-site-verification"
@@ -136,12 +146,7 @@ export default function RootLayout({
               description:
                 "Supacare Solutions is an environmental and sustainability company in Kenya focused on smart waste management, composting, and carbon consultancy.",
               foundingDate: "2022",
-              founders: [
-                {
-                  "@type": "Person",
-                  name: "Virginia Njeri",
-                },
-              ],
+              founders: [{ "@type": "Person", name: "Virginia Njeri" }],
               contactPoint: {
                 "@type": "ContactPoint",
                 telephone: "+254-720-096680",
@@ -167,7 +172,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* ✅ Dedicated Logo Schema (for Google brand display + social linking) */}
+        {/* ✅ Logo Schema */}
         <Script
           id="logo-schema"
           type="application/ld+json"
@@ -193,7 +198,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* ✅ Structured Data for Local Business */}
+        {/* ✅ Local Business Schema */}
         <Script
           id="localbusiness-schema"
           type="application/ld+json"
@@ -224,7 +229,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* ✅ Structured Data for Website */}
+        {/* ✅ Website Schema */}
         <Script
           id="website-schema"
           type="application/ld+json"
@@ -244,7 +249,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* ✅ Structured Data for WebPage */}
+        {/* ✅ WebPage Schema */}
         <Script
           id="webpage-schema"
           type="application/ld+json"
@@ -252,7 +257,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebPage",
-              name: "Supacare Solutions ",
+              name: "Supacare Solutions",
               url: "https://www.supacaresolutions.com",
               description:
                 "Supacare Solutions provides innovative and eco-friendly waste management, recycling, and carbon consultancy services across Kenya.",
@@ -265,7 +270,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* ✅ Structured Data for Breadcrumbs */}
+        {/* ✅ Breadcrumb Schema */}
         <Script
           id="breadcrumb-schema"
           type="application/ld+json"
@@ -287,6 +292,84 @@ export default function RootLayout({
                   item: "https://www.supacaresolutions.com/about",
                 },
               ],
+            }),
+          }}
+        />
+
+        {/* ✅ Services / Offerings Schema */}
+        <Script
+          id="services-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Service",
+              serviceType: "Environmental & Sustainability Services",
+              provider: {
+                "@type": "Organization",
+                name: "Supacare Solutions",
+                url: "https://www.supacaresolutions.com",
+              },
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Supacare Core Services",
+                itemListElement: [
+                  {
+                    "@type": "OfferCatalog",
+                    name: "Waste Management & Recycling",
+                    itemListElement: [
+                      {
+                        "@type": "Service",
+                        name: "Smart Waste Tracking",
+                        description:
+                          "IoT-enabled waste bins and optimized collection routes for urban efficiency.",
+                      },
+                      {
+                        "@type": "Service",
+                        name: "Recycling & Material Recovery",
+                        description:
+                          "Sorting and recycling of plastic, glass, and organic materials to reduce landfill waste.",
+                      },
+                    ],
+                  },
+                  {
+                    "@type": "OfferCatalog",
+                    name: "Carbon Consultancy & Advisory",
+                    itemListElement: [
+                      {
+                        "@type": "Service",
+                        name: "Carbon Project Development",
+                        description:
+                          "Design and registration of carbon offset projects for businesses and communities.",
+                      },
+                      {
+                        "@type": "Service",
+                        name: "Carbon Footprint Analysis",
+                        description:
+                          "Assessment and reporting of greenhouse gas emissions for organizations and municipalities.",
+                      },
+                    ],
+                  },
+                  {
+                    "@type": "OfferCatalog",
+                    name: "Composting & Regenerative Farming Solutions",
+                    itemListElement: [
+                      {
+                        "@type": "Service",
+                        name: "Organic Compost Production",
+                        description:
+                          "Conversion of organic waste into high-quality compost for agricultural use.",
+                      },
+                      {
+                        "@type": "Service",
+                        name: "Community Composting Programs",
+                        description:
+                          "Training and infrastructure setup for community-based waste-to-fertilizer projects.",
+                      },
+                    ],
+                  },
+                ],
+              },
             }),
           }}
         />
