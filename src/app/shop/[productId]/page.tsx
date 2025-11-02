@@ -10,6 +10,7 @@ import AttributesTable from './components/AttributesTable';
 import PackagingDelivery from './components/PackagingDelivery';
 import CustomizationSection from './components/CustomizationSection';
 import ReviewsSection from './components/ReviewsSection';
+import BuyNowSection from './BuyNowSection'; // ✅ Import added
 
 export default function ProductPage() {
   const { productId } = useParams();
@@ -36,6 +37,13 @@ export default function ProductPage() {
           image={product.images[0]}
         />
       </div>
+
+      {/* --- BUY NOW SECTION --- */}
+      <BuyNowSection
+        productName={product.name}
+        imageSrc={product.images[0]}
+        category={product.category} // ✅ detects theme automatically
+      />
 
       {/* --- LOWER DETAILS SECTION --- */}
       <section className="mt-16 space-y-16">
