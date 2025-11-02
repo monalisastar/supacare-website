@@ -12,6 +12,7 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "prisma:seed": "prisma db seed"
+  
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.10.0",
@@ -84,6 +85,10 @@
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
+    "imagemin": "^9.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^10.0.0",
+    "imagemin-webp": "^8.0.0",
     "prisma": "^6.16.3",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
