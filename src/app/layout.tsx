@@ -5,7 +5,7 @@ import NavbarFooterLayout from "./NavbarFooterLayout"
 import { CartProvider } from "@/context/CartContext"
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"
 import Script from "next/script"
-import { useEffect } from "react"
+import ClientHydration from "@/components/ClientHydration" // ✅ added
 
 // ✅ Fonts
 const geistSans = Geist({
@@ -113,17 +113,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // ✅ Lazy load all non-critical images & videos after hydration
-  useEffect(() => {
-    const images = document.querySelectorAll("img:not([loading])")
-    images.forEach((img) => {
-      img.setAttribute("loading", "lazy")
-      img.setAttribute("decoding", "async")
-    })
-    const videos = document.querySelectorAll("video:not([preload])")
-    videos.forEach((v) => v.setAttribute("preload", "metadata"))
-  }, [])
-
   return (
     <html lang="en">
       <head>
@@ -216,6 +205,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-transparent`}
       >
+        {/* ✅ Added client-side hydration logic */}
+        <ClientHydration />
+
         <CartProvider>
           <NavbarFooterLayout>{children}</NavbarFooterLayout>
           <FloatingWhatsAppButton />
