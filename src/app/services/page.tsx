@@ -1,10 +1,11 @@
-'use client';
+'use client'
 
-import SEO from '@/components/SEO';
-import Image from 'next/image';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import SEO from '@/components/SEO'
+import Image from 'next/image'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import Script from 'next/script'
 
 const defaultServices = [
   {
@@ -36,30 +37,30 @@ const defaultServices = [
     link: '/services/waste-collection',
     label: 'Learn more about Waste Collection Services',
   },
-];
+]
 
 export default function ServicesPage() {
-  const [services] = useState(defaultServices);
-  const [offsetTop, setOffsetTop] = useState<number>(0);
-  const heroRef = useRef<HTMLElement>(null);
+  const [services] = useState(defaultServices)
+  const [offsetTop, setOffsetTop] = useState<number>(0)
+  const heroRef = useRef<HTMLElement>(null)
 
-  // ✅ Dynamic spacing adjustment
+  // ✅ Adjust hero spacing below navbar
   useEffect(() => {
     const updateSpacing = () => {
-      const navbar = document.querySelector('[data-navbar]') as HTMLElement | null;
+      const navbar = document.querySelector('[data-navbar]') as HTMLElement | null
       if (navbar) {
-        const extraSpacing = 80;
-        setOffsetTop(navbar.offsetHeight + extraSpacing);
+        const extraSpacing = 80
+        setOffsetTop(navbar.offsetHeight + extraSpacing)
       }
-    };
-    updateSpacing();
-    window.addEventListener('resize', updateSpacing);
-    return () => window.removeEventListener('resize', updateSpacing);
-  }, []);
+    }
+    updateSpacing()
+    window.addEventListener('resize', updateSpacing)
+    return () => window.removeEventListener('resize', updateSpacing)
+  }, [])
 
   return (
     <>
-      {/* ✅ SEO Integration */}
+      {/* ✅ SEO Component */}
       <SEO
         title="Our Environmental & Sustainability Services | Supacare Solutions"
         description="Explore Supacare’s eco-friendly waste management, recycling, and carbon advisory services built to help Kenya transition toward a sustainable future."
@@ -103,6 +104,48 @@ export default function ServicesPage() {
           },
         ]}
       />
+
+      {/* ✅ Breadcrumb + Service Structured Data */}
+      <Script id="services-schema" type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://www.supacaresolutions.com"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Services",
+                  "item": "https://www.supacaresolutions.com/services"
+                }
+              ]
+            },
+            ...defaultServices.map((s) => ({
+              "@type": "Service",
+              "name": s.title,
+              "description": s.description,
+              "provider": {
+                "@type": "Organization",
+                "name": "Supacare Solutions",
+                "url": "https://www.supacaresolutions.com"
+              },
+              "areaServed": {
+                "@type": "Place",
+                "name": "Kenya"
+              },
+              "serviceType": "Environmental & Sustainability Services",
+              "url": `https://www.supacaresolutions.com${s.link}`
+            }))
+          ]
+        })}
+      </Script>
 
       {/* ✅ Page Content */}
       <main className="min-h-screen bg-[#eaf5ec] text-gray-800">
@@ -177,5 +220,5 @@ export default function ServicesPage() {
         </section>
       </main>
     </>
-  );
+  )
 }

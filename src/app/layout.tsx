@@ -5,7 +5,7 @@ import NavbarFooterLayout from "./NavbarFooterLayout"
 import { CartProvider } from "@/context/CartContext"
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"
 import Script from "next/script"
-import ClientHydration from "@/components/ClientHydration" // ✅ added
+import ClientHydration from "@/components/ClientHydration"
 
 // ✅ Fonts
 const geistSans = Geist({
@@ -116,7 +116,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* ✅ Preconnects for performance */}
+        {/* ✅ Performance Preconnects */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="preconnect" href="https://www.supacaresolutions.com" />
@@ -130,18 +130,19 @@ export default function RootLayout({
         />
         <link rel="preload" as="image" href="/images/for-communities.webp" />
 
-        {/* ✅ Google Search Console verification */}
+        {/* ✅ Google Site Verification */}
         <meta
           name="google-site-verification"
           content="kMRdgtlcdkEqVOSaEjTSTKmtn6jnbkthgFEAP93YJ7E"
         />
 
-        {/* ✅ Schema Markup */}
+        {/* ✅ Structured Data (JSON-LD Schemas) */}
         <Script
           id="schemas"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify([
+              // 🔹 Organization Schema
               {
                 "@context": "https://schema.org",
                 "@type": "Organization",
@@ -166,6 +167,7 @@ export default function RootLayout({
                   "https://twitter.com/supacaresol",
                 ],
               },
+              // 🔹 Local Business Schema
               {
                 "@context": "https://schema.org",
                 "@type": "LocalBusiness",
@@ -184,6 +186,7 @@ export default function RootLayout({
                 openingHours: "Mo-Fr 08:00-17:00",
                 url: "https://www.supacaresolutions.com",
               },
+              // 🔹 WebPage Schema
               {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
@@ -197,15 +200,50 @@ export default function RootLayout({
                   url: "https://www.supacaresolutions.com",
                 },
               },
+              // 🔹 WebSite Schema (enables sitelinks)
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                name: "Supacare Solutions",
+                url: "https://www.supacaresolutions.com",
+                potentialAction: {
+                  "@type": "SearchAction",
+                  target:
+                    "https://www.supacaresolutions.com/search?q={search_term_string}",
+                  "query-input": "required name=search_term_string",
+                },
+              },
             ]),
           }}
         />
+
+        {/* ✅ Breadcrumb auto initializer for Google sitelinks */}
+        <Script id="breadcrumb-schema" type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.supacaresolutions.com",
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Main",
+                "item": "https://www.supacaresolutions.com",
+              },
+            ],
+          })}
+        </Script>
       </head>
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-transparent`}
       >
-        {/* ✅ Added client-side hydration logic */}
+        {/* ✅ Client Hydration */}
         <ClientHydration />
 
         <CartProvider>
@@ -213,7 +251,7 @@ export default function RootLayout({
           <FloatingWhatsAppButton />
         </CartProvider>
 
-        {/* ✅ Lazy load safeguard for below-the-fold media */}
+        {/* ✅ Lazy-load safeguard */}
         <Script id="lazy-init" strategy="afterInteractive">
           {`
             document.addEventListener("DOMContentLoaded", () => {
@@ -228,7 +266,7 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* ✅ Defer analytics */}
+        {/* ✅ Google Analytics (replace G-XXXXXXX) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"
           strategy="afterInteractive"
