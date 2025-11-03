@@ -18,7 +18,7 @@ export default function CallToAction() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready to Make Waste Smarter?
           </h2>
-          <p className="mb-6 text-lg">
+          <p className="mb-6 text-lg text-green-50">
             Book a site visit or request a smart waste audit with our team today.
           </p>
           <Link href="/contact">
@@ -39,11 +39,35 @@ export default function CallToAction() {
           <Image
             src="/images/smart-waste/supacareagentwithtablet.webp"
             alt="Supacare Agent with Tablet"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-xl"
+            fill
+            className="object-cover rounded-xl"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority
           />
         </motion.div>
+      </div>
+
+      {/* 🔗 Internal Link Network */}
+      <div className="text-center mt-16 text-sm text-green-100">
+        <p className="max-w-3xl mx-auto leading-relaxed">
+          Learn more{' '}
+          <Link href="/about" className="underline hover:text-white">
+            about Supacare
+          </Link>
+          , explore our{' '}
+          <Link href="/services" className="underline hover:text-white">
+            sustainability services
+          </Link>
+          , see{' '}
+          <Link href="/projects" className="underline hover:text-white">
+            real-world projects
+          </Link>
+          , or{' '}
+          <Link href="/shop" className="underline hover:text-white">
+            shop eco-friendly products
+          </Link>
+          .
+        </p>
       </div>
     </section>
   )

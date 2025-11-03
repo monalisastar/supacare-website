@@ -218,6 +218,25 @@ export default function ServicesPage() {
             </button>
           </Link>
         </section>
+
+        {/* 🔗 Internal Link Network */}
+        <section className="bg-green-50 py-10 text-center text-gray-700">
+          <p className="max-w-2xl mx-auto leading-relaxed">
+            Learn more{' '}
+            <Link href="/about" className="text-green-700 underline">
+              about our mission
+            </Link>
+            , explore{' '}
+            <Link href="/projects" className="text-green-700 underline">
+              real-world impact projects
+            </Link>
+            , or shop our{' '}
+            <Link href="/shop" className="text-green-700 underline">
+              eco-friendly solutions
+            </Link>
+            .
+          </p>
+        </section>
       </main>
     </>
   )

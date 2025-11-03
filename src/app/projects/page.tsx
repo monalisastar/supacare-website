@@ -4,6 +4,7 @@ import React from 'react'
 import SEO from '@/components/SEO'
 import BreadcrumbSchema from '@/components/seo/BreadcrumbSchema'
 import Script from 'next/script'
+import Link from 'next/link'
 import ProjectsHero from './components/ProjectsHero'
 import ProjectList from './components/ProjectList'
 
@@ -72,7 +73,6 @@ const ProjectsPage = () => {
         {JSON.stringify({
           '@context': 'https://schema.org',
           '@graph': [
-            // 🔹 Breadcrumb Schema
             {
               '@type': 'BreadcrumbList',
               itemListElement: [
@@ -90,7 +90,6 @@ const ProjectsPage = () => {
                 },
               ],
             },
-            // 🔹 FAQ Schema
             {
               '@type': 'FAQPage',
               mainEntity: [
@@ -120,7 +119,6 @@ const ProjectsPage = () => {
                 },
               ],
             },
-            // 🔹 Project Summaries (as Service type for visibility)
             {
               '@type': 'Service',
               name: 'Composting and Recycling Projects',
@@ -171,6 +169,29 @@ const ProjectsPage = () => {
       <main className="bg-white text-gray-900">
         <ProjectsHero />
         <ProjectList />
+
+        {/* 🔗 Internal Link Network */}
+        <section className="bg-green-50 py-10 text-center text-gray-700">
+          <p className="max-w-2xl mx-auto leading-relaxed">
+            Discover more about our{' '}
+            <Link href="/services" className="text-green-700 underline">
+              sustainability services
+            </Link>
+            , read about{' '}
+            <Link href="/about" className="text-green-700 underline">
+              who we are
+            </Link>
+            , explore our{' '}
+            <Link href="/shop" className="text-green-700 underline">
+              eco-friendly products
+            </Link>
+            , or{' '}
+            <Link href="/contact" className="text-green-700 underline">
+              get in touch with our team
+            </Link>
+            .
+          </p>
+        </section>
       </main>
     </>
   )

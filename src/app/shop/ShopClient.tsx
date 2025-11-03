@@ -20,9 +20,9 @@ export default function ShopClient() {
   const categories: Category[] = ['All', 'Hardware', 'Compost', 'Support'];
 
   return (
-    <main className="min-h-screen bg-[#c1e3c3] px-4 pt-32 pb-12 sm:px-6 lg:px-20">
+    <main className="min-h-screen bg-[#c1e3c3] px-4 pt-32 pb-12 sm:px-6 lg:px-20 text-green-900">
       {/* Header */}
-      <h1 className="text-3xl sm:text-4xl font-bold text-center text-green-900 mb-8">
+      <h1 className="text-3xl sm:text-4xl font-bold text-center mb-6">
         Supacare Shop
       </h1>
       <p className="text-center max-w-3xl mx-auto text-green-800 mb-8">
@@ -67,9 +67,7 @@ export default function ShopClient() {
             {/* Product Info */}
             <div className="p-4 flex-1 flex flex-col justify-between">
               <div>
-                <h3 className="text-lg font-semibold text-green-900">
-                  {product.name}
-                </h3>
+                <h3 className="text-lg font-semibold">{product.name}</h3>
                 <p className="text-green-700 mt-1">${product.price.toFixed(2)}</p>
               </div>
 
@@ -107,6 +105,29 @@ export default function ShopClient() {
       {filteredProducts.length === 0 && (
         <p className="text-center text-green-900 mt-10">No products found.</p>
       )}
+
+      {/* 🔗 Internal Link Network */}
+      <section className="bg-green-50 py-10 text-center mt-16 rounded-xl shadow-inner">
+        <p className="max-w-2xl mx-auto leading-relaxed text-green-800">
+          Explore our{' '}
+          <Link href="/services" className="text-green-700 underline">
+            sustainability services
+          </Link>
+          , learn more{' '}
+          <Link href="/about" className="text-green-700 underline">
+            about Supacare
+          </Link>
+          , discover{' '}
+          <Link href="/projects" className="text-green-700 underline">
+            real-world impact projects
+          </Link>
+          , or{' '}
+          <Link href="/contact" className="text-green-700 underline">
+            get in touch with our team
+          </Link>
+          .
+        </p>
+      </section>
     </main>
   );
 }

@@ -15,9 +15,26 @@ export default function AboutCTA() {
       <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
         Ready to partner or learn more?
       </h2>
-      <p className="text-green-200 max-w-xl mx-auto mb-8">
+
+      <p className="text-green-200 max-w-xl mx-auto mb-8 leading-relaxed">
         Join us in transforming waste management and building a greener future.
+        Explore our{" "}
+        <Link
+          href="/services"
+          className="underline text-white hover:text-green-100 font-medium"
+        >
+          sustainability services
+        </Link>{" "}
+        or discover our{" "}
+        <Link
+          href="/shop"
+          className="underline text-white hover:text-green-100 font-medium"
+        >
+          eco-friendly products
+        </Link>{" "}
+        designed for impact.
       </p>
+
       <div className="flex flex-col md:flex-row justify-center gap-6 max-w-md mx-auto">
         <Link
           href="/contact"
