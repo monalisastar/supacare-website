@@ -591,3 +591,17 @@ model PageContent {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  price       Float
+  image       String?
+  category    String?
+  stock       Int       @default(0)
+  externalUrl String?
+  specs       Json?     // 🆕 store feature key/value pairs
+  createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+}
+

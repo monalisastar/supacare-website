@@ -8,9 +8,10 @@ interface BuyNowSectionProps {
   productName: string
   imageSrc: string
   category?: string // e.g., "Compost", "Hardware", "Packaging"
+  onAddToCart?: () => void // ✅ added to match page.tsx usage
 }
 
-export default function BuyNowSection({ productName, imageSrc, category }: BuyNowSectionProps) {
+export default function BuyNowSection({ productName, imageSrc, category, onAddToCart }: BuyNowSectionProps) {
   // 🧠 Detect color theme based on category
   const themes: Record<string, any> = {
     compost: {
@@ -47,6 +48,11 @@ export default function BuyNowSection({ productName, imageSrc, category }: BuyNo
   const themeKey = category?.toLowerCase() || 'default'
   const theme = themes[themeKey] || themes.default
 
+  const handleBuyNow = () => {
+    // ✅ Trigger callback if parent wants to add to cart
+    onAddToCart?.()
+  }
+
   return (
     <section className={`relative ${theme.bg} py-20 px-6 sm:px-12 overflow-hidden`}>
       {/* Decorative background */}
@@ -70,6 +76,7 @@ export default function BuyNowSection({ productName, imageSrc, category }: BuyNo
               href="https://www.facebook.com/SupacareSolutions"
               target="_blank"
               className={`${theme.accent} ${theme.text} px-6 py-3 rounded-full font-semibold hover:opacity-90 transition`}
+              onClick={handleBuyNow} // ✅ optional hook to trigger addToCart
             >
               Buy on Facebook
             </Link>
@@ -78,6 +85,7 @@ export default function BuyNowSection({ productName, imageSrc, category }: BuyNo
               href="https://www.instagram.com/supacaresolutions"
               target="_blank"
               className={`${theme.accent} ${theme.text} px-6 py-3 rounded-full font-semibold hover:opacity-90 transition`}
+              onClick={handleBuyNow}
             >
               Buy on Instagram
             </Link>
@@ -86,6 +94,7 @@ export default function BuyNowSection({ productName, imageSrc, category }: BuyNo
               href="https://wa.me/254700000000"
               target="_blank"
               className={`${theme.primary} text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition`}
+              onClick={handleBuyNow}
             >
               Buy on WhatsApp
             </Link>

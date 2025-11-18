@@ -1,19 +1,22 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import { useCart } from '@/context/CartContext';
-import Link from 'next/link';
+import React, { useState } from 'react'
+import { useCart } from '@/lib/CartContext'
+import Link from 'next/link'
+import { ShoppingBag, MessageCircle } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface InquiryPanelProps {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
+  id: string
+  name: string
+  price: number
+  image: string
+  onAddToCart?: () => void // ✅ Added optional prop for parent callback
 }
 
-export default function InquiryPanel({ id, name, price, image }: InquiryPanelProps) {
-  const { addToCart } = useCart();
-  const [showSuccess, setShowSuccess] = useState(false);
+export default function InquiryPanel({ id, name, price, image, onAddToCart }: InquiryPanelProps) {
+  const { addToCart } = useCart()
+  const [showSuccess, setShowSuccess] = useState(false)
 
   const handleAddToCart = () => {
     addToCart({
@@ -22,82 +25,99 @@ export default function InquiryPanel({ id, name, price, image }: InquiryPanelPro
       image,
       price,
       quantity: 1,
-    });
+    })
 
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 4000);
-  };
+    setShowSuccess(true)
+    setTimeout(() => setShowSuccess(false), 4000)
 
-  const whatsappLink = `https://wa.me/254720096680?text=Hello%20Supacare!%20I'm%20interested%20in%20${encodeURIComponent(
-    name
-  )}%20product.%20Can%20you%20share%20more%20details%3F`;
+    // ✅ Trigger callback if provided
+    onAddToCart?.()
+  }
+
+  const whatsappLink = `https://wa.me/254720096680?text=${encodeURIComponent(
+    `Hello Supacare! 👋 I’m interested in the ${name} product. Could you share more details and pricing info?`
+  )}`
 
   return (
     <aside className="w-full lg:w-1/3 lg:sticky lg:top-28 h-fit self-start">
-      <div className="border border-gray-200 rounded-xl p-5 bg-gray-50 shadow-sm space-y-6">
-        {/* Price Range */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="border border-gray-200 dark:border-gray-700 rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm space-y-6"
+      >
+        {/* 💰 Product Pricing */}
         <div>
-          <h2 className="font-semibold text-gray-800 mb-2">Price Range</h2>
-          <div className="grid grid-cols-2 gap-3 text-sm text-gray-700">
+          <h2 className="font-semibold text-gray-800 dark:text-gray-100 mb-3">
+            Pricing Overview
+          </h2>
+          <div className="grid grid-cols-2 gap-3 text-sm text-gray-700 dark:text-gray-300">
             <div>
-              <p className="font-medium">$13.70</p>
+              <p className="font-medium">KES {(price * 1.2).toLocaleString()}</p>
               <p>300–499 pieces</p>
             </div>
             <div>
-              <p className="font-medium">$7.70</p>
+              <p className="font-medium">KES {price.toLocaleString()}</p>
               <p>≥ 500 pieces</p>
             </div>
           </div>
         </div>
 
-        {/* Minimum Order */}
-        <div>
-          <p className="text-sm text-gray-600">
-            Minimum Order Quantity: <strong>300 pieces</strong>
-          </p>
+        {/* 📦 Order Info */}
+        <div className="text-sm text-gray-600 dark:text-gray-400">
+          Minimum Order Quantity: <strong>300 pieces</strong>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col gap-3">
+        {/* 🛒 Actions */}
+        <div className="flex flex-col gap-3 pt-2">
           <button
             onClick={handleAddToCart}
-            className="bg-green-600 text-white font-semibold py-2.5 rounded-lg hover:bg-green-700 transition"
+            className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-lg transition"
           >
+            <ShoppingBag size={18} />
             Add to Cart
           </button>
 
-          {/* WhatsApp Chat */}
           <a
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-center border border-green-600 text-green-700 font-semibold py-2.5 rounded-lg hover:bg-green-50 transition"
+            className="flex items-center justify-center gap-2 border border-green-600 text-green-700 hover:bg-green-50 font-semibold py-2.5 rounded-lg transition"
           >
-            Chat Now
+            <MessageCircle size={18} />
+            Chat on WhatsApp
           </a>
         </div>
 
-        {/* Success Message */}
-        {showSuccess && (
-          <div className="mt-3 text-center bg-green-50 border border-green-200 rounded-lg p-3 animate-fade-in">
-            <p className="text-green-700 text-sm font-medium">
-              ✅ {name} added to cart
-            </p>
-            <Link
-              href="/cart"
-              className="text-green-700 text-sm underline mt-1 inline-block hover:text-green-900 transition"
+        {/* ✅ Success Message */}
+        <AnimatePresence>
+          {showSuccess && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+              className="mt-4 text-center bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg p-3"
             >
-              View Cart →
-            </Link>
-          </div>
-        )}
+              <p className="text-green-700 dark:text-green-300 text-sm font-medium">
+                ✅ {name} added to cart successfully!
+              </p>
+              <Link
+                href="/cart"
+                className="text-green-700 dark:text-green-400 text-sm underline mt-1 inline-block hover:text-green-900 transition"
+              >
+                View Cart →
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* Branding Footer */}
-        <div className="text-sm text-gray-600 border-t pt-4 text-center">
-          <p className="font-medium text-green-700">Supacare</p>
+        {/* 🌿 Branding */}
+        <div className="text-sm text-gray-600 dark:text-gray-400 border-t pt-4 text-center">
+          <p className="font-medium text-green-700 dark:text-green-400">Supacare</p>
           <p>Your trusted partner in sustainable living</p>
         </div>
-      </div>
+      </motion.div>
     </aside>
-  );
+  )
 }

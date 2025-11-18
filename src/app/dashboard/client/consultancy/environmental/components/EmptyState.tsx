@@ -26,13 +26,7 @@ export default function EmptyState() {
         compliance reviews, and other advisory services.
       </p>
 
-      {/* Call to Action */}
-      <button
-        onClick={() => router.push('/dashboard/client/consultancy/new')}
-        className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-all"
-      >
-        Request Consultancy Service
-      </button>
+      
     </div>
   )
 }

@@ -17,7 +17,7 @@ export default function EmptyState() {
         and register your carbon project for carbon credit generation.
       </p>
       <Link
-        href="/dashboard/client/carbon/new" // ✅ fixed route
+        href="/dashboard/client/consultancy/carbon/new" // ✅ fixed route
         className="bg-green-600 text-white px-5 py-2.5 rounded-lg hover:bg-green-700 transition"
       >
         Request Carbon Project

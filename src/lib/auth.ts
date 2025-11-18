@@ -168,25 +168,10 @@ export const authOptions: NextAuthOptions = {
     },
 
     /**
-     * 🧭 Redirect users based on role or admin flag
+     * 🧭 Simplified redirect (middleware handles actual routing)
      */
-    async redirect({ url, baseUrl }) {
-      try {
-        const session = await fetch(`${baseUrl}/api/auth/session`).then((res) =>
-          res.json().catch(() => null)
-        );
-
-        const role = session?.user?.role;
-        const isAdmin = session?.user?.isAdmin;
-
-        if (isAdmin) return `${baseUrl}/dashboard/admin`;
-        if (role === "CONSULTANT")
-          return `${baseUrl}/dashboard/consultant`;
-        if (role === "PARTNER") return `${baseUrl}/dashboard/partner`;
-      } catch (err) {
-        console.error("Redirect error:", err);
-      }
-
+    async redirect({ baseUrl }) {
+      // Always send users to /dashboard; middleware handles the role logic
       return `${baseUrl}/dashboard`;
     },
   },

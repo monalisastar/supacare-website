@@ -70,6 +70,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isVisible && (
           <motion.header
+            data-navbar // ✅ Added this line
             initial={{ y: -80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -80, opacity: 0 }}

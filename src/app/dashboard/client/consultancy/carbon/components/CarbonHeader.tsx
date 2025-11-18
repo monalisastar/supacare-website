@@ -13,7 +13,7 @@ export default function CarbonHeader() {
       </h1>
 
       <Link
-        href="/dashboard/client/carbon/new" // ✅ Correct carbon project creation route
+        href="/dashboard/client/consultancy/carbon/new" // ✅ Correct carbon project creation route
         className="flex items-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
       >
         <PlusCircle size={18} className="mr-2" /> Request New Project

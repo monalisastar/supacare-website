@@ -1,101 +1,110 @@
-'use server'
+'use client'
 
-import { prisma } from '@/lib/prisma'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import { UserRole, ConsultancyStatus } from '@prisma/client'
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import ClientImpactOverview from './components/ClientImpactOverview'
+import ClientOperationsOverview from './components/ClientOperationsOverview'
+import ClientProjectsOverview from './components/ClientProjectsOverview'
+import ClientBillingOverview from './components/ClientBillingOverview'
+import ClientShop from './components/ProductList'
 
-// 🧩 Dashboard Components
-import SustainabilityOverview from '@/components/dashboard/SustainabilityOverview'
-import OperationsSnapshot from '@/components/dashboard/OperationsSnapshot'
-import ProjectsOverview from '@/components/dashboard/ProjectsOverview'
-import DashboardSummary from '@/components/dashboard/DashboardSummary'
+// 🧠 Dashboard Overview Page
+export default function ClientDashboardPage() {
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState<{
+    impact: any | null
+    operations: any | null
+    projects: any | null
+    billing: any | null
+  }>({
+    impact: null,
+    operations: null,
+    projects: null,
+    billing: null,
+  })
 
-/**
- * ♻️ Client Dashboard
- * -------------------------------------------------
- * Displays sustainability metrics, operations,
- * and project data for CLIENT role.
- */
+  // ✅ Simulated data loading (replace with Prisma fetch)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Replace this with actual API route: /api/dashboard/client-overview
+        const res = await fetch('/api/dashboard/client-overview')
+        if (res.ok) {
+          const json = await res.json()
+          setData(json)
+        }
+      } catch (err) {
+        console.error('Error loading client overview:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-export default async function ClientDashboardPage() {
-  // 🔐 Secure session retrieval
-  const session = await getServerSession(authOptions)
-  const role = (session?.user?.role as UserRole) || UserRole.CLIENT
+    fetchData()
+  }, [])
 
-  // 🧩 Fetch all required data concurrently
-  const [
-    metrics,
-    compostMachines,
-    compostSales,
-    wastePickups,
-    carbonProjects,
-    consultancyProjects,
-  ] = await Promise.all([
-    prisma.sustainabilityMetric.findMany().catch(() => []),
-    prisma.compostMachine.findMany().catch(() => []),
-    prisma.compostSale.findMany().catch(() => []),
-    prisma.wastePickup.findMany().catch(() => []),
-    prisma.carbonProject.findMany().catch(() => []),
-    prisma.consultancyProject.findMany().catch(() => []),
-  ])
-
-  // ♻️ Sustainability totals
-  const totals = {
-    co2Reduced: metrics.reduce((s, m) => s + (m.co2Reduced ?? 0), 0),
-    wasteDiverted: metrics.reduce((s, m) => s + (m.wasteDiverted ?? 0), 0),
-    compostProduced: metrics.reduce((s, m) => s + (m.compostProduced ?? 0), 0),
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[70vh] text-gray-500">
+        Loading your dashboard...
+      </div>
+    )
   }
 
-  // ⚙️ Operations snapshot
-  const ops = {
-    activeMachines: compostMachines.length,
-    compostSales: compostSales.length,
-    wastePickups: wastePickups.length,
-  }
-
-  // 💼 Project overview
-  const projects = {
-    consultancyProjects: consultancyProjects.length,
-    carbonProjects: carbonProjects.length,
-    projectsInProgress: consultancyProjects.filter(
-      // ✅ FIXED: your enum uses IN_PROGRESS, not ACTIVE
-      (p) => p.status === ConsultancyStatus.IN_PROGRESS
-    ).length,
-    projectsCompleted: consultancyProjects.filter(
-      (p) => p.status === ConsultancyStatus.COMPLETED
-    ).length,
-  }
-
-  // 🧭 Render dashboard modules
   return (
-    <div className="flex flex-col space-y-10 p-6 md:p-10 bg-gray-50 dark:bg-gray-900 min-h-screen">
-      {/* 🌿 Sustainability Section */}
-      <section>
-        <SustainabilityOverview metrics={totals} />
-      </section>
+    <main className="flex flex-col gap-10 p-6 md:p-10 bg-gray-50 dark:bg-gray-900 min-h-screen overflow-y-auto">
+      {/* 🌿 Section: Impact Overview */}
+      {data?.impact && (
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <ClientImpactOverview data={data.impact} />
+        </motion.section>
+      )}
 
-      {/* ⚙️ Operations Snapshot */}
-      <section>
-        {/* ✅ Convert Prisma UserRole to frontend Role type */}
-        <OperationsSnapshot role="CLIENT" data={ops} />
-      </section>
+      {/* ⚙️ Section: Operations */}
+      {data?.operations && (
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <ClientOperationsOverview data={data.operations} />
+        </motion.section>
+      )}
 
-      {/* 📊 Projects Overview */}
-      <section>
-        <ProjectsOverview role="CLIENT" data={projects} />
-      </section>
+      {/* 💼 Section: Projects */}
+      {data?.projects && (
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <ClientProjectsOverview data={data.projects} />
+        </motion.section>
+      )}
 
-      {/* 🧾 Summary */}
-      <section>
-        <DashboardSummary
-          role="CLIENT"
-          summaryData={{
-            co2Reduced: totals.co2Reduced,
-            compostProduced: totals.compostProduced,
-          }}
-        />
-      </section>
-    </div>
+      {/* 💳 Section: Billing */}
+      {data?.billing && (
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <ClientBillingOverview data={data.billing} />
+        </motion.section>
+      )}
+
+      {/* 🛒 Section: Shop */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+      >
+        <ClientShop />
+      </motion.section>
+    </main>
   )
 }

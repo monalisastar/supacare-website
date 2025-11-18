@@ -23,7 +23,9 @@ export default async function BlogPostPage({
 }: {
   params: { slug: string };
 }) {
-  const { slug } = params;
+  // ✅ Clone to avoid frozen reference (prevents hydration crash)
+  const { slug } = { ...params };
+
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return notFound();
 

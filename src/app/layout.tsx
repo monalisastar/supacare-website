@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import NavbarFooterLayout from "./NavbarFooterLayout"
-import { CartProvider } from "@/context/CartContext"
+import CartProvider from "@/lib/CartContext" // ✅ fixed: default import
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"
 import Script from "next/script"
 import ClientHydration from "@/components/ClientHydration"
@@ -246,6 +246,7 @@ export default function RootLayout({
         {/* ✅ Client Hydration */}
         <ClientHydration />
 
+        {/* ✅ Single Global Cart Provider */}
         <CartProvider>
           <NavbarFooterLayout>{children}</NavbarFooterLayout>
           <FloatingWhatsAppButton />

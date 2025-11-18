@@ -4,17 +4,30 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useCart } from '@/lib/CartContext'
+import { ShoppingBag } from 'lucide-react'
 
 interface BuyNowSectionProps {
   productName: string
   imageSrc: string
   category?: string
+  price?: number
+  productId?: string
+  onAddToCart?: () => void // ✅ added this
 }
 
-export default function BuyNowSection({ productName, imageSrc, category }: BuyNowSectionProps) {
+export default function BuyNowSection({
+  productName,
+  imageSrc,
+  category,
+  price = 0,
+  productId,
+  onAddToCart, // ✅ destructure prop
+}: BuyNowSectionProps) {
   const [countryCode, setCountryCode] = useState('254') // Default to Kenya 🇰🇪
+  const { addToCart } = useCart()
 
-  // 🌍 Detect user's country via IP
+  // 🌍 Detect user's country via IP (for WhatsApp link)
   useEffect(() => {
     async function detectCountry() {
       try {
@@ -24,14 +37,14 @@ export default function BuyNowSection({ productName, imageSrc, category }: BuyNo
           const code = data.country_calling_code.replace('+', '')
           setCountryCode(code)
         }
-      } catch (err) {
+      } catch {
         console.warn('Could not detect country. Using default Kenya (254).')
       }
     }
     detectCountry()
   }, [])
 
-  // 🧠 Color theme
+  // 🧠 Theme colors per category
   const themes: Record<string, any> = {
     compost: {
       bg: 'bg-[#f6fff8]',
@@ -66,11 +79,30 @@ export default function BuyNowSection({ productName, imageSrc, category }: BuyNo
   const whatsappMessage = encodeURIComponent(
     `Hello Supacare Team 👋, I’m interested in buying *${productName}*. Could you please share the price and delivery details?`
   )
-
   const whatsappLink = `https://wa.me/${countryCode}700000000?text=${whatsappMessage}`
 
+  // 🛒 Add to Cart Handler
+  const handleAddToCart = () => {
+    if (onAddToCart) {
+      onAddToCart() // ✅ Call parent handler if provided
+    } else {
+      if (!productId) return alert('Missing product ID')
+      addToCart({
+        id: productId,
+        name: productName,
+        price,
+        image: imageSrc,
+        quantity: 1,
+      })
+      alert(`${productName} added to your cart!`)
+    }
+  }
+
   return (
-    <section className={`relative ${theme.bg} py-20 px-6 sm:px-12 overflow-hidden`}>
+    <section
+      className={`relative ${theme.bg} py-20 px-6 sm:px-12 overflow-hidden rounded-2xl`}
+    >
+      {/* Background Glow */}
       <div className="absolute top-0 right-0 w-[350px] h-[350px] bg-[#F4B940]/30 rounded-full blur-3xl opacity-70 -z-10"></div>
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
@@ -81,34 +113,50 @@ export default function BuyNowSection({ productName, imageSrc, category }: BuyNo
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className={`text-4xl sm:text-5xl font-bold ${theme.text} leading-tight`}>
+          <h2
+            className={`text-4xl sm:text-5xl font-bold ${theme.text} leading-tight`}
+          >
             Buy Your {productName}
           </h2>
-          <p className="text-gray-700 text-lg">Message our team to make a purchase</p>
+          <p className="text-gray-700 text-lg">
+            Message our team or buy directly from your Supacare account
+          </p>
 
           <div className="flex flex-wrap gap-4 pt-4">
+            {/* 🛒 Add to Cart */}
+            <button
+              onClick={handleAddToCart}
+              className={`${theme.primary} text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 hover:opacity-90 transition`}
+            >
+              <ShoppingBag className="w-5 h-5" />
+              Add to Cart
+            </button>
+
+            {/* 💬 WhatsApp */}
+            <Link
+              href={whatsappLink}
+              target="_blank"
+              className={`${theme.accent} ${theme.text} px-6 py-3 rounded-full font-semibold hover:opacity-90 transition`}
+            >
+              Buy on WhatsApp
+            </Link>
+
+            {/* 🌐 Facebook */}
             <Link
               href="https://www.facebook.com/SupacareSolutions"
               target="_blank"
               className={`${theme.accent} ${theme.text} px-6 py-3 rounded-full font-semibold hover:opacity-90 transition`}
             >
-              Buy on Facebook
+              Facebook
             </Link>
 
+            {/* 📸 Instagram */}
             <Link
               href="https://www.instagram.com/supacaresolutions"
               target="_blank"
               className={`${theme.accent} ${theme.text} px-6 py-3 rounded-full font-semibold hover:opacity-90 transition`}
             >
-              Buy on Instagram
-            </Link>
-
-            <Link
-              href={whatsappLink}
-              target="_blank"
-              className={`${theme.primary} text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition`}
-            >
-              Buy on WhatsApp
+              Instagram
             </Link>
           </div>
         </motion.div>
@@ -121,7 +169,12 @@ export default function BuyNowSection({ productName, imageSrc, category }: BuyNo
           transition={{ duration: 0.8 }}
         >
           <div className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] rounded-full overflow-hidden shadow-lg">
-            <Image src={imageSrc} alt={productName} fill className="object-contain bg-white" />
+            <Image
+              src={imageSrc}
+              alt={productName}
+              fill
+              className="object-contain bg-white"
+            />
           </div>
         </motion.div>
       </div>

@@ -5,7 +5,7 @@ export const revalidate = 0
 import ProjectStats from './components/ProjectStats'
 import ProjectFilters from './components/ProjectFilters'
 import ProjectList from './components/ProjectList'
-import prisma from '@/lib/prisma'
+import { prisma } from '@/lib/prisma' // ✅ fixed import (named export)
 import type { ConsultancyProject, CarbonProject, CarbonReport } from '@prisma/client'
 
 /**
