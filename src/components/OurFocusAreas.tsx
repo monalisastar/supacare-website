@@ -5,27 +5,28 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const focusAreas = [
-  {
-    title: 'Sustainable Waste Management',
-    desc: 'We transform organic waste into nutrient-rich compost and clean biomass energy — reducing landfill emissions and supporting regenerative agriculture.',
-    image: '/images/recycling and composting/Supacarecompactmachine.webp',
-    link: '/services/recycling-composting',
-    label: 'Learn More About Sustainable Waste Management',
-  },
-  {
-    title: 'Carbon Project Development',
-    desc: 'We design and manage verified carbon projects across waste, energy, forestry, and agriculture sectors — translating measurable emission reductions into certified carbon credits.',
-    image: '/images/carbon-advisory/carbon-hero.webp',
-    link: '/services/carbon-advisory',
-    label: 'Learn More About Carbon Project Development',
-  },
-  {
-    title: 'Environmental & Climate Consultancy',
-    desc: 'Our experts provide EIA, ESG, and sustainability advisory services to help organizations meet Kenya’s NEMA standards and align with global environmental frameworks.',
-    image: '/images/environmental consultancy/eia-service.webp',
-    link: '/services/environmental-consultancy',
-    label: 'Learn More About Environmental & Climate Consultancy',
-  },
+{
+  title: 'Sustainable Waste Management',
+  desc: 'We convert organic waste into high-quality compost through efficient composting systems, helping organisations cut disposal costs, improve resource recovery, and enhance environmental compliance.',
+  image: '/images/recycling and composting/Supacarecompactmachine.webp',
+  link: '/services/recycling-composting',
+  label: 'Learn More About Sustainable Waste Management',
+},
+{
+  title: 'Carbon Project Development',
+  desc: 'We support organisations through the full carbon project cycle from feasibility and baseline studies to certification, validation, and issuance of verified carbon credits.',
+  image: '/images/carbon-advisory/carbon-hero.webp',
+  link: '/services/carbon-advisory',
+  label: 'Learn More About Carbon Project Development',
+},
+{
+  title: 'Environmental & Climate Consultancy',
+  desc: 'Our experts deliver ESG, environmental compliance, and sustainability advisory services to help organisations meet regulatory standards and align with global best practices.',
+  image: '/images/environmental consultancy/eia-service.webp',
+  link: '/services/environmental-consultancy',
+  label: 'Learn More About Environmental & Climate Consultancy',
+},
+
 ];
 
 export default function OurFocusAreas() {

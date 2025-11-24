@@ -1,105 +1,101 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
+import { FaRecycle, FaLeaf, FaHandsHelping } from 'react-icons/fa';
+import React from 'react';
 
-const focusAreas = [
-  {
-    title: 'Sustainable Waste Management',
-    desc: 'We transform organic waste into nutrient-rich compost and clean biomass energy — reducing landfill emissions and supporting regenerative agriculture.',
-    image: '/images/recycling and composting/Supacarecompactmachine.webp',
-    link: '/services/recycling-composting',
-    label: 'Learn More About Sustainable Waste Management',
-  },
-  {
-    title: 'Carbon Project Development',
-    desc: 'We design and manage verified carbon projects across waste, energy, forestry, and agriculture sectors — translating measurable emission reductions into certified carbon credits.',
-    image: '/images/carbon-advisory/carbon-hero.webp',
-    link: '/services/carbon-advisory',
-    label: 'Learn More About Carbon Project Development',
-  },
-  {
-    title: 'Environmental & Climate Consultancy',
-    desc: 'Our experts provide EIA, ESG, and sustainability advisory services to help organizations meet Kenya’s NEMA standards and align with global environmental frameworks.',
-    image: '/images/environmental consultancy/eia-service.webp',
-    link: '/services/environmental-consultancy',
-    label: 'Learn More About Environmental & Climate Consultancy',
-  },
-];
+export default function SustainabilityActions() {
+  const supacareYellow = '#f5b942';
+  const actions = [
 
-export default function OurFocusAreas() {
+  {
+    label: 'Start Your Resource Recovery Journey',
+    icon: <FaRecycle className="text-green-700 w-8 h-8 mb-3" />,
+    title: 'Measure Your Waste Impact',
+    description:
+      'Use our Smart-Waste system to track waste collection, monitor material flows, and identify opportunities to reduce waste and recover resources across your home, community, or organization.',
+    button: 'Start Tracking',
+    href: '/services/smart-waste',
+  },
+  {
+    label: 'Become Nature Positive',
+    icon: <FaLeaf className="text-green-700 w-8 h-8 mb-3" />,
+    title: 'Get Supacare Compost',
+    description:
+      'Purchase high-quality Supacare compost for your gardens, farms, or landscaping projects enhancing soil health, boosting crop performance, and reducing organic waste sent to landfills.',
+    button: 'Buy Compost',
+    href: '/shop',
+  },
+ {
+  label: 'Implement Sustainable Strategies',
+  icon: <FaHandsHelping className="text-green-700 w-8 h-8 mb-3" />,
+  title: 'Book a Consultation',
+  description:
+    'Work with our expert consulting team across environment, sustainability, and carbon project development. We support businesses across multiple sectoral scopes; with strategy design, compliance-ready solutions, project development, training, and ongoing advisory.',
+  button: 'Partner with Us',
+  href: '/contact',
+},
+  ];
+
   return (
     <section
-      id="focus-areas"
-      className="relative z-10 bg-gradient-to-b from-green-50 via-[#e6f5ea] to-[#c8efc9] pb-20 md:pb-28 pt-10 md:pt-16 overflow-hidden"
+      id="sustainability-actions"
+      aria-label="Sustainability actions and community programs by Supacare"
+      className="relative z-[15] bg-gradient-to-b from-[#f7fbf8] via-white/95 to-[#eaf7ec] pt-12 pb-10 px-6 lg:px-12 overflow-hidden"
     >
-      {/* Ambient background light */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-green-300/20 blur-3xl rounded-full -z-10"></div>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+        {actions.map((item, i) => (
+          <motion.article
+            key={i}
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: i * 0.15 }}
+            viewport={{ once: true }}
+            className="bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_6px_18px_rgba(0,0,0,0.08)] hover:shadow-[0_10px_25px_rgba(0,0,0,0.12)] transition-all duration-300 p-6 text-center flex flex-col justify-between hover:-translate-y-1 border border-green-100"
+            aria-label={item.title}
+          >
+            <div>
+              <p
+                className="text-xs font-semibold mb-2 uppercase tracking-wide"
+                style={{ color: supacareYellow }}
+              >
+                {item.label}
+              </p>
+              <div className="flex justify-center">{item.icon}</div>
+              <h3 className="text-lg font-semibold text-green-900 mb-2">
+                {item.title}
+              </h3>
+              <p className="text-green-800 text-sm leading-relaxed text-justify mb-5">
+                {item.description}
+              </p>
+            </div>
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-3xl sm:text-4xl font-bold text-[#f5b942] mb-10 text-left tracking-tight"
-        >
-          Our  Focus Areas
-        </motion.h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {focusAreas.map((area, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: i * 0.15,
-                duration: 0.6,
-                ease: 'easeOut',
+            <Link
+              href={item.href}
+              className="inline-block border text-sm font-medium tracking-wide px-5 py-1.5 rounded-full transition-all duration-300"
+              style={{
+                borderColor: supacareYellow,
+                color: supacareYellow,
               }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-green-100 flex flex-col justify-between relative z-10"
+              aria-label={`${item.button} — ${item.title}`}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = supacareYellow;
+                e.currentTarget.style.color = '#ffffff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = supacareYellow;
+              }}
             >
-              {/* Image Section */}
-              <div className="relative w-full h-52 sm:h-60">
-                <Image
-                  src={area.image}
-                  alt={`${area.title} – Supacare focus area`}
-                  fill
-                  loading="lazy"
-                  decoding="async"
-                  quality={70}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Text Section */}
-              <div className="p-6 text-left flex flex-col flex-grow">
-                <h3 className="text-lg sm:text-xl font-semibold text-green-800 mb-2">
-                  {area.title}
-                </h3>
-                <p className="text-gray-600 text-sm sm:text-base mb-6 leading-relaxed flex-grow">
-                  {area.desc}
-                </p>
-
-                <Link
-                  href={area.link}
-                  className="inline-block self-start px-5 py-2 bg-green-700 text-white text-sm font-medium rounded-lg hover:bg-green-800 transition"
-                  aria-label={area.label}
-                >
-                  Learn More
-                </Link>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              {item.button}
+            </Link>
+          </motion.article>
+        ))}
       </div>
 
-      {/* Fade to next section */}
-      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent via-[#dcefe0]/90 to-[#1a331d] z-0"></div>
+      {/* Soft fade to next section */}
+      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-b from-transparent to-[#eaf7ec]" />
     </section>
   );
 }

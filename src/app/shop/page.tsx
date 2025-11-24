@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import SEO from '@/components/SEO'
-import BreadcrumbSchema from '@/components/seo/BreadcrumbSchema'
-import Script from 'next/script'
-import ShopClient from './ShopClient'
+import SEO from '@/components/SEO';
+import BreadcrumbSchema from '@/components/seo/BreadcrumbSchema';
+import Script from 'next/script';
+import ShopClient from './ShopClient';
 
 export default function ShopPage() {
   return (
@@ -63,7 +63,7 @@ export default function ShopPage() {
         ]}
       />
 
-      {/* ✅ Breadcrumb Schema */}
+      {/* Breadcrumb Schema */}
       <BreadcrumbSchema
         items={[
           { name: 'Home', url: 'https://www.supacaresolutions.com/' },
@@ -71,7 +71,7 @@ export default function ShopPage() {
         ]}
       />
 
-      {/* ✅ Structured Data: Products + FAQ + Breadcrumb */}
+      {/* Structured Data */}
       <Script id="shop-schema" type="application/ld+json">
         {JSON.stringify({
           '@context': 'https://schema.org',
@@ -122,12 +122,11 @@ export default function ShopPage() {
                 },
               ],
             },
-            // 🛍️ Product listings for Google
+            // Products for Google
             {
               '@type': 'Product',
               name: 'Composting Machines',
-              image:
-                'https://www.supacaresolutions.com/images/products/compost-machine.webp',
+              image: 'https://www.supacaresolutions.com/images/products/compost-machine.webp',
               description:
                 'High-performance composting units for homes, institutions, and farms to convert organic waste into usable compost.',
               brand: { '@type': 'Brand', name: 'Supacare Solutions' },
@@ -142,8 +141,7 @@ export default function ShopPage() {
             {
               '@type': 'Product',
               name: 'Organic Compost Blends',
-              image:
-                'https://www.supacaresolutions.com/images/products/compost-blend.webp',
+              image: 'https://www.supacaresolutions.com/images/products/compost-blend.webp',
               description:
                 'Premium compost products enriched with nutrients for improved soil fertility and water retention.',
               brand: { '@type': 'Brand', name: 'Supacare Solutions' },
@@ -158,8 +156,7 @@ export default function ShopPage() {
             {
               '@type': 'Product',
               name: 'Waste Sorting Bins',
-              image:
-                'https://www.supacaresolutions.com/images/products/sorting-bins.webp',
+              image: 'https://www.supacaresolutions.com/images/products/sorting-bins.webp',
               description:
                 'Color-coded recycling bins for effective segregation of recyclable, organic, and general waste.',
               brand: { '@type': 'Brand', name: 'Supacare Solutions' },
@@ -175,8 +172,8 @@ export default function ShopPage() {
         })}
       </Script>
 
-      {/* ✅ Page Content */}
+      {/* Page Content */}
       <ShopClient />
     </>
-  )
+  );
 }

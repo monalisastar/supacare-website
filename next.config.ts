@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // :white_check_mark: TypeScript
+  // TypeScript
   typescript: {
     ignoreBuildErrors: true,
   },
 
-  // :white_check_mark: Image Optimization
+  // Image Optimization
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -15,33 +15,29 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com', // optional CDN source
+        hostname: 'res.cloudinary.com',
       },
       {
         protocol: 'http',
         hostname: 'localhost',
       },
     ],
-    minimumCacheTTL: 60 * 60 * 24 * 7, // 7 days
+    minimumCacheTTL: 60 * 60 * 24 * 7,
   },
 
-  // :white_check_mark: Core Performance
-  swcMinify: true,
+  // Core Next.js settings
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
 
-  // :white_check_mark: Modern JavaScript output
+  // Modern features (ONLY serverActions valid)
   experimental: {
-    legacyBrowsers: false,
-    browsersListForSwc: true,
-    serverActions: {},
+    serverActions: true,
   },
 
-  // :white_check_mark: Custom Headers (Caching + Preload + Security)
+  // Custom headers (safe to keep)
   async headers() {
     return [
-      // :one: Global caching + security headers
       {
         source: '/(.*)',
         headers: [
@@ -52,8 +48,6 @@ const nextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
         ],
       },
-
-      // :two: Preload critical Supacare assets (improves LCP)
       {
         source: '/',
         headers: [
@@ -71,7 +65,6 @@ const nextConfig = {
     ];
   },
 
-  // :white_check_mark: Clean build folder each time
   cleanDistDir: true,
 };
 

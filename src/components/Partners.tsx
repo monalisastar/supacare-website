@@ -5,16 +5,17 @@ import { motion } from 'framer-motion';
 
 export default function Partners() {
   const partners = [
-    {
-      name: 'Eco-Mentor LMS',
-      logo: '/images/eco-mentor-logo.webp',
-      alt: 'Eco-Mentor LMS Logo',
-    },
-    {
-      name: 'Supacare Foundation',
-      logo: '/images/logo2.webp',
-      alt: 'Supacare Foundation Logo',
-    },
+  {
+  name: 'Eco-Mentor LMS',
+  logo: '/images/ecomentor logo.jpg',
+  alt: 'Eco-Mentor LMS Logo',
+},
+{
+  name: 'Supacare Foundation',
+  logo: '/images/ecomentor logo.jpg',
+  alt: 'Kilimofresh',
+},
+
   ];
 
   return (

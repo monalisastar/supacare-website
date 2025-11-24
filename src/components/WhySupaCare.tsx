@@ -9,19 +9,19 @@ const impactStats = [
   {
     icon: <FaRecycle className="text-white text-2xl sm:text-3xl" />,
     label: 'Tons of Waste Diverted',
-    value: 8200,
+    value: 20,
     suffix: '+',
   },
   {
     icon: <FaHandsHelping className="text-white text-2xl sm:text-3xl" />,
     label: 'Community Members Engaged',
-    value: 25000,
+    value: 1000,
     suffix: '+',
   },
   {
     icon: <FaLeaf className="text-white text-2xl sm:text-3xl" />,
-    label: 'Clean-Up Events Organized',
-    value: 470,
+    label: 'Carbon & Environmental Consultancy Engagements',
+    value: 40,
     suffix: '+',
   },
 ];

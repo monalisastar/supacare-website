@@ -12,13 +12,14 @@ const projects = [
       'Piloting IoT-based waste bins to monitor collection and improve routing efficiency in urban communities.',
     image: '/images/waste-tracking.webp',
   },
-  {
-    title: 'Carbon Advisory & Environmental Consultancy',
-    location: 'Kisumu, Kenya',
-    description:
-      'Community engagement on LPG, E-Jikos, and household carbon savings with token-based incentives.',
-    image: '/images/clean-cooking.webp',
-  },
+{
+  title: 'Carbon Advisory & Environmental Consultancy',
+  location: 'Kisumu, Kenya',
+  description:
+    'Community engagement on clean energy access and carbon-saving solutions, supporting household transitions to low-emission technologies.',
+  image: '/images/solar project carbon consultancy.jpg',
+},
+
   {
     title: 'Circular Composting Pilot',
     location: 'Kiambu County',
@@ -50,9 +51,10 @@ export default function Projects() {
           viewport={{ once: true }}
           className="text-left mb-8"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#F4B940] mb-3 tracking-tight">
-            What We’re Doing
-          </h2>
+       <h2 className="text-3xl sm:text-4xl font-bold text-[#F4B940] mb-3 tracking-tight">
+  Our Work in Action
+      </h2>
+
           <p className="text-gray-800 text-base sm:text-lg max-w-2xl">
             We deliver programs that combine community action and eco-friendly innovation.
           </p>
