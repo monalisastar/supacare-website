@@ -1,26 +1,26 @@
-import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
-import "./globals.css"
-import NavbarFooterLayout from "./NavbarFooterLayout"
-import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"
-import Script from "next/script"
-import ClientHydration from "@/components/ClientHydration"
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import NavbarFooterLayout from "./NavbarFooterLayout";
+import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
+import Script from "next/script";
+import ClientHydration from "@/components/ClientHydration";
 
-// ❌ Temporarily disabled import
-// import { CartProvider } from "@/context/CartProvider";
+// ✅ Correct CartProvider import (ONLY THIS ONE)
+import { CartProvider } from "@/context/CartContext";
 
-// ✅ Fonts
+// Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-})
+});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-})
+});
 
-// ✅ Metadata
+// Metadata
 export const metadata: Metadata = {
   title: "Supacare Solutions",
   description:
@@ -99,21 +99,21 @@ export const metadata: Metadata = {
     follow: true,
     nocache: true,
   },
-}
+};
 
-// ✅ Viewport
+// Viewport
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
   themeColor: "#1b4332",
-}
+};
 
-// ✅ Root Layout
+// Root Layout
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -130,15 +130,29 @@ export default function RootLayout({
           href="/videos/hero-video.webm"
           type="video/webm"
         />
+
         <link rel="preload" as="image" href="/images/for-communities.webp" />
 
-        {/* Google Verification */}
+        {/* Google Site Verification */}
         <meta
           name="google-site-verification"
           content="kMRdgtlcdkEqVOSaEjTSTKmtn6jnbkthgFEAP93YJ7E"
         />
+      </head>
 
-        {/* Structured Data */}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-transparent`}
+      >
+        {/* Hydration Fix */}
+        <ClientHydration />
+
+        {/* CartProvider MUST wrap everything */}
+        <CartProvider>
+          <NavbarFooterLayout>{children}</NavbarFooterLayout>
+          <FloatingWhatsAppButton />
+        </CartProvider>
+
+        {/* JSON-LD MUST be inside BODY */}
         <Script
           id="schemas"
           type="application/ld+json"
@@ -172,41 +186,32 @@ export default function RootLayout({
           }}
         />
 
-        <Script id="breadcrumb-schema" type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://www.supacaresolutions.com",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Main",
-                item: "https://www.supacaresolutions.com",
-              },
-            ],
-          })}
-        </Script>
-      </head>
+        <Script
+          id="breadcrumb-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: "https://www.supacaresolutions.com",
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Main",
+                  item: "https://www.supacaresolutions.com",
+                },
+              ],
+            }),
+          }}
+        />
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-transparent`}
-      >
-        {/* Client Hydration */}
-        <ClientHydration />
-
-        {/* ❌ CartProvider temporarily disabled */}
-        {/* <CartProvider> */}
-          <NavbarFooterLayout>{children}</NavbarFooterLayout>
-          <FloatingWhatsAppButton />
-        {/* </CartProvider> */}
-
-        {/* Lazy-load safeguard */}
+        {/* Lazy Load Optimization */}
         <Script id="lazy-init" strategy="afterInteractive">
           {`
             document.addEventListener("DOMContentLoaded", () => {
@@ -226,6 +231,7 @@ export default function RootLayout({
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"
           strategy="afterInteractive"
         />
+
         <Script id="ga-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -236,5 +242,5 @@ export default function RootLayout({
         </Script>
       </body>
     </html>
-  )
+  );
 }
