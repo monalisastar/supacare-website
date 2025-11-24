@@ -18,7 +18,7 @@ const fallbackData: AboutData = {
     'To deliver integrated environmental, sustainability, and waste management solutions that support climate resilience, promote circular economies, and help organizations meet global ESG and compliance standards.',
 
   vision:
-    'To be a leading provider of environmental, sustainability, and carbon solutions across Africa—empowering communities, businesses, and institutions with innovative systems that drive measurable climate impact and long-term ecological stewardship.',
+    'To be a leading provider of environmental sustainability, and carbon solutions across Africa—empowering communities, businesses, and institutions with innovative systems that drive measurable climate impact and long-term ecological stewardship.',
 };
 
 
