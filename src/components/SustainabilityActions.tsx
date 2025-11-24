@@ -8,33 +8,34 @@ import React from 'react';
 export default function SustainabilityActions() {
   const supacareYellow = '#f5b942';
   const actions = [
-    {
-      label: 'Start your Composting Journey',
-      icon: <FaRecycle className="text-green-700 w-8 h-8 mb-3" />,
-      title: 'Measure Your Waste Impact',
-      description:
-        'Use our Smart-Waste system to track collection, monitor volumes, and identify areas to reduce waste across your community or organization.',
-      button: 'Start Tracking',
-      href: '/services/smart-waste',
-    },
-    {
-      label: 'Become Nature Positive',
-      icon: <FaLeaf className="text-green-700 w-8 h-8 mb-3" />,
-      title: 'Get Supacare Compost',
-      description:
-        'Purchase nutrient-rich Supacare compost for your gardens, farms, or landscaping projects — improving soil health and reducing landfill waste.',
-      button: 'Buy Compost',
-      href: '/shop',
-    },
-    {
-      label: 'Implement Sustainable Strategies',
-      icon: <FaHandsHelping className="text-green-700 w-8 h-8 mb-3" />,
-      title: 'Book a Consultation',
-      description:
-        'Partner with our experts to start composting in your estate, school, or market — we provide training, setup, and ongoing support.',
-      button: 'Partner with Us',
-      href: '/contact',
-    },
+
+  {
+    label: 'Start Your Resource Recovery Journey',
+    icon: <FaRecycle className="text-green-700 w-8 h-8 mb-3" />,
+    title: 'Measure Your Waste Impact',
+    description:
+      'Use our Smart-Waste system to track waste collection, monitor material flows, and identify opportunities to reduce waste and recover resources across your home, community, or organization.',
+    button: 'Start Tracking',
+    href: '/services/smart-waste',
+  },
+  {
+    label: 'Become Nature Positive',
+    icon: <FaLeaf className="text-green-700 w-8 h-8 mb-3" />,
+    title: 'Get Supacare Compost',
+    description:
+      'Purchase high-quality Supacare compost for your gardens, farms, or landscaping projects enhancing soil health, boosting crop performance, and reducing organic waste sent to landfills.',
+    button: 'Buy Compost',
+    href: '/shop',
+  },
+ {
+  label: 'Implement Sustainable Strategies',
+  icon: <FaHandsHelping className="text-green-700 w-8 h-8 mb-3" />,
+  title: 'Book a Consultation',
+  description:
+    'Work with our expert consulting team across environment, sustainability, and carbon project development. We support businesses across multiple sectoral scopes; with strategy design, compliance-ready solutions, project development, training, and ongoing advisory.',
+  button: 'Partner with Us',
+  href: '/contact',
+},
   ];
 
   return (

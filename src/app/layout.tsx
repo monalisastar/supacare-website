@@ -2,10 +2,12 @@ import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import NavbarFooterLayout from "./NavbarFooterLayout"
-import { CartProvider } from "@/context/CartContext"
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton"
 import Script from "next/script"
 import ClientHydration from "@/components/ClientHydration"
+
+// ❌ Temporarily disabled import
+// import { CartProvider } from "@/context/CartProvider";
 
 // ✅ Fonts
 const geistSans = Geist({
@@ -116,12 +118,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* ✅ Performance Preconnects */}
+        {/* Preconnects */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="preconnect" href="https://www.supacaresolutions.com" />
 
-        {/* ✅ Preloads */}
+        {/* Preloads */}
         <link
           rel="preload"
           as="video"
@@ -130,19 +132,18 @@ export default function RootLayout({
         />
         <link rel="preload" as="image" href="/images/for-communities.webp" />
 
-        {/* ✅ Google Site Verification */}
+        {/* Google Verification */}
         <meta
           name="google-site-verification"
           content="kMRdgtlcdkEqVOSaEjTSTKmtn6jnbkthgFEAP93YJ7E"
         />
 
-        {/* ✅ Structured Data (JSON-LD Schemas) */}
+        {/* Structured Data */}
         <Script
           id="schemas"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify([
-              // 🔹 Organization Schema
               {
                 "@context": "https://schema.org",
                 "@type": "Organization",
@@ -167,73 +168,26 @@ export default function RootLayout({
                   "https://twitter.com/supacaresol",
                 ],
               },
-              // 🔹 Local Business Schema
-              {
-                "@context": "https://schema.org",
-                "@type": "LocalBusiness",
-                name: "Supacare Solutions",
-                image: "https://www.supacaresolutions.com/images/supalogo.png",
-                telephone: "+254-720-096680",
-                email: "info@supacaresolutions.com",
-                address: {
-                  "@type": "PostalAddress",
-                  streetAddress: "Laki Gardens, Ruiru",
-                  addressLocality: "Ruiru",
-                  addressRegion: "Kiambu County",
-                  postalCode: "00900",
-                  addressCountry: "KE",
-                },
-                openingHours: "Mo-Fr 08:00-17:00",
-                url: "https://www.supacaresolutions.com",
-              },
-              // 🔹 WebPage Schema
-              {
-                "@context": "https://schema.org",
-                "@type": "WebPage",
-                name: "Supacare Solutions",
-                url: "https://www.supacaresolutions.com",
-                description:
-                  "Supacare Solutions provides innovative and eco-friendly waste management, recycling, and carbon consultancy services across Kenya.",
-                inLanguage: "en",
-                isPartOf: {
-                  "@type": "WebSite",
-                  url: "https://www.supacaresolutions.com",
-                },
-              },
-              // 🔹 WebSite Schema (enables sitelinks)
-              {
-                "@context": "https://schema.org",
-                "@type": "WebSite",
-                name: "Supacare Solutions",
-                url: "https://www.supacaresolutions.com",
-                potentialAction: {
-                  "@type": "SearchAction",
-                  target:
-                    "https://www.supacaresolutions.com/search?q={search_term_string}",
-                  "query-input": "required name=search_term_string",
-                },
-              },
             ]),
           }}
         />
 
-        {/* ✅ Breadcrumb auto initializer for Google sitelinks */}
         <Script id="breadcrumb-schema" type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
-            "itemListElement": [
+            itemListElement: [
               {
                 "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://www.supacaresolutions.com",
+                position: 1,
+                name: "Home",
+                item: "https://www.supacaresolutions.com",
               },
               {
                 "@type": "ListItem",
-                "position": 2,
-                "name": "Main",
-                "item": "https://www.supacaresolutions.com",
+                position: 2,
+                name: "Main",
+                item: "https://www.supacaresolutions.com",
               },
             ],
           })}
@@ -243,15 +197,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-transparent`}
       >
-        {/* ✅ Client Hydration */}
+        {/* Client Hydration */}
         <ClientHydration />
 
-        <CartProvider>
+        {/* ❌ CartProvider temporarily disabled */}
+        {/* <CartProvider> */}
           <NavbarFooterLayout>{children}</NavbarFooterLayout>
           <FloatingWhatsAppButton />
-        </CartProvider>
+        {/* </CartProvider> */}
 
-        {/* ✅ Lazy-load safeguard */}
+        {/* Lazy-load safeguard */}
         <Script id="lazy-init" strategy="afterInteractive">
           {`
             document.addEventListener("DOMContentLoaded", () => {
@@ -266,7 +221,7 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* ✅ Google Analytics (replace G-XXXXXXX) */}
+        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"
           strategy="afterInteractive"
