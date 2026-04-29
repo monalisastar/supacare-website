@@ -1,240 +1,133 @@
-"use client"
+import Link from 'next/link'
+import Image from 'next/image'
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram } from 'lucide-react'
 
-import { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import {
-  Mail, Phone, MapPin,
-  Facebook, Linkedin, Instagram, Twitter, MessageCircle, Youtube
-} from "lucide-react"
-import { usePathname } from "next/navigation"
-import CookieSettingsModal from "./CookieSettingsModal"
+const navigation = {
+  project: [
+    { label: 'The Project',    href: '/the-project'   },
+    { label: 'Carbon Credits', href: '/carbon'        },
+    { label: 'Who We Serve',   href: '/the-project#who-we-serve' },
+    { label: 'Partner portal', href: '/auth/login'    },
+  ],
+  company: [
+    { label: 'About',   href: '/about'   },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Privacy Policy',    href: '/privacy-policy'    },
+    { label: 'Terms of Service',  href: '/terms-of-service'  },
+  ],
+}
+
+const socials = [
+  { icon: Linkedin,  href: 'https://www.linkedin.com/company/supacaresolutions/', label: 'LinkedIn'  },
+  { icon: Twitter,   href: 'https://twitter.com/supacareltd',                    label: 'Twitter'   },
+  { icon: Facebook,  href: 'https://www.facebook.com/supacaresolutions',         label: 'Facebook'  },
+  { icon: Instagram, href: 'https://www.instagram.com/supacaresolutions',        label: 'Instagram' },
+]
 
 export default function Footer() {
-  const [email, setEmail] = useState("")
-  const [language, setLanguage] = useState("English")
-  const [openSettings, setOpenSettings] = useState(false)
-  const pathname = usePathname()
-
-  // ✅ Hide footer on dashboard pages
-  if (pathname?.startsWith("/dashboard")) return null
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Email subscribed:", email)
-    setEmail("")
-  }
-
   return (
-    <>
-      <footer
-        className="bg-[#1b4332] text-[#f5f5f0] px-6 sm:px-12 pt-16 pb-24 sm:pb-16 relative"
-        role="contentinfo"
-        aria-label="Website Footer"
-        aria-labelledby="footer-heading"
-      >
-        <h2 id="footer-heading" className="sr-only">
-          Supacare Solutions Footer
-        </h2>
+    <footer className="bg-[#061209] text-white/60 pt-20 pb-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* ✅ Logo + Tagline + Socials */}
-          <div>
+        {/* Top row */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 pb-16 border-b border-white/10">
+
+          {/* Brand */}
+          <div className="lg:col-span-2">
             <Image
               src="/images/supalogo.webp"
-              alt="Supacare Solutions Logo"
-              width={180}
-              height={80}
-              className="mb-4"
+              alt="Supacare"
+              width={140}
+              height={40}
+              className="h-9 w-auto object-contain mb-5 brightness-0 invert opacity-90"
             />
-            <p className="text-[15px] text-gray-200 mb-6 leading-relaxed">
-              Sustainable solutions for a cleaner, greener tomorrow.
+            <p className="text-sm leading-relaxed max-w-xs mb-6">
+              Partnering with communities across Kenya to manage solid waste,
+              create livelihoods, and generate verified climate impact.
             </p>
-
-            {/* Social icons */}
-            <div className="flex items-center gap-4" aria-label="Social Media Links">
-              <a
-                href="https://www.linkedin.com/company/supacaresolutions"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Supacare Solutions on LinkedIn"
-                className="hover:text-[#fcbf49] focus:outline-none focus:ring-2 focus:ring-[#fcbf49] rounded"
-              >
-                <Linkedin size={20} aria-hidden="true" />
-              </a>
-              <a
-                href="https://twitter.com/supacareltd"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Supacare on Twitter"
-                className="hover:text-[#fcbf49] focus:outline-none focus:ring-2 focus:ring-[#fcbf49] rounded"
-              >
-                <Twitter size={20} aria-hidden="true" />
-              </a>
-              <a
-                href="https://www.facebook.com/supacaresolutions"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Supacare on Facebook"
-                className="hover:text-[#fcbf49] focus:outline-none focus:ring-2 focus:ring-[#fcbf49] rounded"
-              >
-                <Facebook size={20} aria-hidden="true" />
-              </a>
-              <a
-                href="https://www.instagram.com/supacaresolutions"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Supacare on Instagram"
-                className="hover:text-[#fcbf49] focus:outline-none focus:ring-2 focus:ring-[#fcbf49] rounded"
-              >
-                <Instagram size={20} aria-hidden="true" />
-              </a>
-              <a
-                href="https://wa.me/254720096680"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Chat with Supacare on WhatsApp"
-                className="hover:text-[#fcbf49] focus:outline-none focus:ring-2 focus:ring-[#fcbf49] rounded"
-              >
-                <MessageCircle size={20} aria-hidden="true" />
-              </a>
-              <a
-                href="https://www.youtube.com/@supacaresolutions"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Supacare Solutions YouTube Channel"
-                className="hover:text-[#fcbf49] focus:outline-none focus:ring-2 focus:ring-[#fcbf49] rounded"
-              >
-                <Youtube size={20} aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-
-          {/* ✅ Services */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Services</h3>
-            <ul className="space-y-2 text-[15px]">
-              <li>
-                <Link href="/services/recycling-composting" className="hover:text-[#fcbf49]">
-                  Recycling & Composting
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/environmental-consultancy" className="hover:text-[#fcbf49]">
-                  Environmental Consultancy
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/waste-collection" className="hover:text-[#fcbf49]">
-                  Waste Collection & Disposal
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/smart-waste" className="hover:text-[#fcbf49]">
-                  Smart Waste Tracking
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* ✅ Company */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Company</h3>
-            <ul className="space-y-2 text-[15px]">
-              <li><Link href="/about-us" className="hover:text-[#fcbf49]">About Us</Link></li>
-              <li><Link href="/careers" className="hover:text-[#fcbf49]">Careers</Link></li>
-              <li><Link href="/projects" className="hover:text-[#fcbf49]">Projects</Link></li>
-              <li><Link href="/faq" className="hover:text-[#fcbf49]">FAQ</Link></li>
-            </ul>
-          </div>
-
-          {/* ✅ Contact + Newsletter */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Get in Touch</h3>
-            <ul className="space-y-2 text-[15px] text-gray-200">
-              <li className="flex items-center gap-2">
-                <Mail size={16} aria-hidden="true" /> contact@Supacare.com
-              </li>
-              <li className="flex items-center gap-2">
-                <Phone size={16} aria-hidden="true" /> 0720096680
-              </li>
-              <li className="flex items-center gap-2">
-                <MapPin size={16} aria-hidden="true" /> Nairobi, Kenya
-              </li>
-            </ul>
-
-            <form onSubmit={handleSubmit} className="mt-6" aria-label="Newsletter Subscription Form">
-              <label htmlFor="newsletter-email" className="text-sm font-semibold">
-                Subscribe to our newsletter
-              </label>
-              <div className="mt-2 flex">
-                <input
-                  id="newsletter-email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  aria-describedby="newsletter-desc"
-                  className="w-full px-3 py-2 rounded-l-md bg-white text-black placeholder:text-gray-600 outline-none focus:ring-2 focus:ring-[#fcbf49]"
-                />
-                <button
-                  type="submit"
-                  aria-label="Subscribe to newsletter"
-                  className="bg-[#fcbf49] text-[#1b4332] font-semibold px-4 py-2 rounded-r-md hover:bg-[#e0ac00] focus:outline-none focus:ring-2 focus:ring-[#fcbf49]"
+            <div className="flex items-center gap-4">
+              {socials.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="text-white/40 hover:text-green-400 transition-colors"
                 >
-                  Join
-                </button>
-              </div>
-              <p id="newsletter-desc" className="text-xs text-gray-400 mt-1">
-                We’ll send you monthly updates. Unsubscribe anytime.
-              </p>
-            </form>
-          </div>
-        </div>
-
-        {/* ✅ Footer Bottom */}
-        <div className="mt-12 pt-6 border-t border-[#2f5c48] flex flex-col sm:flex-row items-center justify-between text-[15px] text-gray-300">
-          <p>© {new Date().getFullYear()} Supacare. All rights reserved.</p>
-
-          <div className="flex items-center gap-4 mt-3 sm:mt-0 flex-wrap justify-center">
-            <Link href="/privacy-policy" className="underline hover:text-[#fcbf49]">
-              Privacy Policy
-            </Link>
-            <Link href="/cookie-policy" className="underline hover:text-[#fcbf49]">
-              Cookie Policy
-            </Link>
-            <Link href="/terms-of-service" className="underline hover:text-[#fcbf49]">
-              Terms of Service
-            </Link>
-            <button
-              onClick={() => setOpenSettings(true)}
-              className="underline hover:text-[#fcbf49]"
-            >
-              Manage Cookies
-            </button>
-
-            <div className="flex items-center gap-2">
-              <label htmlFor="language" className="text-sm font-medium">
-                🌍 Language:
-              </label>
-              <select
-                id="language"
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className="bg-transparent text-white border border-gray-500 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#fcbf49]"
-                aria-label="Select site language"
-              >
-                <option value="English">English</option>
-                <option value="Swahili">Swahili</option>
-                <option value="French">French</option>
-              </select>
+                  <Icon className="w-5 h-5" />
+                </a>
+              ))}
             </div>
           </div>
-        </div>
-      </footer>
 
-      {/* 🍪 Cookie Settings Modal */}
-      <CookieSettingsModal open={openSettings} onClose={() => setOpenSettings(false)} />
-    </>
+          {/* The Project */}
+          <div>
+            <p className="text-white text-xs font-semibold uppercase tracking-widest mb-5">
+              The Project
+            </p>
+            <ul className="space-y-3">
+              {navigation.project.map(({ label, href }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="text-sm hover:text-white transition-colors"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <p className="text-white text-xs font-semibold uppercase tracking-widest mb-5">
+              Company
+            </p>
+            <ul className="space-y-3 mb-8">
+              {navigation.company.map(({ label, href }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="text-sm hover:text-white transition-colors"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <p className="text-white text-xs font-semibold uppercase tracking-widest mb-4">
+              Contact
+            </p>
+            <ul className="space-y-2.5 text-sm">
+              <li className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 flex-shrink-0" />
+                contact@supacare.com
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5 flex-shrink-0" />
+                +254 720 096 680
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                Nairobi, Kenya
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom row */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30">
+          <p>© {new Date().getFullYear()} Supacare Solutions Ltd. All rights reserved.</p>
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
+            <span>Gold Standard implementation in progress</span>
+          </div>
+        </div>
+
+      </div>
+    </footer>
   )
 }

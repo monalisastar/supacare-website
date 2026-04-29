@@ -22,11 +22,16 @@ const config: Config = {
         pulseFast: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         float: 'float 3s ease-in-out infinite',
         bounceOnce: 'bounce 0.6s ease-in-out 1',
+        'slide-up': 'slideUp 0.25s ease-out',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
+        },
+        slideUp: {
+          '0%':   { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       spacing: {

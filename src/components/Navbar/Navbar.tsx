@@ -1,133 +1,138 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import AnnouncementBar from '../AnnouncementBar'
-import NavbarDesktop from './NavbarDesktop'
-import NavbarMobile from './NavbarMobile'
-import UserMenu from './UserMenu'
+import { Menu, X } from 'lucide-react'
+
+const navLinks = [
+  { label: 'The Project',    href: '/the-project' },
+  { label: 'Carbon Credits', href: '/carbon'      },
+  { label: 'About',          href: '/about'       },
+  { label: 'Contact',        href: '/contact'     },
+]
 
 export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [isVisible, setIsVisible] = useState(true)
-  const [lastScrollY, setLastScrollY] = useState(0)
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  // Hide navbar when scrolling down, show when scrolling up (desktop behavior)
   useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    const handleScroll = () => {
-      const currentY = window.scrollY
-
-      // ✅ On mobile: hide navbar after leaving Hero area (e.g. after 550px)
-      if (window.innerWidth < 768) {
-        if (currentY < 550) {
-          setIsVisible(true) // still in Hero → visible
-        } else {
-          setIsVisible(false) // past Hero → hide completely
-        }
-      } else {
-        // ✅ On desktop: normal scroll behavior
-        if (currentY < 50) {
-          setIsVisible(true)
-        } else if (currentY > lastScrollY) {
-          setIsVisible(false)
-        } else {
-          setIsVisible(true)
-        }
-      }
-
-      setLastScrollY(currentY)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY])
-
-  useEffect(() => {
-    setMenuOpen(false)
+    // reset on route change
+    setScrolled(window.scrollY > 80)
+    const onScroll = () => setScrolled(window.scrollY > 80)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [pathname])
 
-  if (pathname?.startsWith('/dashboard')) return null
+  useEffect(() => { setMenuOpen(false) }, [pathname])
 
-  const brightPages = ['/', '/projects']
-  const isBright = brightPages.includes(pathname)
+  const isHeroPage = pathname === '/'
 
   return (
-    <>
-      {isHome && (
-        <div className="hidden md:block">
-          <AnnouncementBar />
-        </div>
-      )}
+    <header
+      data-navbar
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+        scrolled || !isHome
+          ? 'bg-[#061209] border-b border-white/10'
+          : 'bg-black/55'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
 
-      {/* 🧭 Navbar with smooth hide/show */}
-      <AnimatePresence>
-        {isVisible && (
-          <motion.header
-            data-navbar // ✅ Added this line
-            initial={{ y: -80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -80, opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className={`fixed w-full z-50 transition-all ${
-              isBright
-                ? 'bg-transparent'
-                : 'bg-white/95 backdrop-blur-sm border-b border-gray-100'
-            }`}
+        {/* Logo */}
+        <Link href="/" className="flex-shrink-0">
+          <Image
+            src="/images/supalogo.webp"
+            alt="Supacare"
+            width={200}
+            height={60}
+            className="h-12 w-auto object-contain"
+            priority
+          />
+        </Link>
+
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map(({ label, href }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`text-sm font-medium transition-colors duration-200 ${
+                pathname === href
+                  ? 'text-white'
+                  : 'text-white/70 hover:text-white'
+              }`}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Right: portal button */}
+        <div className="hidden md:flex items-center gap-3">
+          <Link
+            href="/auth/login"
+            className="text-sm font-medium text-white/70 hover:text-white transition-colors duration-200"
           >
-            {/* Top row */}
-            <div className="flex items-center justify-between w-full px-6 pt-3 md:pt-0 absolute top-0 left-0 z-[60]">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                <Link href="/" className="flex items-center">
-                  <Image
-                    src="/images/supalogo.webp"
-                    alt="Supacare Solutions Logo"
-                    width={400}
-                    height={180}
-                    className="object-contain w-auto h-[90px] sm:h-[100px] md:h-[130px] lg:h-[150px]"
-                    style={{
-                      filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.3))',
-                      marginTop: '4px',
-                    }}
-                    priority
-                  />
-                </Link>
-              </motion.div>
+            Sign in
+          </Link>
+          <Link
+            href="/auth/login"
+            className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-white/15 hover:bg-white/25 border border-white/30 transition-colors duration-200"
+          >
+            Partner portal
+          </Link>
+        </div>
 
-              {/* Desktop user menu */}
-              <div
-                className={`hidden md:flex items-center ${
-                  isBright
-                    ? 'text-yellow-400 hover:text-yellow-300 transition-colors drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]'
-                    : 'text-green-800 hover:text-green-600 transition-colors'
-                }`}
-              >
-                <UserMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-              </div>
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMenuOpen(v => !v)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+        >
+          {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
 
-              {/* Mobile hamburger */}
-              <div className="md:hidden flex items-center justify-end">
-                <NavbarMobile menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-              </div>
-            </div>
-
-            {/* Desktop Nav */}
-            <div className="hidden md:block relative mt-[130px] z-[40]">
-              <NavbarDesktop />
-            </div>
-          </motion.header>
-        )}
-      </AnimatePresence>
-    </>
+      {/* Mobile menu */}
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ${
+          menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        } bg-[#061209] border-t border-white/10 shadow-xl`}
+      >
+        <div className="px-6 py-4 flex flex-col gap-1">
+          {navLinks.map(({ label, href }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                pathname === href
+                  ? 'bg-white/10 text-white font-semibold'
+                  : 'text-white/70 hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              {label}
+            </Link>
+          ))}
+          <div className="mt-3 pt-3 border-t border-white/10 flex flex-col gap-2">
+            <Link
+              href="/auth/login"
+              className="px-3 py-2.5 rounded-lg text-sm font-medium text-white/60 hover:bg-white/10 hover:text-white transition-colors"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/auth/login"
+              className="px-4 py-2.5 rounded-lg text-sm font-semibold text-white bg-white/15 border border-white/25 hover:bg-white/25 transition-colors text-center"
+            >
+              Partner portal
+            </Link>
+          </div>
+        </div>
+      </div>
+    </header>
   )
 }

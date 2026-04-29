@@ -1,24 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import NavbarFooterLayout from "./NavbarFooterLayout";
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 import Script from "next/script";
 import ClientHydration from "@/components/ClientHydration";
-
-// ✅ Correct CartProvider import (ONLY THIS ONE)
-import { CartProvider } from "@/context/CartContext";
-
-// Fonts
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 // Metadata
 export const metadata: Metadata = {
@@ -141,16 +128,14 @@ export default function RootLayout({
       </head>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-transparent`}
+        className={`${GeistSans.variable} ${GeistMono.variable} antialiased relative bg-transparent`}
       >
         {/* Hydration Fix */}
         <ClientHydration />
 
-        {/* CartProvider MUST wrap everything */}
-        <CartProvider>
-          <NavbarFooterLayout>{children}</NavbarFooterLayout>
-          <FloatingWhatsAppButton />
-        </CartProvider>
+        {/* ✅ CartProvider removed */}
+        <NavbarFooterLayout>{children}</NavbarFooterLayout>
+        <FloatingWhatsAppButton />
 
         {/* JSON-LD MUST be inside BODY */}
         <Script
@@ -178,7 +163,7 @@ export default function RootLayout({
                 sameAs: [
                   "https://www.facebook.com/supacaresolutions",
                   "https://www.instagram.com/supacaresolutions",
-                  "https://www.linkedin.com/company/supacare-solutions",
+                  "https://www.linkedin.com/company/supacaresolutions/",
                   "https://twitter.com/supacaresol",
                 ],
               },

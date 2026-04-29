@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession, signOut } from '@/lib/next-auth-shim';
 
 type HeroData = {
   title?: string;

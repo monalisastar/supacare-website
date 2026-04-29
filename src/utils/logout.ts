@@ -1,6 +1,6 @@
 'use client'
 
-import { signOut } from 'next-auth/react'
+import { signOut } from '@/lib/next-auth-shim'
 
 export const handleLogout = async () => {
   try {

@@ -1,175 +1,186 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useState, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+import { Leaf, Eye, EyeOff, AlertCircle, ArrowLeft } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
-export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [navbarHeight, setNavbarHeight] = useState(0);
+function LoginForm() {
+  const router       = useRouter()
+  const searchParams = useSearchParams()
+  const redirectTo   = searchParams.get('redirectTo') || '/portal'
+  const urlError     = searchParams.get('error')
 
-  // ✅ Detect navbar height dynamically (adjusts based on layout)
-  useEffect(() => {
-    const navbar = document.querySelector("nav, header");
-    if (navbar) setNavbarHeight(navbar.getBoundingClientRect().height);
+  const [email,    setEmail]    = useState('')
+  const [password, setPassword] = useState('')
+  const [showPw,   setShowPw]   = useState(false)
+  const [loading,  setLoading]  = useState(false)
+  const [gLoading, setGLoading] = useState(false)
+  const [error,    setError]    = useState(urlError ?? '')
 
-    const handleResize = () => {
-      const nav = document.querySelector("nav, header");
-      if (nav) setNavbarHeight(nav.getBoundingClientRect().height);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
 
-  // ---------- EMAIL/PASSWORD LOGIN ----------
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+    const supabase = createClient()
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-
-    setLoading(false);
-
-    if (res?.error) {
-      const friendlyErrors: Record<string, string> = {
-        "No account found with this email":
-          "We couldn't find an account with that email.",
-        "This account uses Google login":
-          "This account is linked with Google. Please sign in with Google.",
-        "Invalid email or password": "Your email or password is incorrect.",
-      };
-      setError(
-        friendlyErrors[res.error] || "Something went wrong. Please try again."
-      );
-      return;
+    if (error) {
+      setError(error.message)
+      setLoading(false)
+      return
     }
 
-    // ✅ Universal redirect (role handled in /dashboard/page.tsx)
-    router.push("/dashboard");
-  };
+    router.push(redirectTo)
+    router.refresh()
+  }
 
-  // ---------- GOOGLE LOGIN ----------
-  const handleGoogleLogin = async () => {
-    setError(null);
-    setLoading(true);
-    await signIn("google");
-  };
+  async function handleGoogle() {
+    setError('')
+    setGLoading(true)
+    const supabase = createClient()
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    })
+
+    if (error) {
+      setError(error.message)
+      setGLoading(false)
+    }
+    // On success, browser redirects to Google — no further action needed
+  }
 
   return (
-    <div
-      className="relative flex flex-col items-center justify-center bg-gray-100"
-      style={{
-        minHeight: `calc(100vh - ${navbarHeight}px)`,
-        marginTop: navbarHeight,
-      }}
-    >
-      {/* ✅ Background */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/recycling-composting.webp"
-          alt="Login background"
-          fill
-          className="object-cover brightness-75"
-          priority
-        />
-      </div>
+    <div className="min-h-screen bg-[#061209] flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
 
-      {/* ✅ Login Card */}
-      <div className="relative z-20 w-full max-w-md bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Welcome Back
-        </h1>
+        {/* Back to home */}
+        <div className="mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to home
+          </Link>
+        </div>
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-green-700 rounded-2xl mb-4 shadow-lg">
+            <Leaf className="w-7 h-7 text-white" />
+          </div>
+          <h1 className="text-2xl font-bold text-white">Supacare Portal</h1>
+          <p className="text-white/40 mt-1 text-sm">Gold Standard Waste Management · Kenya</p>
+        </div>
+
+        {/* Card */}
+        <div className="bg-white rounded-2xl shadow-2xl p-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-6">Sign in to your account</h2>
+
           {error && (
-            <p className="text-red-600 text-sm text-center bg-red-50 border border-red-200 rounded p-2">
-              {error}
-            </p>
+            <div className="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 mb-5 text-sm">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <span>{error}</span>
+            </div>
           )}
 
-          <input
-            type="email"
-            placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full p-3 border border-gray-300 rounded-lg 
-                       bg-white text-gray-800 placeholder-gray-500 
-                       focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full p-3 border border-gray-300 rounded-lg 
-                       bg-white text-gray-800 placeholder-gray-500 
-                       focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-
+          {/* Google button */}
           <button
-            type="submit"
-            disabled={loading}
-            className="w-full flex items-center justify-center py-3 
-                       bg-green-600 text-white rounded-lg font-semibold 
-                       hover:bg-green-700 transition disabled:opacity-50"
+            onClick={handleGoogle}
+            disabled={gLoading || loading}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-60 mb-5"
           >
-            {loading ? "Logging in..." : "Login"}
+            <Image src="/icons/google.svg" alt="Google" width={18} height={18} />
+            {gLoading ? 'Redirecting to Google…' : 'Continue with Google'}
           </button>
-        </form>
 
-        {/* Divider */}
-        <div className="flex items-center my-6">
-          <div className="flex-grow h-px bg-gray-300"></div>
-          <span className="px-3 text-sm text-gray-500">OR</span>
-          <div className="flex-grow h-px bg-gray-300"></div>
+          <div className="flex items-center gap-3 mb-5">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="text-xs text-gray-400">or sign in with email</span>
+            <div className="flex-1 h-px bg-gray-200" />
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1.5">
+                Email address
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                placeholder="you@example.com"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-green-500 focus:bg-white transition-colors"
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
+                  Password
+                </label>
+                <Link href="/auth/forgot-password" className="text-xs text-green-700 hover:text-green-600">
+                  Forgot password?
+                </Link>
+              </div>
+              <div className="relative">
+                <input
+                  type={showPw ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                  placeholder="••••••••"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-10 text-sm bg-gray-50 focus:outline-none focus:border-green-500 focus:bg-white transition-colors"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw(!showPw)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading || gLoading}
+              className="w-full bg-green-700 hover:bg-green-600 text-white font-semibold rounded-xl py-2.5 text-sm transition-colors disabled:opacity-60"
+            >
+              {loading ? 'Signing in…' : 'Sign in'}
+            </button>
+          </form>
+
+          <p className="text-center text-sm text-gray-500 mt-6">
+            Don't have an account?{' '}
+            <Link href="/auth/register" className="text-green-700 font-medium hover:text-green-600">
+              Create one
+            </Link>
+          </p>
         </div>
 
-        {/* Google Login */}
-        <button
-          onClick={handleGoogleLogin}
-          disabled={loading}
-          className="flex items-center justify-center gap-3 w-full py-3 
-                     border border-gray-300 rounded-lg font-medium 
-                     text-gray-700 bg-white hover:bg-gray-50 transition shadow-sm"
-        >
-          <Image src="/icons/google.svg" alt="Google logo" width={20} height={20} />
-          <span>Sign in with Google</span>
-        </button>
-
-        {/* Footer Links */}
-        <div className="mt-6 text-center text-sm text-gray-600 space-y-2">
-          <p>
-            Don’t have an account?{" "}
-            <a
-              href="/auth/register"
-              className="text-green-600 font-medium hover:underline"
-            >
-              Register
-            </a>
-          </p>
-          <p>
-            <a
-              href="/auth/forgot-password"
-              className="text-green-600 font-medium hover:underline"
-            >
-              Forgot your password?
-            </a>
-          </p>
-        </div>
       </div>
     </div>
-  );
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#061209] flex items-center justify-center">
+        <div className="text-green-400 text-sm">Loading…</div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
+  )
 }

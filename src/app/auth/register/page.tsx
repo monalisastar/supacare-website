@@ -1,176 +1,196 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+import { Leaf, Eye, EyeOff, AlertCircle, ArrowLeft } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function RegisterPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [navbarHeight, setNavbarHeight] = useState(0);
+  const router = useRouter()
 
-  // ✅ Detect navbar height dynamically
-  useEffect(() => {
-    const navbar = document.querySelector("nav, header");
-    if (navbar) setNavbarHeight(navbar.getBoundingClientRect().height);
+  const [name,     setName]     = useState('')
+  const [email,    setEmail]    = useState('')
+  const [password, setPassword] = useState('')
+  const [showPw,   setShowPw]   = useState(false)
+  const [loading,  setLoading]  = useState(false)
+  const [gLoading, setGLoading] = useState(false)
+  const [error,    setError]    = useState('')
 
-    const handleResize = () => {
-      const nav = document.querySelector("nav, header");
-      if (nav) setNavbarHeight(nav.getBoundingClientRect().height);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  async function handleRegister(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
+    const supabase = createClient()
 
-    try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      });
+    const { data, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: name } },
+    })
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        const friendlyErrors: Record<string, string> = {
-          "Email already in use":
-            "That email is already registered. Please log in instead.",
-          "Please use Google login":
-            "This email is linked with Google. Please sign up with Google.",
-          "Password too short":
-            "Password must be at least 6 characters long.",
-        };
-
-        throw new Error(
-          friendlyErrors[data.message] ||
-            data.message ||
-            "Failed to create your account."
-        );
-      }
-
-      router.push("/auth/login");
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    if (signUpError) {
+      setError(signUpError.message)
+      setLoading(false)
+      return
     }
-  };
+
+    // Profile row is created automatically by the DB trigger (role = 'client')
+    // Update the name in profiles
+    if (data.user) {
+      await supabase
+        .from('profiles')
+        .update({ name })
+        .eq('id', data.user.id)
+    }
+
+    // If email confirmation is required, tell user; otherwise redirect
+    if (!data.session) {
+      router.push('/auth/login?message=Check your email to confirm your account')
+    } else {
+      router.push('/portal/client')
+      router.refresh()
+    }
+  }
+
+  async function handleGoogle() {
+    setError('')
+    setGLoading(true)
+    const supabase = createClient()
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    })
+
+    if (error) {
+      setError(error.message)
+      setGLoading(false)
+    }
+  }
 
   return (
-    <div
-      className="relative flex flex-col items-center justify-center bg-gray-100"
-      style={{
-        minHeight: `calc(100vh - ${navbarHeight}px)`,
-        marginTop: navbarHeight,
-      }}
-    >
-      {/* ✅ Background hero image */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/about-hero.webp"
-          alt="Register background"
-          fill
-          className="object-cover brightness-75"
-          priority
-        />
-      </div>
+    <div className="min-h-screen bg-[#061209] flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
 
-      {/* ✅ Overlay card */}
-      <div className="relative z-20 w-full max-w-md bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Create an Account
-        </h1>
-
-        <form onSubmit={handleRegister} className="space-y-4">
-          {error && (
-            <p className="text-red-600 text-sm text-center bg-red-50 border border-red-200 rounded p-2">
-              {error}
-            </p>
-          )}
-
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="w-full p-3 border border-gray-300 rounded-lg 
-                       bg-white text-gray-800 placeholder-gray-500
-                       focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-
-          <input
-            type="email"
-            placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full p-3 border border-gray-300 rounded-lg 
-                       bg-white text-gray-800 placeholder-gray-500
-                       focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-
-          <input
-            type="password"
-            placeholder="Create password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={6}
-            className="w-full p-3 border border-gray-300 rounded-lg 
-                       bg-white text-gray-800 placeholder-gray-500
-                       focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full flex items-center justify-center py-3 
-                       bg-green-600 text-white rounded-lg font-semibold 
-                       hover:bg-green-700 transition disabled:opacity-50"
+        {/* Back to home */}
+        <div className="mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors"
           >
-            {loading ? "Creating account..." : "Register"}
-          </button>
-        </form>
-
-        {/* Divider */}
-        <div className="flex items-center my-6">
-          <div className="flex-grow h-px bg-gray-300"></div>
-          <span className="px-3 text-sm text-gray-500">OR</span>
-          <div className="flex-grow h-px bg-gray-300"></div>
+            <ArrowLeft className="w-4 h-4" />
+            Back to home
+          </Link>
         </div>
 
-        {/* Google register */}
-        <button
-          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          className="flex items-center justify-center gap-3 w-full py-3 
-                     border border-gray-300 rounded-lg font-medium 
-                     text-gray-700 bg-white hover:bg-gray-50 transition shadow-sm"
-        >
-          <Image src="/icons/google.svg" alt="Google logo" width={20} height={20} />
-          <span>Sign up with Google</span>
-        </button>
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-green-700 rounded-2xl mb-4 shadow-lg">
+            <Leaf className="w-7 h-7 text-white" />
+          </div>
+          <h1 className="text-2xl font-bold text-white">Create your account</h1>
+          <p className="text-white/40 mt-1 text-sm">For partners and clients of Supacare</p>
+        </div>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Already have an account?{" "}
-          <a
-            href="/auth/login"
-            className="text-green-600 font-medium hover:underline"
+        {/* Card */}
+        <div className="bg-white rounded-2xl shadow-2xl p-8">
+
+          {error && (
+            <div className="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 mb-5 text-sm">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          {/* Google button */}
+          <button
+            onClick={handleGoogle}
+            disabled={gLoading || loading}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-60 mb-5"
           >
-            Login
-          </a>
-        </p>
+            <Image src="/icons/google.svg" alt="Google" width={18} height={18} />
+            {gLoading ? 'Redirecting to Google…' : 'Sign up with Google'}
+          </button>
+
+          <div className="flex items-center gap-3 mb-5">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="text-xs text-gray-400">or register with email</span>
+            <div className="flex-1 h-px bg-gray-200" />
+          </div>
+
+          <form onSubmit={handleRegister} className="space-y-4">
+            <div>
+              <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1.5">Full name</label>
+              <input
+                type="text"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+                placeholder="Your full name"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-green-500 focus:bg-white transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1.5">Email address</label>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                placeholder="you@example.com"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-green-500 focus:bg-white transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1.5">Password</label>
+              <div className="relative">
+                <input
+                  type={showPw ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  placeholder="Min. 6 characters"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-10 text-sm bg-gray-50 focus:outline-none focus:border-green-500 focus:bg-white transition-colors"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw(!showPw)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading || gLoading}
+              className="w-full bg-green-700 hover:bg-green-600 text-white font-semibold rounded-xl py-2.5 text-sm transition-colors disabled:opacity-60"
+            >
+              {loading ? 'Creating account…' : 'Create account'}
+            </button>
+          </form>
+
+          <p className="text-center text-xs text-gray-400 mt-5 leading-relaxed">
+            Staff accounts are created by your admin.<br />
+            This form is for partners and clients only.
+          </p>
+
+          <p className="text-center text-sm text-gray-500 mt-4">
+            Already have an account?{' '}
+            <Link href="/auth/login" className="text-green-700 font-medium hover:text-green-600">Sign in</Link>
+          </p>
+        </div>
+
       </div>
     </div>
-  );
+  )
 }
